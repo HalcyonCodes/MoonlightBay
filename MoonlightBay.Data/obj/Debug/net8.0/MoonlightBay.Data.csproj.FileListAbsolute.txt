@@ -1,0 +1,15 @@
+/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Data/bin/Debug/net8.0/MoonlightBay.Data.deps.json
+/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Data/bin/Debug/net8.0/MoonlightBay.Data.dll
+/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Data/bin/Debug/net8.0/MoonlightBay.Data.pdb
+/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Data/obj/Debug/net8.0/MoonlightBay.Data.GeneratedMSBuildEditorConfig.editorconfig
+/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Data/obj/Debug/net8.0/MoonlightBay.Data.AssemblyInfoInputs.cache
+/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Data/obj/Debug/net8.0/MoonlightBay.Data.AssemblyInfo.cs
+/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Data/obj/Debug/net8.0/MoonlightBay.Data.csproj.CoreCompileInputs.cache
+/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Data/obj/Debug/net8.0/MoonlightBay.Data.dll
+/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Data/obj/Debug/net8.0/refint/MoonlightBay.Data.dll
+/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Data/obj/Debug/net8.0/MoonlightBay.Data.pdb
+/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Data/obj/Debug/net8.0/ref/MoonlightBay.Data.dll
+/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Data/bin/Debug/net8.0/MoonlightBay.Model.dll
+/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Data/bin/Debug/net8.0/MoonlightBay.Model.pdb
+/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Data/obj/Debug/net8.0/MoonlightBay.Data.csproj.AssemblyReference.cache
+/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Data/obj/Debug/net8.0/MoonlightBay.Data.csproj.CopyComplete
