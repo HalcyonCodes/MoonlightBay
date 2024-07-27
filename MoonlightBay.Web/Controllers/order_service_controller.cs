@@ -196,11 +196,11 @@ public class OrderServiceController(
         
     }
 
-    //SER009-0: AddServiceResourceToService
+    //SER009-0: AddServiceResourceToOrderService
     //Desc: 为订单服务添加服务资源
     [HttpPost]
     [Authorize(Roles = "admin")]
-    public async Task<IActionResult> AddServiceResourceToService(OrderServiceViewModel viewModel){
+    public async Task<IActionResult> AddServiceResourceToOrderService(OrderServiceViewModel viewModel){
         OrderService? orderService = await _orderServiceRepository.GetOrderServiceByIDWithResourcesAsync(viewModel.orderServiceID);
         if(orderService == null) return BadRequest("add order service resource to order service failed.");
         viewModel.orderServiceResources ??= [];
@@ -218,11 +218,83 @@ public class OrderServiceController(
         return Ok();
     }
 
-    
+    //SER010-0: AddOrderServiceWorkScript
+    //Desc: 添加工作脚本
+    [HttpPost]
+    [Authorize(Roles = "admin")]
+    public async Task<IActionResult> AddOrderServiceWorkScript(OrderServiceViewModel viewModel){
+        OrderServiceScript newScript = new(){
+            OrderServiceScriptID = null,
+            OrderServiceScriptName = viewModel.orderServiceName,
+            OrderServiceDesc = viewModel.orderServiceDesc
+        };
+
+        int? status = await _orderServiceRepository.AddOrderServiceScriptAsync(newScript);
+        if(status != 0) return BadRequest("add order service work script failed.");
+        return Ok();
+    }
+
+    //SER011-0 DeleteOrderServiceWorkScript
+    //Desc: 删除工作脚本
+    [HttpPost]
+    [Authorize(Roles = "admin")]
+    public async Task<IActionResult> DelteOrderServiceWorkScript(OrderServiceScriptViewModel viewModel){
+        
+        OrderServiceScript? script = new(){
+            OrderServiceScriptID = viewModel.orderServiceScriptID,
+            OrderServiceScriptName = viewModel.orderServiceScriptName,
+            OrderServiceDesc = viewModel.orderServiceDesc
+        };
 
 
+        int status = await _orderServiceRepository.DeleteOrderServiceScriptAsync(script);
+        if(status != 0) return BadRequest("delete order service work script failed.");
+        return Ok();
+    }
 
-    
+    //SER012-0 UpdateOrderServiceWorkScript
+    //Desc: 更新工作脚本
+    [HttpPost]
+    [Authorize(Roles = "admin")]
+    public async Task<IActionResult> UpdateOrderServiceWorkScript(OrderServiceViewModel viewModel){
+        OrderServiceScript script = new(){
+            OrderServiceScriptID = viewModel.orderServiceID,
+            OrderServiceScriptName = viewModel.orderServiceName,
+            OrderServiceDesc = viewModel.orderServiceDesc
+        };
+        int? status = await _orderServiceRepository.UpdateOrderServiceSeriptAsync(script);
+        if(status != 0) return BadRequest("update order service work script failed.");
+        return Ok();
+    }
+
+
+    //SER013-0 GetOrderServiceWorkScripts
+    //Desc: 获取所有工作脚本
+    [HttpGet]
+    [Authorize(Roles = "admin")]
+    public async Task<IActionResult> GetOrderServiceWorkScripts(){
+        List<OrderServiceScript>? scripts = await _orderServiceRepository.GetOrderServiceScriptsAsync();
+        scripts ??= [];
+
+        
+        OrderServiceScriptsResultViewModel resultViewModel = new(){
+            code = "200",
+            message = "",
+            orderServiceScripts = [],
+        };
+        
+        scripts.ForEach(t => {
+            OrderServiceScriptViewModel scriptViewModel = new(){
+                orderServiceScriptID = t.OrderServiceScriptID,
+                orderServiceDesc = t.OrderServiceDesc,
+                orderServiceScriptName = t.OrderServiceScriptName
+            };
+            resultViewModel.orderServiceScripts.Add(scriptViewModel);
+        });
+
+        return Ok(resultViewModel);
+    }
+
 
 
 

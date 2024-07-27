@@ -13,7 +13,8 @@ public class Order{
         complete = 2
     }
 
-    public Guid? OraderID{get; set;}
+    public Guid? OrderID{get; set;}
+    public int? OrderIndex{get; set;} //订单所在队列中的位置
     public Terminal? SourceTerminal{get; set;} //发起终端
     public Terminal? TargetTerminal{get; set;} //目标终端
     public DateTime? CreatedTime{get; set;} //创建时间

@@ -26,8 +26,15 @@ public interface IOrderServiceRepository
     Task<OrderService?> GetOrderServiceByIDWithResourcesAsync(int? orderServiceID);
     Task<List<OrderService>> GetOrderServicesAsync();
     Task<int> AddOrderServiceResourcesToOrderServiceAsync(OrderService orderService);
+    Task<int> AddOrderServiceScriptToOrderServiceAsync(OrderService orderService);
 
-
+    //操作OrderServiceScript
+    Task<int?> AddOrderServiceScriptAsync(OrderServiceScript script);
+    Task<int> DeleteOrderServiceScriptAsync(OrderServiceScript script);
+    Task<int> UpdateOrderServiceSeriptAsync(OrderServiceScript script);
+    Task<OrderServiceScript?> GetOrderServiceScriptAsync(int? scriptID);
+    Task<List<OrderServiceScript>?> GetOrderServiceScriptsAsync();
+    
 
 
 

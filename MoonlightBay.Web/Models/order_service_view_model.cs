@@ -32,3 +32,17 @@ public class OrderServicesResultViewModel{
     public string? message;
     public List<OrderServiceViewModel>? orderServices;
 }
+
+public class OrderServiceScriptViewModel{
+    public int? orderServiceScriptID;
+    public string? orderServiceScriptName;
+    public string? orderServiceDesc;
+}
+
+
+public class OrderServiceScriptsResultViewModel{
+    public string? code;
+    public string? message;
+    public List<OrderServiceScriptViewModel>? orderServiceScripts;
+
+}

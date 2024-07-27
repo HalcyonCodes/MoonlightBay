@@ -92,6 +92,7 @@ public class OrderServiceResourceRepository(
         OrderService? dbOrderService = await _dbContext.OrderServices
         .FirstOrDefaultAsync(t => t.OrderServiceName == newOrderService.OrderServiceName);
         if(dbOrderService == null) return -1;
+
         _dbContext.OrderServices.Add(newOrderService);
         await _dbContext.SaveChangesAsync();
         return newOrderService.OrderServiceID;
@@ -175,6 +176,7 @@ public class OrderServiceResourceRepository(
 
     public async Task<int> AddOrderServiceResourcesToOrderServiceAsync(OrderService orderService)
     {
+        if(orderService.OrderServiceID == null) return -1;
         OrderService? dbOrderService = await _dbContext.OrderServices
         .Include(t => t.OrderServiceResources)
         .FirstOrDefaultAsync(t => t.OrderServiceID == orderService.OrderServiceID);
@@ -189,6 +191,80 @@ public class OrderServiceResourceRepository(
         dbOrderService.OrderServiceResources.AddRange(dbOrderServiceResources);
         await _dbContext.SaveChangesAsync();
         return 0;
+    }
+
+    public async Task<int> AddOrderServiceScriptToOrderServiceAsync(OrderService orderService){
+        if(orderService.OrderServiceID == null) return -1;
+        if(orderService.WorkScript == null) return -1;
+        if(orderService.WorkScript.OrderServiceScriptID == null) return -1;
+        OrderService? dbOrderService = await _dbContext.OrderServices
+        .Include(t => t.OrderServiceResources)
+        .FirstOrDefaultAsync(t => t.OrderServiceID == orderService.OrderServiceID);
+        if(dbOrderService == null) return -1;
+
+        OrderServiceScript? dbOrderServiceScript = await _dbContext.OrderServiceScripts
+        .FirstOrDefaultAsync(t => t.OrderServiceScriptID == orderService.WorkScript.OrderServiceScriptID);
+        if(dbOrderServiceScript == null) return -1;
+        dbOrderService.WorkScript = dbOrderServiceScript;
+        _dbContext.OrderServices.Update(dbOrderService);
+        await _dbContext.SaveChangesAsync();
+        return 0;
+    }
+
+    public async Task<int?> AddOrderServiceScriptAsync(OrderServiceScript script){
+        OrderServiceScript newOrderServiceScript = new(){
+            OrderServiceScriptID = null,
+            OrderServiceDesc = script.OrderServiceDesc,
+            OrderServiceScriptName = script.OrderServiceScriptName
+        };
+        _dbContext.OrderServiceScripts.Add(newOrderServiceScript);
+        await _dbContext.SaveChangesAsync();
+        return newOrderServiceScript.OrderServiceScriptID;
+
+    }
+    public async Task<int> DeleteOrderServiceScriptAsync(OrderServiceScript script){
+        if(script.OrderServiceScriptID == null) return -1;
+        OrderServiceScript? dbScript = await _dbContext.OrderServiceScripts
+        .FirstOrDefaultAsync(t => t.OrderServiceScriptID == script.OrderServiceScriptID);
+        if(dbScript == null) return -1;
+        List<OrderService>? dbOrderServices = await _dbContext.OrderServices
+        .Where(t => (t.WorkScript != null) && (t.WorkScript.OrderServiceScriptID == script.OrderServiceScriptID))
+        .ToListAsync();
+        dbOrderServices ??= [];
+        dbOrderServices.ForEach(q =>{
+            q.WorkScript = null;
+            _dbContext.OrderServices.Update(q);
+        });
+        _dbContext.OrderServiceScripts.Remove(dbScript);
+        await _dbContext.SaveChangesAsync();
+        return 0;
+    }
+
+    public async Task<int> UpdateOrderServiceSeriptAsync(OrderServiceScript script){
+        if(script.OrderServiceScriptID == null) return -1;
+        OrderServiceScript? dbOrderScript = await _dbContext.OrderServiceScripts
+        .FirstOrDefaultAsync(t => t.OrderServiceScriptID == script.OrderServiceScriptID);
+        if(dbOrderScript == null) return -1;
+        dbOrderScript.OrderServiceScriptName = script.OrderServiceScriptName;
+        dbOrderScript.OrderServiceDesc = script.OrderServiceDesc;
+        _dbContext.OrderServiceScripts.Update(dbOrderScript);
+        await _dbContext.SaveChangesAsync();
+        return 0;
+    }
+
+    public async Task<OrderServiceScript?> GetOrderServiceScriptAsync(int? scriptID){
+        if(scriptID == null) return null;
+        OrderServiceScript? dbOrderServiceScript = await _dbContext.OrderServiceScripts
+        .FirstOrDefaultAsync(t => t.OrderServiceScriptID == scriptID);
+        if(dbOrderServiceScript == null) return null;
+        return dbOrderServiceScript;
+    }
+
+    public async Task<List<OrderServiceScript>?> GetOrderServiceScriptsAsync(){
+        List<OrderServiceScript>? scripts = await _dbContext.OrderServiceScripts
+        .ToListAsync();
+        scripts ??= [];
+        return scripts;
     }
     
     
