@@ -1,6 +1,13 @@
 
 namespace MoonlightBay.Web.Models;
 
+public class OrderResultViewModel{
+    public string? code;
+    public string? message;
+    public OrderViewModel? order;
+}
+
+
 public class OrderServiceResourceClassesViewModel{
     public Guid? orderServiceResourceClasssID;
     public DateTime? createdTime;

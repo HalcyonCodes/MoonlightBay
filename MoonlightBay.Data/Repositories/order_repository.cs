@@ -226,8 +226,8 @@ public class OrderRepository(
         return 0;
     }
 
-    //从所有终端订单栈里弹出优先度最高的订单
-    public async Task<Order?> PopOrderAsync()
+    //从所有终端订单栈里得到弹出优先度最高的订单
+    public async Task<Order?> GetOrderAsync()
     {
         if(_httpContextAccessor.HttpContext == null) return null;
         ApplicationUser? user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
@@ -260,6 +260,35 @@ public class OrderRepository(
         if(flag){return null;}
         return targetOrder;
     }
+
+    //获取所有订单通道中的订单
+    public async Task<List<OrderChannel>?> GetOrderChannelsAsync(){
+
+        if(_httpContextAccessor.HttpContext == null) return null;
+
+        ApplicationUser? user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+
+        if(user == null) return null;
+
+        Terminal? terminal = await _dbContext.Terminals
+        .Include(t => t.OrderChannels)!
+        .ThenInclude(t => t.Orders)!
+        .ThenInclude(t => t.OrderResources)!
+        .Include(t => t.OrderChannels)!
+        .ThenInclude(t => t.Orders)!
+        .ThenInclude(t => t.OrderService)
+        .ThenInclude(t => t!.OrderServiceResources)
+        .FirstOrDefaultAsync(t => t.User == user);
+
+        if(terminal == null) return[];
+
+        List<OrderChannel>? orderChannels = terminal.OrderChannels;
+
+        orderChannels ??= [];
+        return orderChannels;
+    }
+
+
 
 
 }
