@@ -106,7 +106,7 @@ public class OrderController(
         return Ok();    
     }
 
-    [HttpPost]
+    [HttpGet]
     [Authorize]
     public async Task<IActionResult> GetOrder(){
 
@@ -169,12 +169,15 @@ public class OrderController(
         
     }
 
-    [HttpPost]
+    [HttpGet]
     [Authorize]
     public async Task<IActionResult> GetOrderChannels(){
         List<OrderChannel>? orderChannels = await _ordereRepository.GetOrderChannelsAsync();
+
         if(orderChannels == null) return BadRequest("Get order channels failed.");
         orderChannels ??= [];
+        orderChannels = [.. orderChannels.OrderBy(t => t.OrderChannelLevel)];
+        List<OrderChannelViewModel> orderChannelViews = [];
 
         bool flag = false;
         foreach(var q in orderChannels){
@@ -204,6 +207,7 @@ public class OrderController(
                     orderServiceResources = [],
                 };
                 s.OrderService.OrderServiceResources ??= [];
+
                 foreach(var c in s.OrderService.OrderServiceResources){
                     OrderServiceResourceViewModel resourceView = new(){
                         orderServiceResourceID = c.OrderServiceResourceID,
@@ -212,6 +216,7 @@ public class OrderController(
                     };
                     orderServiceViewModel.orderServiceResources.Add(resourceView);
                 }
+                
                 OrderViewModel orderView = new()
                 {
                     orderID = s.OrderID,
@@ -222,7 +227,10 @@ public class OrderController(
                     status = (OrderViewModel.OrderStatus?)s.Status,
                     orderServiceResources = [],
                 };
+
                 s.OrderResources ??= [];
+                orderView.orderService = orderServiceViewModel;
+
                 foreach(var v in s.OrderResources){
                     OrderServiceResourceClassesViewModel viewModel = new(){
                         orderServiceResourceClasssID = v.OrderServiceResoourceClassID,
@@ -235,36 +243,42 @@ public class OrderController(
                         flag = true;
                         break;
                     };
-                    OrderServiceResourceViewModel serviceViewModel = new(){
-                         orderServiceResourceID = v.OrderServiceResource.OrderServiceResourceID,
-                         orderServiceResourceName = v.OrderServiceResource.OrderServiceResourceName,
-                         orderServiceResourceDesc = v.OrderServiceResource.OrderServiceResourceDesc,
-                    };    
+                    
+                    orderView.orderServiceResources.Add(viewModel);
                 }
-                
 
-                orderView.orderServiceResources.AddRange( );
-                
-                
             }
+            orderChannelViews.Add(orderChannel);
+
             if(flag == true){break;}
         }
 
         if(flag == true) return BadRequest("Get order channels failed.");
         
 
-        OrderChannelsResultViewModel resoultViewModel = new(){
+        OrderChannelsResultViewModel resultViewModel = new(){
             code = "200",
             message = "",
-            orderChannels = [],
+            orderChannels = orderChannelViews,
         };
 
 
-
+        return Ok(resultViewModel);
     }
 
 
-    
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> UpdateOrderStatus(Guid? orderID, int? orderStatus){
+        if(orderStatus == null) return BadRequest("update order status failed.");
+        Order? order = await _ordereRepository.GetOrderByIDAsync(orderID);
+        if(order == null) return BadRequest("get order failed.");
+        order.Status = (Order.OrderStatus?)orderStatus;
+        int status = await _ordereRepository.UpdateOrderStatusAsync(order);
+        if(status != 0) return BadRequest("update order status failed.");
+        return Ok();
+    }
+
 
 }
 

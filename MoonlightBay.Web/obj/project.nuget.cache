@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "OjTDV6xvsDtGINfqpAu7xuptbu0Wj0XVRFsZYatXMQzNyvwnNHS38MvItZiEBSEy9iMm/pwMftQCloE/5InZxw==",
+  "dgSpecHash": "s8y/cVGUgy4=",
   "success": true,
-  "projectFilePath": "/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Web/MoonlightBay.Web.csproj",
+  "projectFilePath": "/Users/reddock/Documents/Codes/MoonlightBay/MoonlightBay/MoonlightBay.Web/MoonlightBay.Web.csproj",
   "expectedPackageFiles": [
     "/Users/reddock/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/reddock/.nuget/packages/microsoft.aspnetcore.authentication.jwtbearer/7.0.12/microsoft.aspnetcore.authentication.jwtbearer.7.0.12.nupkg.sha512",

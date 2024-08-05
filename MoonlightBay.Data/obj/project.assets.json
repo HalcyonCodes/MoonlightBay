@@ -855,11 +855,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Data/MoonlightBay.Data.csproj",
+      "projectUniqueName": "/Users/reddock/Documents/Codes/MoonlightBay/MoonlightBay/MoonlightBay.Data/MoonlightBay.Data.csproj",
       "projectName": "MoonlightBay.Data",
-      "projectPath": "/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Data/MoonlightBay.Data.csproj",
+      "projectPath": "/Users/reddock/Documents/Codes/MoonlightBay/MoonlightBay/MoonlightBay.Data/MoonlightBay.Data.csproj",
       "packagesPath": "/Users/reddock/.nuget/packages/",
-      "outputPath": "/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Data/obj/",
+      "outputPath": "/Users/reddock/Documents/Codes/MoonlightBay/MoonlightBay/MoonlightBay.Data/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/reddock/.nuget/NuGet/NuGet.Config"
@@ -874,8 +874,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj": {
-              "projectPath": "/Users/reddock/Documents/codes/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj"
+            "/Users/reddock/Documents/Codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj": {
+              "projectPath": "/Users/reddock/Documents/Codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj"
             }
           }
         }
@@ -884,6 +884,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -919,7 +924,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.100-rc.1.23463.5/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
