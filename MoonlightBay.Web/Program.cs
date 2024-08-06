@@ -29,11 +29,11 @@ var builder = WebApplication.CreateBuilder(args);
 //配置数据库
 builder.Services.AddDbContextPool<ApplicationDbContext>(options =>
 
-    options.UseMySql("Server=localhost;Port=3306;Database=MoonlighterGame;User=root;Password=z123;",
+    options.UseMySql("Server=localhost;Port=3306;Database=MoonlightBay;User=root;Password=z12312;",
         ServerVersion.Create(new Version(8, 1, 0), ServerType.MySql),
         b =>
         {
-            b.MigrationsAssembly("MoonlighterServer.Web");
+            b.MigrationsAssembly("MoonlightBay.Web");
         }
 ));
 
@@ -65,9 +65,9 @@ var tokenValidationParameters = new TokenValidationParameters
     ValidateIssuerSigningKey = true,
     IssuerSigningKey = signingKey,
     ValidateIssuer = true,
-    ValidIssuer = "Moonlighter",
+    ValidIssuer = "MoonlightBay",
     ValidateAudience = true,
-    ValidAudience = "MoonlighterAudience",
+    ValidAudience = "MoonlightBayAudience",
     ValidateLifetime = true,
     ClockSkew = TimeSpan.Zero
 };

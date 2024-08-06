@@ -61,6 +61,12 @@ public class AccountController(
     {
         //Console.WriteLine("sssssss");
         //在identity里创建账户
+        IList<ApplicationUser> rootUser = await _userManager.GetUsersInRoleAsync("Root");
+        rootUser ??= [];
+        if(rootUser.Count >= 1){
+            return BadRequest("regist root failed");
+        };
+        
         var user = new ApplicationUser { UserName = registerModel.UserID, Email = registerModel.UserID, Role = registerModel.Role };
         var result = await _userManager.CreateAsync(user, registerModel.Password);
         if (result.Succeeded)
