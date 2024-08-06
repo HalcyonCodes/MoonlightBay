@@ -114,4 +114,6 @@ public class TerminalReoisitory(ApplicationDbContext dbContext
         await _dbContext.SaveChangesAsync();
         return 0;
     }
+
+    
 }

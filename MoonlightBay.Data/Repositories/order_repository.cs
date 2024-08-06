@@ -288,7 +288,15 @@ public class OrderRepository(
         return orderChannels;
     }
 
-
-
-
+    public async Task<Order?> GetOrderByIDAsync(Guid? orderID)
+    {
+        Order? dbOrder = await _dbContext.Orders
+        .Include(t => t.OrderResources)
+        .Include(t => t.OrderService)
+        .ThenInclude(t => t!.OrderServiceResources)
+        .FirstOrDefaultAsync(t => t.OrderID == orderID);
+        if(dbOrder == null) return null;
+        return dbOrder;
+    }
+    
 }

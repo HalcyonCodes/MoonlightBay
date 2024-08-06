@@ -16,6 +16,7 @@ public interface IOrderRepository{
    Task<int> AddOrderToOrderChannelAsync(Guid orderID, int channelLevel);
    Task<Order?> GetOrderAsync();
    Task<List<OrderChannel>?> GetOrderChannelsAsync();
+   Task<Order?> GetOrderByIDAsync(Guid? orderID);
 }
 
 
