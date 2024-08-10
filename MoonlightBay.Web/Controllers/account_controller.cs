@@ -1,25 +1,19 @@
 //using System;
-
 using Microsoft.AspNetCore.Authorization;
 //using Microsoft.AspNetCore.Components;
 using MoonlightBay.Data.Interfaces;
-
 using Microsoft.AspNetCore.Identity;
-
 using Microsoft.AspNetCore.Mvc;
-
 using MoonlightBay.Model;
-
 //using MoonlightBay.Web.Models;
-
 using Microsoft.Extensions.Options;
-
 using Microsoft.IdentityModel.Tokens;
 using MoonlightBay.Web.Jwt;
 using System.Text;
 //using Microsoft.AspNetCore.Http.HttpResults;
 using MoonlightBay.Web.Utils;
 using MoonlightBay.Web.Models;
+using MoonlightBay.Data.Repositories;
 
 
 namespace MoonlightBay.Web.Controllers;
@@ -32,27 +26,21 @@ namespace MoonlightBay.Web.Controllers;
 public class AccountController(
     ILoggerFactory loggerFactory,
     UserManager<ApplicationUser> userManager,
+    RoleManager<ApplicationUser> roleManager,
     SignInManager<ApplicationUser> signInManager,
-    IOptions<WebApiSettings> settings
+    IOptions<WebApiSettings> settings,
+    IUserRepository userRepository
     ) : Controller
 {
 
     private readonly ILogger _logger = loggerFactory.CreateLogger<AccountController>();
     private readonly UserManager<ApplicationUser> _userManager = userManager;
+    private readonly RoleManager<ApplicationUser> _roleManager = roleManager;
     private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
     readonly IOptions<WebApiSettings> _settings = settings;
+    private readonly IUserRepository _userRepository = userRepository;
 
-    /*
-    [HttpGet]
-    [Authorize]
-    public async Task<IActionResult> Get([FromQuery] string id)
-    {
-        if (string.IsNullOrWhiteSpace(id))
-            return Ok();
-        var user = await _userManager.FindByEmailAsync(id);
-        JsonResult result = new JsonResult(user);
-        return result;
-    }*/
+
 
     // POST: /Account/Register
     [HttpPost]
@@ -61,22 +49,31 @@ public class AccountController(
     {
         //Console.WriteLine("sssssss");
         //在identity里创建账户
-        IList<ApplicationUser> rootUser = await _userManager.GetUsersInRoleAsync("Root");
-        rootUser ??= [];
-        if(rootUser.Count >= 1){
-            return BadRequest("regist root failed");
-        };
+        ApplicationUser? userAdmin = await _roleManager.FindByNameAsync("Admin");
         
-        var user = new ApplicationUser { UserName = registerModel.UserID, Email = registerModel.UserID, Role = registerModel.Role };
+       
+        if(userAdmin != null && registerModel.Role == "Admin"){
+            return BadRequest("regist admin failed");
+        }
+
+        if(registerModel.Role != "Admin" && registerModel.Role != "Terminal"){
+            return BadRequest ("regist account failed.");
+        };
+
+        var user = new ApplicationUser { UserName = registerModel.UserName};
         var result = await _userManager.CreateAsync(user, registerModel.Password);
+ 
         if (result.Succeeded)
         {
-            await _userManager.AddToRoleAsync(user, registerModel.Role);
+            
+            await _userRepository.AddUserRoleAsync(user.Id, registerModel.Role);
+            //await _userManager.AddToRoleAsync(user, "Admin");
+            
             await _signInManager.SignInAsync(user, isPersistent: true);
+
             _logger.LogInformation(3, "User created a new account with password.");
             return Ok();
         }
-
         // If we got this far, something failed.
         return ResponseHelper.Unauthorized();
     }
@@ -88,7 +85,7 @@ public class AccountController(
     {
         //先在identity里验证账户
         Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(
-                loginModel.UserID, loginModel.Password, true, lockoutOnFailure: false);
+                loginModel.UserName, loginModel.Password, true, lockoutOnFailure: false);
         if (result.Succeeded)
         {
             _logger.LogInformation(1, "User logged in.");
@@ -103,7 +100,7 @@ public class AccountController(
 
             //用账户的账户名和密码来创建jwt
             TokenProvider tpm = new(options);
-            TokenEntity? token = await tpm.GenerateToken(HttpContext, loginModel.UserID, loginModel.Password);
+            TokenEntity? token = await tpm.GenerateToken(HttpContext, loginModel.UserName, loginModel.Password);
 
             //送出jwt，放到app让其他app的请求头带有jwt
             if (null != token)

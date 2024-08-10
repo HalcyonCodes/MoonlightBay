@@ -11,7 +11,7 @@ using MoonlightBay.Data;
 namespace MoonlightBay.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240806143843_CodeFirst")]
+    [Migration("20240810083838_CodeFirst")]
     partial class CodeFirst
     {
         /// <inheritdoc />
@@ -251,9 +251,6 @@ namespace MoonlightBay.Web.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("Role")
-                        .HasColumnType("longtext");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext");
