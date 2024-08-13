@@ -23,19 +23,18 @@ using MoonlightBay.Data.Interfaces;
 using MoonlightBay.Data.Repositories;
 //
 using MoonlightBay.Web.Middleware;
+using Microsoft.AspNetCore.Authorization;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderServiceRepository, OrderServiceRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITerminalRepository, TerminalRepository>();
-
+//builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
 
 
 
@@ -51,7 +50,6 @@ builder.Services.AddDbContextPool<ApplicationDbContext>(options =>
 ));
 
 
-
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
     options => {
         options.Password.RequireDigit = false; // 要求至少一个数字
@@ -62,8 +60,8 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(
     }
 )
 //.AddRoles<ApplicationUser>()
-.AddEntityFrameworkStores<ApplicationDbContext>();
-//.AddDefaultTokenProviders();
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
 
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options => options.IdleTimeout = TimeSpan.FromMinutes(20));
@@ -87,25 +85,16 @@ var tokenValidationParameters = new TokenValidationParameters
 };
 
 // 添加 JWT Bearer 身份验证服务
-/*builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.TokenValidationParameters = tokenValidationParameters;
-        
-    });*/
-builder.Services.AddAuthentication(o =>
-{
-    o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-.AddJwtBearer(o => { o.TokenValidationParameters = tokenValidationParameters; });
+    });
 
 // 添加授权服务
-builder.Services.AddAuthorizationBuilder()
-             // 添加授权服务
-             .AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"))
-             // 添加授权服务
-             .AddPolicy("RequireTerminalRole", policy => policy.RequireRole("Terminal"));
+builder.Services.AddAuthorizationBuilder();
+
+builder.Services.AddAuthorization();
 
 
 //设置大小写一致
@@ -126,30 +115,6 @@ var app = builder.Build();
 //使用静态文件
 app.UseStaticFiles();
 
-// Configure the HTTP request pipeline.
-/*if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-//app.UseRoleInitialization();
-//app.UseMiddleware<RoleInitializationMiddleware>();
-//app.UseMiddleware<RoleAuthorizeMiddleware>();
-
-app.UseRouting();
-app.UseSession();
-// 添加 JWT 身份验证
-app.UseAuthentication(); // 添加身份验证中间件
-app.UseAuthorization(); // 添加授权中间件
-
-app.UseEndpoints(endpoints =>
-           {
-               endpoints.MapControllers();
-           });
-
-app.UseHttpsRedirection();*/
-
 //
 if (app.Environment.IsDevelopment())
 {
@@ -157,6 +122,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+//app.UseMiddleware<RoleInitializationMiddleware>();
 
 app.UseStaticFiles();
 app.UseRouting();
@@ -172,5 +139,7 @@ app.UseEndpoints(endpoints =>
 
 app.UseHttpsRedirection();
 
+
 app.Run();
+
 

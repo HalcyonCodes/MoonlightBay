@@ -24,20 +24,22 @@ public class OrderServiceController(
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly IOrderServiceRepository _orderServiceRepository = orderServiceRepository;
     
-
     //SER001-0: AddOrderServiceResource
     //Desc: 添加服务资源
     [HttpPost]
-    [Authorize(Roles = "admin")]
+    [Authorize]
     public async Task<IActionResult> AddOrderServiceResource([FromBody] OrderServiceResourceViewModel viewModel )
     {
+        ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+        if(user == null) return BadRequest("faild.");
+        if(user.Role != "Admin") return BadRequest("faild.");
         OrderServiceResource newOrderServiceResource = new()
         {
+            OrderServiceResourceID = null,
             CreatedTime = DateTime.Now,
             OrderServiceResourceName = viewModel.orderServiceResourceName,
             OrderServiceResourceDesc = viewModel.orderServiceResourceDesc
         };
-
         int? status = await _orderServiceRepository.AddOrderServiceResourceAsync(newOrderServiceResource);
         if(status == null) return BadRequest("add serviceResource faild.");
         return Ok();
@@ -46,9 +48,12 @@ public class OrderServiceController(
     //SER002-0: DeleteOrderServiceResource
     //Desc: 删除服务资源
     [HttpPost]
-    [Authorize(Roles = "admin")]
+    [Authorize]
     public async Task<IActionResult> DeleteOrderServiceResource([FromBody] OrderServiceResourceViewModel viewModel )
     {
+        ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+        if(user == null) return BadRequest("faild.");
+        if(user.Role != "Admin") return BadRequest("faild.");
         int status = await _orderServiceRepository.DeleteOrderServiceResourceByIDAsync(viewModel.orderServiceResourceID);
         if(status != 0) return BadRequest("delete order service resource failed.");
         return Ok();
@@ -57,9 +62,12 @@ public class OrderServiceController(
     //SER003-0: GetOrderServiceResources
     //Desc: 获取所有订单服务资源列表
     [HttpGet]
-    [Authorize(Roles = "admin")]
+    [Authorize]
     public async Task<IActionResult> GetOrderServiceResources()
     {
+        ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+        if(user == null) return BadRequest("faild.");
+        if(user.Role != "Admin") return BadRequest("faild.");
         List<OrderServiceResource>? orderServiceResources= await _orderServiceRepository.GetOrderServiceResourcesAsync();
         orderServiceResources ??= [];
 
@@ -83,8 +91,11 @@ public class OrderServiceController(
     //SER004-0: UpdateOrderServiceResource
     //Desc: 更新一个订单服务资源
     [HttpPost]
-    [Authorize(Roles = "admin")]
+    [Authorize]
     public async Task<IActionResult> UpdateOrderServiceResource(OrderServiceResourceViewModel viewModel){
+        ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+        if(user == null) return BadRequest("faild.");
+        if(user.Role != "Admin") return BadRequest("faild.");
         OrderServiceResource orderServiceResource = new(){
             OrderServiceResourceID = viewModel.orderServiceResourceID,
             OrderServiceResourceName = viewModel.orderServiceResourceName,
@@ -98,10 +109,12 @@ public class OrderServiceController(
     //SER005-0: AddOrderService
     //Desc: 添加一个订单服务,并初始化
     [HttpPost]
-    [Authorize(Roles = "admin")]
+    [Authorize]
     public async Task<IActionResult> AddOrderSercie(OrderServiceViewModel viewModel){
+        ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+        if(user == null) return BadRequest("faild.");
+        if(user.Role != "Admin") return BadRequest("faild.");
         OrderService newOrderService = new() {
-            OrderServiceID = null,
             OrderServiceName = viewModel.orderServiceName,
             OrderServiceDesc = viewModel.orderServiceDesc,
             OrderServiceResources = []
@@ -114,8 +127,9 @@ public class OrderServiceController(
     //SER006-0: DeleteOrderService
     //Desc: 删除一个订单服务
     [HttpPost]
-    [Authorize(Roles = "admin")]
+    [Authorize]
     public async Task<IActionResult> DeleteOrderService(int? orderServiceID){
+        
         int? status = await _orderServiceRepository.DeleteOrderServiceByIDAsync(orderServiceID);
         if(status != 0) return BadRequest("delete order service failed.");
         return Ok();
@@ -124,7 +138,7 @@ public class OrderServiceController(
     //SER007-0: UpdateOrderService
     //Desc: 更新一个订单服务
     [HttpPost]
-    [Authorize(Roles = "admin")]
+    [Authorize]
     public async Task<IActionResult> UpdateOrderService(OrderServiceViewModel viewModel){
         OrderService? dbOrderService = await _orderServiceRepository.GetOrderServiceByIDWithResourcesAsync(viewModel.orderServiceID);
         if(dbOrderService == null) return BadRequest("Update Order Service failed.");
@@ -136,7 +150,7 @@ public class OrderServiceController(
     //SER008-0: GetOrderService
     //Desc: 获得一个订单服务
     [HttpGet]
-    [Authorize(Roles = "admin")]
+    [Authorize]
     public async Task<IActionResult> GetOrderService(int? orderServiceID){
         if(orderServiceID == null) return BadRequest("get order service failed.");
         OrderService? dbOrderService = await _orderServiceRepository
@@ -164,7 +178,7 @@ public class OrderServiceController(
     //SER008-1: GetOrderServices
     //Desc: 获得所有订单服务
     [HttpGet]
-    [Authorize(Roles = "admin")]
+    [Authorize]
     public async Task<IActionResult> GetOrderServices(){
         List<OrderService>? orderServices = await _orderServiceRepository.GetOrderServicesAsync();
         orderServices ??= [];
@@ -199,7 +213,7 @@ public class OrderServiceController(
     //SER009-0: AddServiceResourceToOrderService
     //Desc: 为订单服务添加服务资源
     [HttpPost]
-    [Authorize(Roles = "admin")]
+    [Authorize]
     public async Task<IActionResult> AddServiceResourceToOrderService(OrderServiceViewModel viewModel){
         OrderService? orderService = await _orderServiceRepository.GetOrderServiceByIDWithResourcesAsync(viewModel.orderServiceID);
         if(orderService == null) return BadRequest("add order service resource to order service failed.");
@@ -207,7 +221,7 @@ public class OrderServiceController(
         orderService.OrderServiceResources ??= [];
         viewModel.orderServiceResources.ForEach(t => {
             OrderServiceResource orderServiceResource = new() {
-                OrderServiceResourceID = t.orderServiceResourceID,
+                //OrderServiceResourceID = t.orderServiceResourceID,
             };
             orderService.OrderServiceResources.Add(orderServiceResource);
         });
@@ -221,10 +235,13 @@ public class OrderServiceController(
     //SER010-0: AddOrderServiceWorkScript
     //Desc: 添加工作脚本
     [HttpPost]
-    [Authorize(Roles = "admin")]
+    [Authorize]
     public async Task<IActionResult> AddOrderServiceWorkScript(OrderServiceViewModel viewModel){
+            ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+        if(user == null) return BadRequest("faild.");
+        if(user.Role != "Admin") return BadRequest("faild.");
         OrderServiceScript newScript = new(){
-            OrderServiceScriptID = null,
+            //OrderServiceScriptID = null,
             OrderServiceScriptName = viewModel.orderServiceName,
             OrderServiceDesc = viewModel.orderServiceDesc
         };
@@ -237,11 +254,14 @@ public class OrderServiceController(
     //SER011-0 DeleteOrderServiceWorkScript
     //Desc: 删除工作脚本
     [HttpPost]
-    [Authorize(Roles = "admin")]
+    [Authorize]
     public async Task<IActionResult> DelteOrderServiceWorkScript(OrderServiceScriptViewModel viewModel){
+            ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+        if(user == null) return BadRequest("faild.");
+        if(user.Role != "Admin") return BadRequest("faild.");
         
         OrderServiceScript? script = new(){
-            OrderServiceScriptID = viewModel.orderServiceScriptID,
+            OrderServiceScriptID = (int)viewModel.orderServiceScriptID,
             OrderServiceScriptName = viewModel.orderServiceScriptName,
             OrderServiceDesc = viewModel.orderServiceDesc
         };
@@ -255,10 +275,13 @@ public class OrderServiceController(
     //SER012-0 UpdateOrderServiceWorkScript
     //Desc: 更新工作脚本
     [HttpPost]
-    [Authorize(Roles = "admin")]
+    [Authorize]
     public async Task<IActionResult> UpdateOrderServiceWorkScript(OrderServiceViewModel viewModel){
+            ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+        if(user == null) return BadRequest("faild.");
+        if(user.Role != "Admin") return BadRequest("faild.");
         OrderServiceScript script = new(){
-            OrderServiceScriptID = viewModel.orderServiceID,
+            OrderServiceScriptID = (int)viewModel.orderServiceID,
             OrderServiceScriptName = viewModel.orderServiceName,
             OrderServiceDesc = viewModel.orderServiceDesc
         };
@@ -271,18 +294,15 @@ public class OrderServiceController(
     //SER013-0 GetOrderServiceWorkScripts
     //Desc: 获取所有工作脚本
     [HttpGet]
-    [Authorize(Roles = "admin")]
+    [Authorize]
     public async Task<IActionResult> GetOrderServiceWorkScripts(){
         List<OrderServiceScript>? scripts = await _orderServiceRepository.GetOrderServiceScriptsAsync();
         scripts ??= [];
-
-        
         OrderServiceScriptsResultViewModel resultViewModel = new(){
             code = "200",
             message = "",
             orderServiceScripts = [],
         };
-        
         scripts.ForEach(t => {
             OrderServiceScriptViewModel scriptViewModel = new(){
                 orderServiceScriptID = t.OrderServiceScriptID,
@@ -291,7 +311,6 @@ public class OrderServiceController(
             };
             resultViewModel.orderServiceScripts.Add(scriptViewModel);
         });
-
         return Ok(resultViewModel);
     }
 

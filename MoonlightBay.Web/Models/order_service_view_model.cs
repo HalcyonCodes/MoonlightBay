@@ -5,26 +5,24 @@ namespace MoonlightBay.Web.Models;
 
 
 public class OrderServiceResourceViewModel{
-    public int? orderServiceResourceID;
-    public string? orderServiceResourceName;
-    public string? orderServiceResourceDesc; //资源说明
-
+    public int? orderServiceResourceID{get; set;}
+    public string? orderServiceResourceName{get; set;}
+    public string? orderServiceResourceDesc{get; set;}//资源说明
 }
 
 public  class OrderServiceResourcesResultViewModel{
     public string? code;
     public string? message;
-    public List<OrderServiceResourceViewModel>? orderServiceResources;
-
- 
+    public List<OrderServiceResourceViewModel>? orderServiceResources{get; set;}
 }
 
 public class OrderServiceViewModel{
-    public int? orderServiceID;
-    public string? orderServiceName;
-    public List<OrderServiceResourceViewModel>? orderServiceResources;
-    public DateTime? createdTime;
-    public string? orderServiceDesc;
+    public int? orderServiceID{get; set;}
+    public string? orderServiceName{get; set;}
+    public List<OrderServiceResourceViewModel>? orderServiceResources{get; set;}
+    public DateTime? createdTime{get; set;}
+    public string? orderServiceDesc{get; set;}
+    
 }
 
 public class OrderServicesResultViewModel{
@@ -34,15 +32,14 @@ public class OrderServicesResultViewModel{
 }
 
 public class OrderServiceScriptViewModel{
-    public int? orderServiceScriptID;
-    public string? orderServiceScriptName;
-    public string? orderServiceDesc;
+    public int? orderServiceScriptID{get; set;}
+    public string? orderServiceScriptName{get; set;}
+    public string? orderServiceDesc{get; set;}
 }
 
 
 public class OrderServiceScriptsResultViewModel{
     public string? code;
     public string? message;
-    public List<OrderServiceScriptViewModel>? orderServiceScripts;
-
+    public List<OrderServiceScriptViewModel>? orderServiceScripts{get; set;}
 }

@@ -26,51 +26,37 @@ namespace MoonlightBay.Web.Controllers;
 public class AccountController(
     ILoggerFactory loggerFactory,
     UserManager<ApplicationUser> userManager,
-    RoleManager<ApplicationUser> roleManager,
     SignInManager<ApplicationUser> signInManager,
-    IOptions<WebApiSettings> settings,
-    IUserRepository userRepository
+    IOptions<WebApiSettings> settings
     ) : Controller
 {
 
     private readonly ILogger _logger = loggerFactory.CreateLogger<AccountController>();
     private readonly UserManager<ApplicationUser> _userManager = userManager;
-    private readonly RoleManager<ApplicationUser> _roleManager = roleManager;
     private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
     readonly IOptions<WebApiSettings> _settings = settings;
-    private readonly IUserRepository _userRepository = userRepository;
-
-
 
     // POST: /Account/Register
     [HttpPost]
     [AllowAnonymous]
     public async Task<IActionResult> Register([FromBody] RegisterApiModel registerModel)
     {
-        //Console.WriteLine("sssssss");
         //在identity里创建账户
-        ApplicationUser? userAdmin = await _roleManager.FindByNameAsync("Admin");
-        
-       
-        if(userAdmin != null && registerModel.Role == "Admin"){
-            return BadRequest("regist admin failed");
-        }
+        //IdentityRole? userAdmin = await _roleManager.FindByNameAsync("Admin");
+        //if(userAdmin != null && registerModel.Role == "Admin"){
+        //return BadRequest("regist admin failed");
+        //}
 
         if(registerModel.Role != "Admin" && registerModel.Role != "Terminal"){
             return BadRequest ("regist account failed.");
         };
 
-        var user = new ApplicationUser { UserName = registerModel.UserName};
+        var user = new ApplicationUser { UserName = registerModel.UserName, Role = registerModel.Role};
         var result = await _userManager.CreateAsync(user, registerModel.Password);
  
         if (result.Succeeded)
         {
-            
-            await _userRepository.AddUserRoleAsync(user.Id, registerModel.Role);
-            //await _userManager.AddToRoleAsync(user, "Admin");
-            
             await _signInManager.SignInAsync(user, isPersistent: true);
-
             _logger.LogInformation(3, "User created a new account with password.");
             return Ok();
         }
@@ -135,6 +121,12 @@ public class AccountController(
     public IActionResult Test()
     {
         return Ok("asdasd");
+    }
+
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> PostTest(){
+        return Ok();
     }
 
 }

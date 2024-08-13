@@ -66,7 +66,7 @@ public class OrderController(
 
         if(s.orderService == null) return BadRequest("create order failed.");
         OrderService? orderService = new(){
-            OrderServiceID = s.orderService!.orderServiceID,
+            OrderServiceID = (int)s.orderService!.orderServiceID,
         };
 
         s.orderServiceResources ??= [];
@@ -78,7 +78,7 @@ public class OrderController(
                 break;
             }
             OrderServiceResource classResource = new(){
-                OrderServiceResourceID = q.orderServiceResource.orderServiceResourceID,
+                //OrderServiceResourceID = (int)q.orderServiceResource.orderServiceResourceID,
             };
             OrderServiceResourceClass newResourceClass = new(){
                 OrderServiceResoourceClassID = Guid.NewGuid(),
