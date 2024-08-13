@@ -115,6 +115,7 @@ public class OrderServiceController(
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
         OrderService newOrderService = new() {
+            OrderServiceID = null,
             OrderServiceName = viewModel.orderServiceName,
             OrderServiceDesc = viewModel.orderServiceDesc,
             OrderServiceResources = []

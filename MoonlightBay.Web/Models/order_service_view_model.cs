@@ -22,7 +22,6 @@ public class OrderServiceViewModel{
     public List<OrderServiceResourceViewModel>? orderServiceResources{get; set;}
     public DateTime? createdTime{get; set;}
     public string? orderServiceDesc{get; set;}
-    
 }
 
 public class OrderServicesResultViewModel{
