@@ -92,7 +92,7 @@ public class OrderServiceController(
     //Desc: 更新一个订单服务资源
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> UpdateOrderServiceResource(OrderServiceResourceViewModel viewModel){
+    public async Task<IActionResult> UpdateOrderServiceResource([FromBody] OrderServiceResourceViewModel viewModel){
         ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
@@ -110,7 +110,7 @@ public class OrderServiceController(
     //Desc: 添加一个订单服务,并初始化
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> AddOrderSercie(OrderServiceViewModel viewModel){
+    public async Task<IActionResult> AddOrderSercie([FromBody] OrderServiceViewModel viewModel){
         ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
@@ -129,7 +129,7 @@ public class OrderServiceController(
     //Desc: 删除一个订单服务
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> DeleteOrderService(int? orderServiceID){
+    public async Task<IActionResult> DeleteOrderService([FromBody] int? orderServiceID){
         
         int? status = await _orderServiceRepository.DeleteOrderServiceByIDAsync(orderServiceID);
         if(status != 0) return BadRequest("delete order service failed.");
@@ -140,13 +140,31 @@ public class OrderServiceController(
     //Desc: 更新一个订单服务
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> UpdateOrderService(OrderServiceViewModel viewModel){
+    public async Task<IActionResult> UpdateOrderService([FromBody] OrderServiceViewModel viewModel){
         OrderService? dbOrderService = await _orderServiceRepository.GetOrderServiceByIDWithResourcesAsync(viewModel.orderServiceID);
         if(dbOrderService == null) return BadRequest("Update Order Service failed.");
+        dbOrderService = new(){
+            OrderServiceID = dbOrderService.OrderServiceID,
+            OrderServiceDesc = dbOrderService.OrderServiceDesc,
+            OrderServiceName = dbOrderService.OrderServiceName,
+            OrderServiceResources = []
+        };
+        dbOrderService.OrderServiceResources ??= [];
+        dbOrderService.OrderServiceResources.Clear();
+        viewModel.orderServiceResources ??= [];
+        foreach(var v in viewModel.orderServiceResources){
+            OrderServiceResource resource = new(){
+                OrderServiceResourceID = v.orderServiceResourceID,
+                OrderServiceResourceName = v.orderServiceResourceName,
+                OrderServiceResourceDesc = v.orderServiceResourceDesc
+            };
+            dbOrderService.OrderServiceResources.Add(resource);
+        }
         int? status = await _orderServiceRepository.UpdateOrderServiceAsync(dbOrderService);
         if(status != 0) return BadRequest("Update Order Service failed.");
         return Ok();
     }
+
 
     //SER008-0: GetOrderService
     //Desc: 获得一个订单服务
@@ -215,7 +233,7 @@ public class OrderServiceController(
     //Desc: 为订单服务添加服务资源
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> AddServiceResourceToOrderService(OrderServiceViewModel viewModel){
+    public async Task<IActionResult> AddServiceResourceToOrderService([FromBody] OrderServiceViewModel viewModel){
         OrderService? orderService = await _orderServiceRepository.GetOrderServiceByIDWithResourcesAsync(viewModel.orderServiceID);
         if(orderService == null) return BadRequest("add order service resource to order service failed.");
         viewModel.orderServiceResources ??= [];
@@ -237,7 +255,7 @@ public class OrderServiceController(
     //Desc: 添加工作脚本
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> AddOrderServiceWorkScript(OrderServiceViewModel viewModel){
+    public async Task<IActionResult> AddOrderServiceWorkScript([FromBody] OrderServiceViewModel viewModel){
             ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
@@ -256,7 +274,7 @@ public class OrderServiceController(
     //Desc: 删除工作脚本
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> DelteOrderServiceWorkScript(OrderServiceScriptViewModel viewModel){
+    public async Task<IActionResult> DelteOrderServiceWorkScript([FromBody] OrderServiceScriptViewModel viewModel){
             ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
@@ -277,7 +295,7 @@ public class OrderServiceController(
     //Desc: 更新工作脚本
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> UpdateOrderServiceWorkScript(OrderServiceViewModel viewModel){
+    public async Task<IActionResult> UpdateOrderServiceWorkScript([FromBody] OrderServiceViewModel viewModel){
             ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
@@ -315,6 +333,18 @@ public class OrderServiceController(
         return Ok(resultViewModel);
     }
 
+
+
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> test([FromBody] ListTest test){
+        /*OrderService? dbOrderService = await _orderServiceRepository.GetOrderServiceByIDWithResourcesAsync(viewModel.orderServiceID);
+        if(dbOrderService == null) return BadRequest("Update Order Service failed.");
+        int? status = await _orderServiceRepository.UpdateOrderServiceAsync(dbOrderService);
+        if(status != 0) return BadRequest("Update Order Service failed.");*/
+        int a;
+        return Ok();
+    }
 
 
 

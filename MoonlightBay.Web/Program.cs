@@ -112,6 +112,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
+
 //使用静态文件
 app.UseStaticFiles();
 

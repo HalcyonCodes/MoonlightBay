@@ -10,6 +10,15 @@ public class OrderServiceResourceViewModel{
     public string? orderServiceResourceDesc{get; set;}//资源说明
 }
 
+public class Test{
+    public int? testInt{get; set;}
+}
+
+public class ListTest{
+    public List<Test>? listTest{get; set;}
+}
+
+
 public  class OrderServiceResourcesResultViewModel{
     public string? code;
     public string? message;
