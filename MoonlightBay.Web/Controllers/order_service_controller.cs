@@ -154,16 +154,20 @@ public class OrderServiceController(
         viewModel.orderServiceResources ??= [];
         foreach(var v in viewModel.orderServiceResources){
             OrderServiceResource resource = new(){
-                OrderServiceResourceID = v.orderServiceResourceID,
-                OrderServiceResourceName = v.orderServiceResourceName,
-                OrderServiceResourceDesc = v.orderServiceResourceDesc
+                OrderServiceResourceID = v.orderServiceResource!.orderServiceResourceID,
+               
             };
             OrderServiceResourceClass resourceClass = new(){
-                OrderServiceResoourceClassID = 
-            }
-
-            dbOrderService.OrderServiceResources.Add(resource);
+                OrderServiceResoourceClassID = v.orderServiceResourceClasssID,
+                CreatedTime = v.createdTime,
+                ResourceIntValue = v.resourceIntValue,
+                ResourceDoubleValue = v.resourceDoubleValue,
+                ResourceStringValue = v.resourceStringValue,
+                OrderServiceResource = resource,
+            };
+            dbOrderService.OrderServiceResources.Add(resourceClass);
         }
+
         int? status = await _orderServiceRepository.UpdateOrderServiceAsync(dbOrderService);
         if(status != 0) return BadRequest("Update Order Service failed.");
         return Ok();
@@ -187,14 +191,23 @@ public class OrderServiceController(
         };
         resultViewModel.orderServiceResources ??= [];
         dbOrderService.OrderServiceResources ??= [];
-        dbOrderService.OrderServiceResources.ForEach(t => {
-            OrderServiceResourceViewModel resourceView = new(){
-                orderServiceResourceID = t.OrderServiceResourceID,
-                orderServiceResourceName = t.OrderServiceResourceName,
-                orderServiceResourceDesc = t.OrderServiceResourceDesc
+        foreach(var w in dbOrderService.OrderServiceResources){
+            OrderServiceResourceViewModel newResourceView = new(){
+                orderServiceResourceID = w.OrderServiceResource!.OrderServiceResourceID,
+                orderServiceResourceDesc = w.OrderServiceResource.OrderServiceResourceDesc,
+                orderServiceResourceName = w.OrderServiceResource.OrderServiceResourceName,
             };
-            resultViewModel.orderServiceResources.Add(resourceView);
-        });
+            OrderServiceResourceClassesViewModel classesViewModel = new(){
+                orderServiceResourceClasssID = w.OrderServiceResoourceClassID,
+                orderServiceResource = newResourceView,
+                createdTime = w.CreatedTime,
+                resourceDoubleValue = w.ResourceDoubleValue,
+                resourceStringValue = w.ResourceStringValue,
+                resourceIntValue = w.ResourceIntValue
+            };
+            
+        }
+
         return Ok(resultViewModel);
     }
 
@@ -219,18 +232,27 @@ public class OrderServiceController(
                 orderServiceResources = [],
             };
             t.OrderServiceResources ??= [];
+
             t.OrderServiceResources.ForEach(q => {
                 OrderServiceResourceViewModel resourceViewModel = new() {
-                    orderServiceResourceID = q.OrderServiceResourceID,
-                    orderServiceResourceName = q.OrderServiceResourceName,
-                    orderServiceResourceDesc = q.OrderServiceResourceDesc,
+                    orderServiceResourceID = q.OrderServiceResource!.OrderServiceResourceID,
+                    orderServiceResourceDesc = q.OrderServiceResource.OrderServiceResourceDesc,
+                    orderServiceResourceName = q.OrderServiceResource.OrderServiceResourceName,
                 };
-                serviceViewModel.orderServiceResources.Add(resourceViewModel);
+                OrderServiceResourceClassesViewModel resouceClassViewModel = new(){
+                    orderServiceResourceClasssID = q.OrderServiceResoourceClassID,
+                    createdTime = q.CreatedTime,
+                    resourceIntValue = q.ResourceIntValue,
+                    resourceDoubleValue = q.ResourceDoubleValue,
+                    resourceStringValue = q.ResourceStringValue,
+                    orderServiceResource = resourceViewModel,  
+                };
+                serviceViewModel.orderServiceResources.Add(resouceClassViewModel);
             });
+
             resultViewModel.orderServices.Add(serviceViewModel);
         });
         return Ok(resultViewModel);
-        
     }
 
     //SER009-0: AddServiceResourceToOrderService
@@ -242,12 +264,22 @@ public class OrderServiceController(
         if(orderService == null) return BadRequest("add order service resource to order service failed.");
         viewModel.orderServiceResources ??= [];
         orderService.OrderServiceResources ??= [];
-        viewModel.orderServiceResources.ForEach(t => {
-            OrderServiceResource orderServiceResource = new() {
-                //OrderServiceResourceID = t.orderServiceResourceID,
+        foreach( var w in viewModel.orderServiceResources){
+            OrderServiceResource  resource = new(){
+                OrderServiceResourceID = w.orderServiceResource!.orderServiceResourceID,
+                OrderServiceResourceDesc = w.orderServiceResource!.orderServiceResourceDesc,
+                OrderServiceResourceName = w.orderServiceResource!.orderServiceResourceName,
             };
-            orderService.OrderServiceResources.Add(orderServiceResource);
-        });
+            OrderServiceResourceClass newClass = new(){
+                OrderServiceResoourceClassID = w.orderServiceResourceClasssID,
+                CreatedTime = w.createdTime,
+                ResourceIntValue = w.resourceIntValue,
+                ResourceDoubleValue = w.resourceDoubleValue,
+                ResourceStringValue = w.resourceStringValue,
+                OrderServiceResource = resource,
+            };
+            orderService.OrderServiceResources.Add(newClass);
+        }
 
 
         int status = await _orderServiceRepository.AddOrderServiceResourcesToOrderServiceAsync(orderService);
