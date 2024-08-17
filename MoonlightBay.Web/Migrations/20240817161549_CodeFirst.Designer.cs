@@ -11,7 +11,7 @@ using MoonlightBay.Data;
 namespace MoonlightBay.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240817034012_CodeFirst")]
+    [Migration("20240817161549_CodeFirst")]
     partial class CodeFirst
     {
         /// <inheritdoc />
@@ -362,9 +362,6 @@ namespace MoonlightBay.Web.Migrations
                     b.Property<DateTime?>("CreatedTime")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<int?>("OrderServiceID")
-                        .HasColumnType("int");
-
                     b.Property<string>("OrderServiceResourceDesc")
                         .HasColumnType("longtext");
 
@@ -372,8 +369,6 @@ namespace MoonlightBay.Web.Migrations
                         .HasColumnType("longtext");
 
                     b.HasKey("OrderServiceResourceID");
-
-                    b.HasIndex("OrderServiceID");
 
                     b.ToTable("OrderServiceResources");
                 });
@@ -390,6 +385,9 @@ namespace MoonlightBay.Web.Migrations
                     b.Property<Guid?>("OrderID")
                         .HasColumnType("char(36)");
 
+                    b.Property<int?>("OrderServiceID")
+                        .HasColumnType("int");
+
                     b.Property<int?>("OrderServiceResourceID")
                         .HasColumnType("int");
 
@@ -405,6 +403,8 @@ namespace MoonlightBay.Web.Migrations
                     b.HasKey("OrderServiceResoourceClassID");
 
                     b.HasIndex("OrderID");
+
+                    b.HasIndex("OrderServiceID");
 
                     b.HasIndex("OrderServiceResourceID");
 
@@ -548,18 +548,15 @@ namespace MoonlightBay.Web.Migrations
                     b.Navigation("WorkScript");
                 });
 
-            modelBuilder.Entity("MoonlightBay.Model.OrderServiceResource", b =>
-                {
-                    b.HasOne("MoonlightBay.Model.OrderService", null)
-                        .WithMany("OrderServiceResources")
-                        .HasForeignKey("OrderServiceID");
-                });
-
             modelBuilder.Entity("MoonlightBay.Model.OrderServiceResourceClass", b =>
                 {
                     b.HasOne("MoonlightBay.Model.Order", null)
                         .WithMany("OrderResources")
                         .HasForeignKey("OrderID");
+
+                    b.HasOne("MoonlightBay.Model.OrderService", null)
+                        .WithMany("OrderServiceResources")
+                        .HasForeignKey("OrderServiceID");
 
                     b.HasOne("MoonlightBay.Model.OrderServiceResource", "OrderServiceResource")
                         .WithMany()

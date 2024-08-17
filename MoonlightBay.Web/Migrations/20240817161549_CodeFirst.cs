@@ -107,6 +107,24 @@ namespace MoonlightBay.Web.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "OrderServiceResources",
+                columns: table => new
+                {
+                    OrderServiceResourceID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    OrderServiceResourceName = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    OrderServiceResourceDesc = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreatedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderServiceResources", x => x.OrderServiceResourceID);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "OrderServiceScripts",
                 columns: table => new
                 {
@@ -320,30 +338,6 @@ namespace MoonlightBay.Web.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "OrderServiceResources",
-                columns: table => new
-                {
-                    OrderServiceResourceID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    OrderServiceResourceName = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    OrderServiceResourceDesc = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4"),
-                    CreatedTime = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    OrderServiceID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderServiceResources", x => x.OrderServiceResourceID);
-                    table.ForeignKey(
-                        name: "FK_OrderServiceResources_OrderServices_OrderServiceID",
-                        column: x => x.OrderServiceID,
-                        principalTable: "OrderServices",
-                        principalColumn: "OrderServiceID");
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -393,7 +387,8 @@ namespace MoonlightBay.Web.Migrations
                     ResourceStringValue = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ResourceDoubleValue = table.Column<double>(type: "double", nullable: true),
-                    OrderID = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci")
+                    OrderID = table.Column<Guid>(type: "char(36)", nullable: true, collation: "ascii_general_ci"),
+                    OrderServiceID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -403,6 +398,11 @@ namespace MoonlightBay.Web.Migrations
                         column: x => x.OrderServiceResourceID,
                         principalTable: "OrderServiceResources",
                         principalColumn: "OrderServiceResourceID");
+                    table.ForeignKey(
+                        name: "FK_OrderServiceResourceClasses_OrderServices_OrderServiceID",
+                        column: x => x.OrderServiceID,
+                        principalTable: "OrderServices",
+                        principalColumn: "OrderServiceID");
                     table.ForeignKey(
                         name: "FK_OrderServiceResourceClasses_Orders_OrderID",
                         column: x => x.OrderID,
@@ -459,14 +459,14 @@ namespace MoonlightBay.Web.Migrations
                 column: "OrderID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderServiceResourceClasses_OrderServiceID",
+                table: "OrderServiceResourceClasses",
+                column: "OrderServiceID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderServiceResourceClasses_OrderServiceResourceID",
                 table: "OrderServiceResourceClasses",
                 column: "OrderServiceResourceID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderServiceResources_OrderServiceID",
-                table: "OrderServiceResources",
-                column: "OrderServiceID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderServices_WorkScriptOrderServiceScriptID",

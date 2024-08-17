@@ -105,9 +105,11 @@ public class OrderServiceRepository(
 
     public async Task<int> DeleteOrderServiceByIDAsync(int? orderServiceID){
         if(orderServiceID == null) return -1;
+
         OrderService? orderService = await _dbContext.OrderServices
-        .Include(t => t.OrderServiceResources)
-        .FirstOrDefaultAsync(t => t.OrderServiceID == orderServiceID);
+        .Include(q => q.OrderServiceResources)
+        .FirstOrDefaultAsync(q => q.OrderServiceID == orderServiceID);
+
         if(orderService == null) return -1;
         orderService.OrderServiceResources ??= [];
         orderService.OrderServiceResources.Clear();
@@ -130,6 +132,7 @@ public class OrderServiceRepository(
         await _dbContext.SaveChangesAsync();
         return 0;
     }
+
     public async Task<int> UpdateOrderServiceAsync(OrderService orderService){
         OrderService? dbOrderService = await _dbContext.OrderServices
         .Include(t => t.OrderServiceResources)
