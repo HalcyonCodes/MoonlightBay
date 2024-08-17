@@ -150,7 +150,10 @@
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "7.0.11"
         },
         "runtime": {
-          "MoonlightBay.Model.dll": {}
+          "MoonlightBay.Model.dll": {
+            "assemblyVersion": "1.0.0",
+            "fileVersion": "1.0.0.0"
+          }
         }
       }
     }

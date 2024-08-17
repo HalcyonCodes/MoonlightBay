@@ -23,3 +23,16 @@
 /Users/reddock/Documents/Codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/Debug/net8.0/refint/MoonlightBay.Model.dll
 /Users/reddock/Documents/Codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/Debug/net8.0/MoonlightBay.Model.pdb
 /Users/reddock/Documents/Codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/Debug/net8.0/ref/MoonlightBay.Model.dll
+/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/bin/Debug/net8.0/MoonlightBay.Model.deps.json
+/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/bin/Debug/net8.0/MoonlightBay.Model.dll
+/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/bin/Debug/net8.0/MoonlightBay.Model.pdb
+/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/Debug/net8.0/MoonlightBay.Model.csproj.AssemblyReference.cache
+/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/Debug/net8.0/MoonlightBay.Model.GeneratedMSBuildEditorConfig.editorconfig
+/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/Debug/net8.0/MoonlightBay.Model.AssemblyInfoInputs.cache
+/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/Debug/net8.0/MoonlightBay.Model.AssemblyInfo.cs
+/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/Debug/net8.0/MoonlightBay.Model.csproj.CoreCompileInputs.cache
+/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/Debug/net8.0/MoonlightBay.Model.sourcelink.json
+/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/Debug/net8.0/MoonlightBay.Model.dll
+/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/Debug/net8.0/refint/MoonlightBay.Model.dll
+/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/Debug/net8.0/MoonlightBay.Model.pdb
+/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/Debug/net8.0/ref/MoonlightBay.Model.dll

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MoonlightBay.Data.Interfaces;
@@ -9,7 +10,7 @@ namespace MoonlightBay.Data.Repositories;
 
 
 
-public class OrderServiceResourceRepository(
+public class OrderServiceRepository(
     ApplicationDbContext dbContext,
     UserManager<ApplicationUser> userManager,
     IHttpContextAccessor httpContextAccessor
@@ -35,14 +36,17 @@ public class OrderServiceResourceRepository(
         List<OrderService> orderServices = await _dbContext.OrderServices
         .Include(t => t.OrderServiceResources)
 
-        .Where(t => t.OrderServiceResources!.Any(r => r.OrderServiceResourceID == orderServiceResourceID)).ToListAsync();
+        .Where(t => t.OrderServiceResources!.Any(r => r.OrderServiceResource!.OrderServiceResourceID == orderServiceResourceID)).ToListAsync();
 
-        orderServices.ForEach(q => {
+        orderServices.ForEach(async q => {
             q.OrderServiceResources ??= [];
-            if(q.OrderServiceResources.Any(t => t.OrderServiceResourceID == orderServiceResource.OrderServiceResourceID) ){
-                q.OrderServiceResources.Remove(orderServiceResource);
+            List<OrderServiceResourceClass>? resourceClass = await _dbContext.OrderServiceResourceClasses
+            .Where(q => q.OrderServiceResource!.OrderServiceResourceID == q.OrderServiceResource.OrderServiceResourceID).ToListAsync();
+            foreach(var k in resourceClass){
+                q.OrderServiceResources.Remove(k);
             }
         });
+
         _dbContext.OrderServiceResources.Remove(orderServiceResource);
         await _dbContext.SaveChangesAsync();
         return 0;
@@ -87,11 +91,12 @@ public class OrderServiceResourceRepository(
             OrderServiceName = orderService.OrderServiceName,
             OrderServiceDesc = orderService.OrderServiceDesc,
             CreatedTime = DateTime.Now,
+            OrderServiceResources = []
         };
         //查看服务名称是否重复
         OrderService? dbOrderService = await _dbContext.OrderServices
         .FirstOrDefaultAsync(t => t.OrderServiceName == newOrderService.OrderServiceName);
-        if(dbOrderService == null) return -1;
+        if(dbOrderService != null) return -1;
 
         _dbContext.OrderServices.Add(newOrderService);
         await _dbContext.SaveChangesAsync();
@@ -136,12 +141,21 @@ public class OrderServiceResourceRepository(
         dbOrderService.OrderServiceResources ??= [];
         dbOrderService.OrderServiceResources.Clear();
         orderService.OrderServiceResources ??= [];
-        List<OrderServiceResource>? newOrderResources = await _dbContext.OrderServiceResources
-        .Where(t => orderService.OrderServiceResources.Any(q => q.OrderServiceResourceName == t.OrderServiceResourceName))
+        /*List<OrderServiceResource>? newOrderResources = await _dbContext.OrderServiceResources
+        .Where(t => orderService.OrderServiceResources.Any(q => q.OrderServiceResource!.OrderServiceResourceName == t.OrderServiceResourceName))
+        .ToListAsync();
+        */
+        List<OrderServiceResourceClass> classes = await _dbContext.OrderServiceResourceClasses
+        .Include(q => q.OrderServiceResource)
+        .Where(q => orderService.OrderServiceResources.Select(g => g.OrderServiceResoourceClassID).Contains(q.OrderServiceResoourceClassID))
         .ToListAsync();
 
-        if(newOrderResources.Count != orderService.OrderServiceResources.Count) return -1;
-        dbOrderService.OrderServiceResources.AddRange(newOrderResources);
+        if(classes.Count != orderService.OrderServiceResources.Count) return -1;
+        dbOrderService.OrderServiceResources.Clear();
+        foreach(var q in classes){
+            dbOrderService.OrderServiceResources.Add(q);
+        }
+        //dbOrderService.OrderServiceResources.AddRange(newOrderResources);
         await _dbContext.SaveChangesAsync();
         return 0;
     }
@@ -184,11 +198,31 @@ public class OrderServiceResourceRepository(
         dbOrderService.OrderServiceResources ??= [];
         if(dbOrderService.OrderServiceResources.Count != 0) return -1;
         orderService.OrderServiceResources ??= [];
-        List<OrderServiceResource> dbOrderServiceResources = await _dbContext.OrderServiceResources
-        .Where(t => orderService.OrderServiceResources.Any(q => q.OrderServiceResourceID == t.OrderServiceResourceID))
-        .ToListAsync();
-        if(dbOrderServiceResources.Count != orderService.OrderServiceResources.Count) return -1;
-        dbOrderService.OrderServiceResources.AddRange(dbOrderServiceResources);
+        List<OrderServiceResourceClass>? oldClass = orderService.OrderServiceResources;
+        oldClass ??=[];
+        _dbContext.OrderServiceResourceClasses.RemoveRange(oldClass);
+        orderService.OrderServiceResources.Clear();
+        bool flag = false;
+        foreach(var q in orderService.OrderServiceResources){
+            OrderServiceResource? newResouce = await _dbContext.OrderServiceResources
+            .FirstOrDefaultAsync(w => w.OrderServiceResourceID == q.OrderServiceResource!.OrderServiceResourceID);
+            if(newResouce == null){
+                flag = true;
+                break;
+            }
+            OrderServiceResourceClass newClass = new(){
+                OrderServiceResoourceClassID = Guid.NewGuid(),
+                CreatedTime = DateTime.Now,
+                ResourceIntValue = q.ResourceIntValue,
+                ResourceDoubleValue = q.ResourceDoubleValue,
+                ResourceStringValue = q.ResourceStringValue,
+                OrderServiceResource = newResouce,
+            };
+            dbOrderService.OrderServiceResources.Add(newClass);
+        }
+        if(flag == true){
+            return -1;
+        }
         await _dbContext.SaveChangesAsync();
         return 0;
     }

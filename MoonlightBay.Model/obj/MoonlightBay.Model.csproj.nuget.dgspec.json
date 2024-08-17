@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/reddock/Documents/Codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj": {}
+    "/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj": {}
   },
   "projects": {
-    "/Users/reddock/Documents/Codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj": {
+    "/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/reddock/Documents/Codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj",
+        "projectUniqueName": "/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj",
         "projectName": "MoonlightBay.Model",
-        "projectPath": "/Users/reddock/Documents/Codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj",
-        "packagesPath": "/Users/reddock/.nuget/packages/",
-        "outputPath": "/Users/reddock/Documents/Codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/",
+        "projectPath": "/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj",
+        "packagesPath": "/Users/yuchengyu/.nuget/packages/",
+        "outputPath": "/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/reddock/.nuget/NuGet/NuGet.Config"
+          "/Users/yuchengyu/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -64,7 +64,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -130,11 +130,19 @@ public class OrderController(
 
         foreach(var q in order.OrderService.OrderServiceResources){
             OrderServiceResourceViewModel newResourceView = new(){
-                orderServiceResourceID = q.OrderServiceResourceID,
-                orderServiceResourceName = q.OrderServiceResourceName,
-                orderServiceResourceDesc = q.OrderServiceResourceDesc,
+                orderServiceResourceID = q.OrderServiceResource!.OrderServiceResourceID,
+                orderServiceResourceName = q.OrderServiceResource!.OrderServiceResourceName,
+                orderServiceResourceDesc = q.OrderServiceResource!.OrderServiceResourceDesc,
             };
-            serviceViewModel.orderServiceResources.Add(newResourceView);
+            OrderServiceResourceClassesViewModel newclass = new(){
+                orderServiceResourceClasssID = q.OrderServiceResoourceClassID,
+                orderServiceResource = newResourceView,
+                resourceIntValue = q.ResourceIntValue,
+                resourceDoubleValue = q.ResourceDoubleValue,
+                resourceStringValue = q.ResourceStringValue
+            };
+            serviceViewModel.orderServiceResources.Add(newclass);
+
         };
 
         order.OrderResources ??= [];
@@ -152,10 +160,16 @@ public class OrderController(
         };
 
         foreach(var q in order.OrderResources){
+            OrderServiceResourceViewModel viewModel = new(){
+                orderServiceResourceID = q.OrderServiceResource!.OrderServiceResourceID,
+                orderServiceResourceDesc = q.OrderServiceResource.OrderServiceResourceDesc,
+                orderServiceResourceName = q.OrderServiceResource.OrderServiceResourceName,
+            };
+
             OrderServiceResourceClassesViewModel classViewModel = new(){
                 orderServiceResourceClasssID = q.OrderServiceResoourceClassID,
-                orderServiceResource = serviceViewModel.orderServiceResources
-                .FirstOrDefault(t => t.orderServiceResourceID == q.OrderServiceResource!.OrderServiceResourceID),
+
+                orderServiceResource = viewModel,
                 createdTime = q.CreatedTime,
                 resourceIntValue = q.ResourceIntValue,
                 resourceStringValue = q.ResourceStringValue,
@@ -210,11 +224,15 @@ public class OrderController(
 
                 foreach(var c in s.OrderService.OrderServiceResources){
                     OrderServiceResourceViewModel resourceView = new(){
-                        orderServiceResourceID = c.OrderServiceResourceID,
-                        orderServiceResourceName = c.OrderServiceResourceName,
-                        orderServiceResourceDesc = c.OrderServiceResourceDesc,
+                        orderServiceResourceID = c.OrderServiceResource!.OrderServiceResourceID,
+                        orderServiceResourceName = c.OrderServiceResource!.OrderServiceResourceName,
+                        orderServiceResourceDesc = c.OrderServiceResource!.OrderServiceResourceDesc,
                     };
-                    orderServiceViewModel.orderServiceResources.Add(resourceView);
+                    OrderServiceResourceClassesViewModel classView = new(){
+                        orderServiceResourceClasssID = c.OrderServiceResoourceClassID,
+                        orderServiceResource = resourceView,
+                    };
+                    orderServiceViewModel.orderServiceResources.Add(classView);
                 }
                 
                 OrderViewModel orderView = new()
@@ -252,16 +270,14 @@ public class OrderController(
 
             if(flag == true){break;}
         }
-
+        
         if(flag == true) return BadRequest("Get order channels failed.");
         
-
         OrderChannelsResultViewModel resultViewModel = new(){
             code = "200",
             message = "",
             orderChannels = orderChannelViews,
         };
-
 
         return Ok(resultViewModel);
     }

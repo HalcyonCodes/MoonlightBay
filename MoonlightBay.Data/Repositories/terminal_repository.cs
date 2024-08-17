@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 namespace MoonlightBay.Data.Repositories;
 
 
-public class TerminalReoisitory(ApplicationDbContext dbContext
+public class TerminalRepository(ApplicationDbContext dbContext
 , UserManager<ApplicationUser> userManager
 , IHttpContextAccessor httpContextAccessor
 ) : ITerminalRepository
