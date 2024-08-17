@@ -110,7 +110,7 @@ public class OrderServiceController(
     //Desc: 添加一个订单服务,并初始化
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> AddOrderSercie([FromBody] OrderServiceViewModel viewModel){
+    public async Task<IActionResult> AddOrderService([FromBody] OrderServiceViewModel viewModel){
         ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
@@ -121,7 +121,7 @@ public class OrderServiceController(
             OrderServiceResources = []
         };
         int? status = await _orderServiceRepository.AddOrderServiceAsync(newOrderService);
-        if(status != 0) return BadRequest("add order service failed.");
+        if(status == null) return BadRequest("add order service failed.");
         return Ok();
     }
 
@@ -158,6 +158,10 @@ public class OrderServiceController(
                 OrderServiceResourceName = v.orderServiceResourceName,
                 OrderServiceResourceDesc = v.orderServiceResourceDesc
             };
+            OrderServiceResourceClass resourceClass = new(){
+                OrderServiceResoourceClassID = 
+            }
+
             dbOrderService.OrderServiceResources.Add(resource);
         }
         int? status = await _orderServiceRepository.UpdateOrderServiceAsync(dbOrderService);

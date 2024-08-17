@@ -28,7 +28,7 @@ public  class OrderServiceResourcesResultViewModel{
 public class OrderServiceViewModel{
     public int? orderServiceID{get; set;}
     public string? orderServiceName{get; set;}
-    public List<OrderServiceResourceViewModel>? orderServiceResources{get; set;}
+    public List<OrderServiceResourceClassesViewModel>? orderServiceResources{get; set;}
     public DateTime? createdTime{get; set;}
     public string? orderServiceDesc{get; set;}
 }

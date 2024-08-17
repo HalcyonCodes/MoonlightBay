@@ -22,7 +22,6 @@ using MoonlightBay.Web;
 using MoonlightBay.Data.Interfaces;
 using MoonlightBay.Data.Repositories;
 //
-using MoonlightBay.Web.Middleware;
 using Microsoft.AspNetCore.Authorization;
 
 
@@ -32,7 +31,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderServiceRepository, OrderServiceRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITerminalRepository, TerminalRepository>();
 //builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
 
@@ -41,7 +39,7 @@ builder.Services.AddScoped<ITerminalRepository, TerminalRepository>();
 //配置数据库
 builder.Services.AddDbContextPool<ApplicationDbContext>(options =>
 
-    options.UseMySql("Server=localhost;Port=3306;Database=MoonlightBay;User=root;Password=z12312;",
+    options.UseMySql("Server=localhost;Port=3306;Database=MoonlightBay;User=root;Password=z123123123;",
         ServerVersion.Create(new Version(8, 1, 0), ServerType.MySql),
         b =>
         {
