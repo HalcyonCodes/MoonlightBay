@@ -34,6 +34,9 @@ public interface IOrderServiceRepository
     Task<int> UpdateOrderServiceSeriptAsync(OrderServiceScript script);
     Task<OrderServiceScript?> GetOrderServiceScriptAsync(int? scriptID);
     Task<List<OrderServiceScript>?> GetOrderServiceScriptsAsync();
+
+    //操作OrderServiceClasses
+    Task<int> DeleteOrderServiceClassAsync(Guid? orderServiceClassID);
     
 
 

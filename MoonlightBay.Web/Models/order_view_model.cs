@@ -9,12 +9,12 @@ public class OrderResultViewModel{
 
 
 public class OrderServiceResourceClassesViewModel{
-    public Guid? orderServiceResourceClasssID;
-    public DateTime? createdTime;
-    public OrderServiceResourceViewModel? orderServiceResource;
-    public int? resourceIntValue;
-    public string? resourceStringValue;
-    public double? resourceDoubleValue;
+    public Guid? orderServiceResourceClasssID {get; set;}
+    public DateTime? createdTime{get; set;}
+    public OrderServiceResourceViewModel? orderServiceResource{get; set;}
+    public int? resourceIntValue{get; set;}
+    public string? resourceStringValue{get; set;}
+    public double? resourceDoubleValue{get; set;}
 
 }
 
@@ -36,9 +36,9 @@ public class OrderViewModel{
 }
 
 public class OrderChannelViewModel{
-    public Guid? orderChannelID;
-    public int? orderChannelLevel;
-    public List<OrderViewModel>? orders;
+    public Guid? orderChannelID{get; set;}
+    public int? orderChannelLevel{get; set;}
+    public List<OrderViewModel>? orders{get; set;}
 }
 
 public class OrderChannelsResultViewModel{

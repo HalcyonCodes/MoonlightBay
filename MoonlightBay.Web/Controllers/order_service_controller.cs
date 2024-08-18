@@ -154,10 +154,14 @@ public class OrderServiceController(
         dbOrderService.OrderServiceResources.Clear();
         viewModel.orderServiceResources ??= [];
         foreach(var v in viewModel.orderServiceResources){
-            OrderServiceResource resource = new(){
-                OrderServiceResourceID = v.orderServiceResource!.orderServiceResourceID,
-               
-            };
+            OrderServiceResource resource;
+            if (v.orderServiceResource != null)
+            {
+                resource = new()
+                {
+                    OrderServiceResourceID = v.orderServiceResource!.orderServiceResourceID,
+                };
+            
             OrderServiceResourceClass resourceClass = new(){
                 OrderServiceResoourceClassID = v.orderServiceResourceClasssID,
                 CreatedTime = v.createdTime,
@@ -166,7 +170,9 @@ public class OrderServiceController(
                 ResourceStringValue = v.resourceStringValue,
                 OrderServiceResource = resource,
             };
+             
             dbOrderService.OrderServiceResources.Add(resourceClass);
+            }
         }
 
         int? status = await _orderServiceRepository.UpdateOrderServiceAsync(dbOrderService);
@@ -265,15 +271,28 @@ public class OrderServiceController(
         if(orderService == null) return BadRequest("add order service resource to order service failed.");
         viewModel.orderServiceResources ??= [];
         orderService.OrderServiceResources ??= [];
+
+        bool flag = false;
+        List<OrderServiceResourceClass> oldClass = orderService.OrderServiceResources;
+        int status = 0;
+        foreach(var w in oldClass){
+            status = await _orderServiceRepository.DeleteOrderServiceClassAsync(w.OrderServiceResoourceClassID);
+            if(status != 0) break;
+        }
+        if(status != 0){
+            return BadRequest("");
+        }
+        
+
         foreach( var w in viewModel.orderServiceResources){
-            OrderServiceResource  resource = new(){
-                OrderServiceResourceID = w.orderServiceResource!.orderServiceResourceID,
-                OrderServiceResourceDesc = w.orderServiceResource!.orderServiceResourceDesc,
-                OrderServiceResourceName = w.orderServiceResource!.orderServiceResourceName,
-            };
+            OrderServiceResource? resource = await _orderServiceRepository.GetOrderServiceResourceByIDAsync(w.orderServiceResource!.orderServiceResourceID);
+            if(resource == null){
+                flag = true;
+                break;
+            }
             OrderServiceResourceClass newClass = new(){
-                OrderServiceResoourceClassID = w.orderServiceResourceClasssID,
-                CreatedTime = w.createdTime,
+                OrderServiceResoourceClassID = Guid.NewGuid(),
+                CreatedTime = DateTime.Now,
                 ResourceIntValue = w.resourceIntValue,
                 ResourceDoubleValue = w.resourceDoubleValue,
                 ResourceStringValue = w.resourceStringValue,
@@ -281,9 +300,8 @@ public class OrderServiceController(
             };
             orderService.OrderServiceResources.Add(newClass);
         }
-
-
-        int status = await _orderServiceRepository.AddOrderServiceResourcesToOrderServiceAsync(orderService);
+        if(flag == true) return BadRequest("add service resource to service failed.");
+        status = await _orderServiceRepository.AddOrderServiceResourcesToOrderServiceAsync(orderService);
         if(status != 0) return BadRequest("add service resource to service failed.");
         return Ok();
     }

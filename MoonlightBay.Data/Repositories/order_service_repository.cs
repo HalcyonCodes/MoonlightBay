@@ -148,6 +148,13 @@ public class OrderServiceRepository(
         .Where(t => orderService.OrderServiceResources.Any(q => q.OrderServiceResource!.OrderServiceResourceName == t.OrderServiceResourceName))
         .ToListAsync();
         */
+        //找出多余的并且删除
+        List<OrderServiceResourceClass> elseClass = await _dbContext.OrderServiceResourceClasses
+        .Where(q => !orderService.OrderServiceResources.Select(g => g.OrderServiceResoourceClassID).Contains(q.OrderServiceResoourceClassID))
+        .ToListAsync();
+        
+        _dbContext.OrderServiceResourceClasses.RemoveRange(elseClass);
+
         List<OrderServiceResourceClass> classes = await _dbContext.OrderServiceResourceClasses
         .Include(q => q.OrderServiceResource)
         .Where(q => orderService.OrderServiceResources.Select(g => g.OrderServiceResoourceClassID).Contains(q.OrderServiceResoourceClassID))
@@ -162,6 +169,7 @@ public class OrderServiceRepository(
         await _dbContext.SaveChangesAsync();
         return 0;
     }
+    
 
     public async Task<OrderService?> GetOrderServiceByNameWithResourcesAsync(string orderServiceResourceName){
         OrderService? orderService = await _dbContext.OrderServices
@@ -199,9 +207,16 @@ public class OrderServiceRepository(
         .FirstOrDefaultAsync(t => t.OrderServiceID == orderService.OrderServiceID);
         if(dbOrderService == null) return -1;
         dbOrderService.OrderServiceResources ??= [];
-        if(dbOrderService.OrderServiceResources.Count != 0) return -1;
+        orderService.OrderServiceResources ??= [];
+        List<OrderServiceResourceClass> resourceClasses = orderService.OrderServiceResources;
+        if(dbOrderService.OrderServiceResources.Count - resourceClasses.Count != 0) return -1;
         orderService.OrderServiceResources ??= [];
         List<OrderServiceResourceClass>? oldClass = orderService.OrderServiceResources;
+        _dbContext.OrderServiceResourceClasses.AddRange(oldClass);
+        _dbContext.OrderServices.Update(dbOrderService);
+        await _dbContext.SaveChangesAsync();
+        return 0;
+        /*
         oldClass ??=[];
         _dbContext.OrderServiceResourceClasses.RemoveRange(oldClass);
         orderService.OrderServiceResources.Clear();
@@ -227,7 +242,7 @@ public class OrderServiceRepository(
             return -1;
         }
         await _dbContext.SaveChangesAsync();
-        return 0;
+        return 0;*/
     }
 
     public async Task<int> AddOrderServiceScriptToOrderServiceAsync(OrderService orderService){
@@ -303,8 +318,14 @@ public class OrderServiceRepository(
         scripts ??= [];
         return scripts;
     }
-    
-    
 
-  
+    public async Task<int> DeleteOrderServiceClassAsync(Guid? orderServiceClassID)
+    {
+        OrderServiceResourceClass? dbResourceClass = await _dbContext.OrderServiceResourceClasses
+        .FirstOrDefaultAsync(q => q.OrderServiceResoourceClassID == orderServiceClassID);
+        if(dbResourceClass == null) return -1;
+        _dbContext.OrderServiceResourceClasses.Remove(dbResourceClass);
+        await _dbContext.SaveChangesAsync();
+        return 0;
+    }
 }
