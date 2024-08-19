@@ -26,13 +26,13 @@ public class OrderViewModel{
         locking = 0, //冻结
         complete = 2
     }
-    public Guid? orderID;
-    public OrderServiceViewModel? orderService;
-    public DateTime? createdTime;
-    public Guid? sourceTerminalID;
-    public Guid? targetTerminalID;
-    public OrderStatus? status;
-    public List<OrderServiceResourceClassesViewModel>? orderServiceResources;
+    public Guid? orderID{get; set;}
+    public OrderServiceViewModel? orderService{get; set;}
+    public DateTime? createdTime{get; set;}
+    public Guid? sourceTerminalID{get; set;}
+    public Guid? targetTerminalID{get; set;}
+    public OrderStatus? status{get; set;}
+    public List<OrderServiceResourceClassesViewModel>? orderServiceResources{get; set;}
 }
 
 public class OrderChannelViewModel{
@@ -46,7 +46,6 @@ public class OrderChannelsResultViewModel{
     public string? message;
     public List<OrderChannelViewModel>? orderChannels;
 }
-
 
 
 

@@ -64,6 +64,13 @@ public class TerminalRepository(ApplicationDbContext dbContext
         ApplicationUser? user = await _userManager.GetUserAsync(_contextAccessor.HttpContext.User);
         if(user == null) return null;
         List<Terminal> terminals = await _dbContext.Terminals
+        .Include(q => q.OrderChannels)!
+        .ThenInclude(q => q.Orders)!
+        .ThenInclude(q => q.OrderResources)
+        .Include(q => q.OrderChannels)!
+        .ThenInclude(q => q.Orders)!
+        .ThenInclude(q => q.OrderService)
+        .ThenInclude(q => q!.OrderServiceResources)
         .Where(t => t.User!.Id == user.Id)
         .ToListAsync();
         terminals ??= [];

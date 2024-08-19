@@ -26,7 +26,7 @@ public class OrderRepository(
         if (order.TargetTerminal == null) return null;
         if (order.Status == null) return null;
         if (order.OrderService == null) return null;
-        if (order.OrderService.WorkScript == null) return null;
+        //if (order.OrderService.WorkScript == null) return null;
         order.OrderResources ??= [];
 
         Order newOrder = new()
@@ -52,14 +52,15 @@ public class OrderRepository(
         newOrder.OrderService = orderService;
 
         //处理订单参数
-      
-
         foreach(var q in order.OrderResources){
             if(q.OrderServiceResource == null) break;
             if(q.OrderServiceResource.OrderServiceResourceID == null) break;
+            OrderServiceResource? resource = await _dbContext.OrderServiceResources
+            .FirstOrDefaultAsync(q => q.OrderServiceResourceID == q.OrderServiceResourceID);
+
             OrderServiceResourceClass newOrderResource = new(){
-                OrderServiceResoourceClassID = null,
-                OrderServiceResource = q.OrderServiceResource,
+                OrderServiceResoourceClassID = Guid.NewGuid(),
+                OrderServiceResource = resource,
                 ResourceIntValue = q.ResourceIntValue,
                 ResourceStringValue = q.ResourceStringValue,
                 ResourceDoubleValue = q.ResourceDoubleValue,
@@ -69,11 +70,9 @@ public class OrderRepository(
             newOrder.OrderResources.Add(newOrderResource);
         }
 
-
         _dbContext.Orders.Add(newOrder);
         await _dbContext.SaveChangesAsync();
         return newOrder.OrderID;
-
     }
 
     public async Task<int> DeleteOrderAsync(Order order)
@@ -195,7 +194,6 @@ public class OrderRepository(
         Order? dbOrder = await _dbContext.Orders
         .FirstOrDefaultAsync(t => t.OrderID == order.OrderID);
         if(dbOrder == null) return -1;
-        
         if(order.Status == null) return -1;
         dbOrder.Status = order.Status;
         return 0;
@@ -218,7 +216,7 @@ public class OrderRepository(
         Order? order = await _dbContext.Orders.FirstOrDefaultAsync(t => t.OrderID == orderID);
         if(order == null) return -1;
         orderChannel.Orders ??= [];
-        int index = orderChannel.Orders.Count - 1;
+        int index = orderChannel.Orders.Count;
         order.OrderIndex = index;
         _dbContext.Orders.Update(order);
         orderChannel.Orders.Add(order);
