@@ -273,7 +273,8 @@ public class OrderServiceController(
         orderService.OrderServiceResources ??= [];
 
         bool flag = false;
-        List<OrderServiceResourceClass> oldClass = orderService.OrderServiceResources;
+        List<OrderServiceResourceClass> oldClass = new([.. orderService.OrderServiceResources]);
+
         int status = 0;
         foreach(var w in oldClass){
             status = await _orderServiceRepository.DeleteOrderServiceClassAsync(w.OrderServiceResoourceClassID);
@@ -310,18 +311,18 @@ public class OrderServiceController(
     //Desc: 添加工作脚本
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> AddOrderServiceWorkScript([FromBody] OrderServiceViewModel viewModel){
-            ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+    public async Task<IActionResult> AddOrderServiceWorkScript([FromBody] OrderServiceScriptViewModel viewModel){
+        ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
         OrderServiceScript newScript = new(){
             //OrderServiceScriptID = null,
-            OrderServiceScriptName = viewModel.orderServiceName,
-            OrderServiceDesc = viewModel.orderServiceDesc
+            OrderServiceScriptName = viewModel.orderServiceScriptName,
+            OrderServiceDesc = viewModel.orderServiceDesc,
         };
 
         int? status = await _orderServiceRepository.AddOrderServiceScriptAsync(newScript);
-        if(status != 0) return BadRequest("add order service work script failed.");
+        if(status < 0) return BadRequest("add order service work script failed.");
         return Ok();
     }
 
@@ -350,13 +351,13 @@ public class OrderServiceController(
     //Desc: 更新工作脚本
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> UpdateOrderServiceWorkScript([FromBody] OrderServiceViewModel viewModel){
+    public async Task<IActionResult> UpdateOrderServiceWorkScript([FromBody] OrderServiceScriptViewModel viewModel){
             ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
         OrderServiceScript script = new(){
-            OrderServiceScriptID = (int)viewModel.orderServiceID,
-            OrderServiceScriptName = viewModel.orderServiceName,
+            OrderServiceScriptID = viewModel.orderServiceScriptID,
+            OrderServiceScriptName = viewModel.orderServiceScriptName,
             OrderServiceDesc = viewModel.orderServiceDesc
         };
         int? status = await _orderServiceRepository.UpdateOrderServiceSeriptAsync(script);
@@ -387,6 +388,32 @@ public class OrderServiceController(
         });
         return Ok(resultViewModel);
     }
+
+    //SER014-0 AddOrderServiceWorkScriptsToOrderService
+    //Desc: 将工作脚本添加到OrderService里
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> AddOrderServiceWorkScriptToOrderSerivce([FromBody] OrderServiceViewModel viewModel){
+        ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+        if(user == null) return BadRequest("faild.");
+        if(user.Role != "Admin") return BadRequest("faild.");
+
+        OrderServiceScript script = new(){
+            OrderServiceScriptID = viewModel.orderServiceID
+        };
+        OrderService orderService = new(){
+            OrderServiceID = viewModel.orderServiceID,
+            OrderServiceName = viewModel.orderServiceName,
+            OrderServiceDesc = viewModel.orderServiceDesc,
+            WorkScript = script,
+        };
+
+        int status = await _orderServiceRepository.AddOrderServiceScriptToOrderServiceAsync(orderService);
+        if(status != 0) return BadRequest("add script to order service faild.");
+        return Ok();
+
+    }
+
 
 
 

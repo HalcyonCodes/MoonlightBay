@@ -1,6 +1,8 @@
 
 
 
+using MoonlightBay.Model;
+
 namespace MoonlightBay.Web.Models;
 
 
@@ -31,6 +33,7 @@ public class OrderServiceViewModel{
     public List<OrderServiceResourceClassesViewModel>? orderServiceResources{get; set;}
     public DateTime? createdTime{get; set;}
     public string? orderServiceDesc{get; set;}
+    public OrderServiceScriptViewModel? orderServiceWorkScript{get; set;}
 }
 
 public class OrderServicesResultViewModel{
