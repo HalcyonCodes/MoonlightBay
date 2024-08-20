@@ -196,6 +196,8 @@ public class OrderRepository(
         if(dbOrder == null) return -1;
         if(order.Status == null) return -1;
         dbOrder.Status = order.Status;
+        _dbContext.Orders.Update(dbOrder);
+        await _dbContext.SaveChangesAsync(); 
         return 0;
      }
 
@@ -236,7 +238,8 @@ public class OrderRepository(
         .Include(t => t.OrderChannels)!
         .ThenInclude(t => t.Orders)!
         .ThenInclude(t => t.OrderService)
-        .ThenInclude(t => t!.OrderServiceResources)
+        .ThenInclude(t => t!.OrderServiceResources)!
+        .ThenInclude(q => q.OrderServiceResource)
         .FirstOrDefaultAsync(t => t.User == user);
         if(terminal == null) return null;
         terminal.OrderChannels ??= [];
@@ -275,7 +278,8 @@ public class OrderRepository(
         .Include(t => t.OrderChannels)!
         .ThenInclude(t => t.Orders)!
         .ThenInclude(t => t.OrderService)
-        .ThenInclude(t => t!.OrderServiceResources)
+        .ThenInclude(t => t!.OrderServiceResources)!
+        .ThenInclude(q => q.OrderServiceResource)
         .FirstOrDefaultAsync(t => t.User == user);
 
         if(terminal == null) return[];

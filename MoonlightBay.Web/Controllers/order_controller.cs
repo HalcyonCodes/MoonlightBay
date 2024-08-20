@@ -279,6 +279,7 @@ public class OrderController(
                     
                     orderView.orderServiceResources.Add(viewModel);
                 }
+                orderChannel.orders.Add(orderView);
 
             }
             orderChannelViews.Add(orderChannel);
@@ -300,11 +301,11 @@ public class OrderController(
 
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> UpdateOrderStatus([FromBody] Guid? orderID, int? orderStatus){
-        if(orderStatus == null) return BadRequest("update order status failed.");
-        Order? order = await _ordereRepository.GetOrderByIDAsync(orderID);
+    public async Task<IActionResult> UpdateOrderStatus([FromBody] OrderStatusViewModel viewModel){
+        
+        Order? order = await _ordereRepository.GetOrderByIDAsync(viewModel.orderID);
         if(order == null) return BadRequest("get order failed.");
-        order.Status = (Order.OrderStatus?)orderStatus;
+        order.Status = (Order.OrderStatus?)viewModel.status;
         int status = await _ordereRepository.UpdateOrderStatusAsync(order);
         if(status != 0) return BadRequest("update order status failed.");
         return Ok();

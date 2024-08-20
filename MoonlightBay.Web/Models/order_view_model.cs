@@ -48,4 +48,15 @@ public class OrderChannelsResultViewModel{
 }
 
 
+public class OrderStatusViewModel{
+    public Guid? orderID{get; set;}
+    public int status{get; set;}
+}
+
+
+
+
+
+
+
 
