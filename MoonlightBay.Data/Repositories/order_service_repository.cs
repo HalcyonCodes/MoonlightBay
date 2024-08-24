@@ -13,12 +13,14 @@ namespace MoonlightBay.Data.Repositories;
 public class OrderServiceRepository(
     ApplicationDbContext dbContext,
     UserManager<ApplicationUser> userManager,
-    IHttpContextAccessor httpContextAccessor
+    IHttpContextAccessor httpContextAccessor,
+    IAccountRepository accountRepository
 ) : IOrderServiceRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
     private readonly UserManager<ApplicationUser> _userManager = userManager;
+    private readonly IAccountRepository _accountRepository = accountRepository;
 
 
     public async Task<int?> AddOrderServiceResourceAsync(OrderServiceResource orderServiceResource){

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MoonlightBay.Data.Interfaces;
 using MoonlightBay.Model;
+using System.Security.Claims;
 
 
 namespace MoonlightBay.Data.Repositories;
@@ -12,12 +13,14 @@ namespace MoonlightBay.Data.Repositories;
 public class OrderRepository(
     ApplicationDbContext dbContext,
     UserManager<ApplicationUser> userManager,
-    IHttpContextAccessor httpContextAccessor
+    IHttpContextAccessor httpContextAccessor,
+    IAccountRepository accountRepository,
 ) : IOrderRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+    private readonly IAccountRepository _accountRepository = accountRepository;
 
     
     public async Task<Guid?> AddOrderAsync(Order order)
@@ -204,8 +207,16 @@ public class OrderRepository(
     public async Task<int> AddOrderToOrderChannelAsync(Guid orderID, int channelLevel)
     {
         if(_httpContextAccessor.HttpContext == null) return -1;
-        ApplicationUser? user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-        if(user == null) return -1;
+        //ApplicationUser? user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+        //===
+        var currentUser = _httpContextAccessor.HttpContext.User;
+
+        // 从 Claims 中获取用户 ID
+        string? userID = currentUser.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userID == null) return -1;
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userID);
+
+        if (user == null) return -1;
         Terminal? terminal = await _dbContext.Terminals
         .Include(t => t.OrderChannels)!
         .ThenInclude(t => t.Orders)
@@ -229,8 +240,17 @@ public class OrderRepository(
     //从所有终端订单栈里得到弹出优先度最高的订单
     public async Task<Order?> GetOrderAsync()
     {
-        if(_httpContextAccessor.HttpContext == null) return null;
-        ApplicationUser? user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+        if (_httpContextAccessor.HttpContext == null) return -1;
+        //ApplicationUser? user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+        //===
+        var currentUser = _httpContextAccessor.HttpContext.User;
+
+        // 从 Claims 中获取用户 ID
+        string? userID = currentUser.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userID == null) return null;
+
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userID);
+
         Terminal? terminal = await _dbContext.Terminals
         .Include(t => t.OrderChannels)!
         .ThenInclude(t => t.Orders)!
@@ -267,9 +287,15 @@ public class OrderRepository(
 
         if(_httpContextAccessor.HttpContext == null) return null;
 
-        ApplicationUser? user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+        if (_httpContextAccessor.HttpContext == null) return -1;
+        //ApplicationUser? user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+        //===
+        var currentUser = _httpContextAccessor.HttpContext.User;
 
-        if(user == null) return null;
+        // 从 Claims 中获取用户 ID
+        string? userID = currentUser.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userID == null) return null;
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userID);
 
         Terminal? terminal = await _dbContext.Terminals
         .Include(t => t.OrderChannels)!

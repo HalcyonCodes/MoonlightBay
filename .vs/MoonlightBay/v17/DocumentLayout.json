@@ -1,0 +1,122 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\CODES\\MoonlightBay\\MoonlightBay\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{848AADCC-013D-4ECD-96FE-5142E43BC738}|MoonlightBay.Data\\MoonlightBay.Data.csproj|c:\\codes\\moonlightbay\\moonlightbay\\moonlightbay.data\\repositories\\order_service_repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{848AADCC-013D-4ECD-96FE-5142E43BC738}|MoonlightBay.Data\\MoonlightBay.Data.csproj|solutionrelative:moonlightbay.data\\repositories\\order_service_repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{848AADCC-013D-4ECD-96FE-5142E43BC738}|MoonlightBay.Data\\MoonlightBay.Data.csproj|c:\\codes\\moonlightbay\\moonlightbay\\moonlightbay.data\\repositories\\order_repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{848AADCC-013D-4ECD-96FE-5142E43BC738}|MoonlightBay.Data\\MoonlightBay.Data.csproj|solutionrelative:moonlightbay.data\\repositories\\order_repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3D70411-B19C-46D5-9DA0-B82B685D4448}|MoonlightBay.Web\\MoonlightBay.Web.csproj|c:\\codes\\moonlightbay\\moonlightbay\\moonlightbay.web\\controllers\\account_controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3D70411-B19C-46D5-9DA0-B82B685D4448}|MoonlightBay.Web\\MoonlightBay.Web.csproj|solutionrelative:moonlightbay.web\\controllers\\account_controller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{848AADCC-013D-4ECD-96FE-5142E43BC738}|MoonlightBay.Data\\MoonlightBay.Data.csproj|c:\\codes\\moonlightbay\\moonlightbay\\moonlightbay.data\\repositories\\account_repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{848AADCC-013D-4ECD-96FE-5142E43BC738}|MoonlightBay.Data\\MoonlightBay.Data.csproj|solutionrelative:moonlightbay.data\\repositories\\account_repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{848AADCC-013D-4ECD-96FE-5142E43BC738}|MoonlightBay.Data\\MoonlightBay.Data.csproj|c:\\codes\\moonlightbay\\moonlightbay\\moonlightbay.data\\interfaces\\i_account_repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{848AADCC-013D-4ECD-96FE-5142E43BC738}|MoonlightBay.Data\\MoonlightBay.Data.csproj|solutionrelative:moonlightbay.data\\interfaces\\i_account_repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E3D70411-B19C-46D5-9DA0-B82B685D4448}|MoonlightBay.Web\\MoonlightBay.Web.csproj|c:\\codes\\moonlightbay\\moonlightbay\\moonlightbay.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3D70411-B19C-46D5-9DA0-B82B685D4448}|MoonlightBay.Web\\MoonlightBay.Web.csproj|solutionrelative:moonlightbay.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "order_service_repository.cs",
+              "DocumentMoniker": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Data\\Repositories\\order_service_repository.cs",
+              "RelativeDocumentMoniker": "MoonlightBay.Data\\Repositories\\order_service_repository.cs",
+              "ToolTip": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Data\\Repositories\\order_service_repository.cs",
+              "RelativeToolTip": "MoonlightBay.Data\\Repositories\\order_service_repository.cs",
+              "ViewState": "AgIAAHIAAAAAAAAAAAAiwBYAAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-24T09:03:47.908Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "order_repository.cs",
+              "DocumentMoniker": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Data\\Repositories\\order_repository.cs",
+              "RelativeDocumentMoniker": "MoonlightBay.Data\\Repositories\\order_repository.cs",
+              "ToolTip": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Data\\Repositories\\order_repository.cs",
+              "RelativeToolTip": "MoonlightBay.Data\\Repositories\\order_repository.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAAACkBAABYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-24T08:43:40.891Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "account_repository.cs",
+              "DocumentMoniker": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Data\\Repositories\\account_repository.cs",
+              "RelativeDocumentMoniker": "MoonlightBay.Data\\Repositories\\account_repository.cs",
+              "ToolTip": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Data\\Repositories\\account_repository.cs",
+              "RelativeToolTip": "MoonlightBay.Data\\Repositories\\account_repository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-24T08:43:36.134Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "i_account_repository.cs",
+              "DocumentMoniker": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Data\\Interfaces\\i_account_repository.cs",
+              "RelativeDocumentMoniker": "MoonlightBay.Data\\Interfaces\\i_account_repository.cs",
+              "ToolTip": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Data\\Interfaces\\i_account_repository.cs",
+              "RelativeToolTip": "MoonlightBay.Data\\Interfaces\\i_account_repository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-24T08:42:50.246Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Web\\Program.cs",
+              "RelativeDocumentMoniker": "MoonlightBay.Web\\Program.cs",
+              "ToolTip": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Web\\Program.cs",
+              "RelativeToolTip": "MoonlightBay.Web\\Program.cs",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAAAFIAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-23T09:56:47.818Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "account_controller.cs",
+              "DocumentMoniker": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Web\\Controllers\\account_controller.cs",
+              "RelativeDocumentMoniker": "MoonlightBay.Web\\Controllers\\account_controller.cs",
+              "ToolTip": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Web\\Controllers\\account_controller.cs",
+              "RelativeToolTip": "MoonlightBay.Web\\Controllers\\account_controller.cs",
+              "ViewState": "AgIAAH0AAAAAAAAAAAAQwIwAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-22T05:30:46.633Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -14,6 +14,8 @@ using System.Text;
 using MoonlightBay.Web.Utils;
 using MoonlightBay.Web.Models;
 using MoonlightBay.Data.Repositories;
+using Microsoft.VisualBasic;
+using System.Security.Claims;
 
 
 namespace MoonlightBay.Web.Controllers;
@@ -27,7 +29,10 @@ public class AccountController(
     ILoggerFactory loggerFactory,
     UserManager<ApplicationUser> userManager,
     SignInManager<ApplicationUser> signInManager,
-    IOptions<WebApiSettings> settings
+    IOptions<WebApiSettings> settings,
+    IHttpContextAccessor httpContextAccessor,
+    IAccountRepository accountRepository
+
     ) : Controller
 {
 
@@ -35,6 +40,8 @@ public class AccountController(
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly SignInManager<ApplicationUser> _signInManager = signInManager;
     readonly IOptions<WebApiSettings> _settings = settings;
+    private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
+    private readonly IAccountRepository _accountRepository = accountRepository;
 
     // POST: /Account/Register
     [HttpPost]
@@ -80,7 +87,7 @@ public class AccountController(
             var options = new TokenProviderOptions
             {
                 Audience = "MoonlightBayAudience",
-                Issuer = "MeteorSkiff",
+                Issuer = "MoonlightBay",
                 SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256),
             };
 
@@ -118,8 +125,30 @@ public class AccountController(
     }
 
     [HttpGet]
-    public IActionResult Test()
+    public async Task<IActionResult> Test()
     {
+        var requestHeaders = _httpContextAccessor.HttpContext.Request.Headers;
+        var requestBody = _httpContextAccessor.HttpContext.Request.Body;
+        ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+
+        return Ok("asdasd");
+    }
+
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> DDTest()
+    {
+        var requestHeaders = _httpContextAccessor.HttpContext.Request.Headers;
+        var requestBody = _httpContextAccessor.HttpContext.Request.Body;
+
+        //===
+        var currentUser = _httpContextAccessor.HttpContext.User;
+
+        // 从 Claims 中获取用户 ID
+        string? userId = currentUser.FindFirstValue(ClaimTypes.NameIdentifier);
+        //ApplicationUser? user = await _userManager.FindByIdAsync(userId!);
+
+        
         return Ok("asdasd");
     }
 

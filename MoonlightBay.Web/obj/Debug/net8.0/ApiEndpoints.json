@@ -1,0 +1,380 @@
+[
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.AccountController",
+    "Method": "DDTest",
+    "RelativePath": "api/v1/Account/DDTest",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.AccountController",
+    "Method": "LogOff",
+    "RelativePath": "api/v1/Account/LogOff",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.AccountController",
+    "Method": "Login",
+    "RelativePath": "api/v1/Account/Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginModel",
+        "Type": "MoonlightBay.Web.Models.LoginAPIModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.AccountController",
+    "Method": "PostTest",
+    "RelativePath": "api/v1/Account/PostTest",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.AccountController",
+    "Method": "Register",
+    "RelativePath": "api/v1/Account/Register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "registerModel",
+        "Type": "MoonlightBay.Web.Models.RegisterApiModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.AccountController",
+    "Method": "Test",
+    "RelativePath": "api/v1/Account/Test",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderController",
+    "Method": "CreateOrder",
+    "RelativePath": "api/v1/Order/CreateOrder",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.OrderChannelViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderController",
+    "Method": "GetOrder",
+    "RelativePath": "api/v1/Order/GetOrder",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderController",
+    "Method": "GetOrderChannels",
+    "RelativePath": "api/v1/Order/GetOrderChannels",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderController",
+    "Method": "UpdateOrderStatus",
+    "RelativePath": "api/v1/Order/UpdateOrderStatus",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.OrderStatusViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "AddOrderService",
+    "RelativePath": "api/v1/OrderService/AddOrderService",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.OrderServiceViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "AddOrderServiceResource",
+    "RelativePath": "api/v1/OrderService/AddOrderServiceResource",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.OrderServiceResourceViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "AddOrderServiceWorkScript",
+    "RelativePath": "api/v1/OrderService/AddOrderServiceWorkScript",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.OrderServiceScriptViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "AddOrderServiceWorkScriptToOrderSerivce",
+    "RelativePath": "api/v1/OrderService/AddOrderServiceWorkScriptToOrderSerivce",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.OrderServiceViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "AddServiceResourceToOrderService",
+    "RelativePath": "api/v1/OrderService/AddServiceResourceToOrderService",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.OrderServiceViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "DeleteOrderService",
+    "RelativePath": "api/v1/OrderService/DeleteOrderService",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderServiceID",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "DeleteOrderServiceResource",
+    "RelativePath": "api/v1/OrderService/DeleteOrderServiceResource",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.OrderServiceResourceViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "DelteOrderServiceWorkScript",
+    "RelativePath": "api/v1/OrderService/DelteOrderServiceWorkScript",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.OrderServiceScriptViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "GetOrderService",
+    "RelativePath": "api/v1/OrderService/GetOrderService",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderServiceID",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "GetOrderServiceResources",
+    "RelativePath": "api/v1/OrderService/GetOrderServiceResources",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "GetOrderServiceWorkScripts",
+    "RelativePath": "api/v1/OrderService/GetOrderServiceWorkScripts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "GetOrderServices",
+    "RelativePath": "api/v1/OrderService/GetOrderServices",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "UpdateOrderService",
+    "RelativePath": "api/v1/OrderService/UpdateOrderService",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.OrderServiceViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "UpdateOrderServiceResource",
+    "RelativePath": "api/v1/OrderService/UpdateOrderServiceResource",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.OrderServiceResourceViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "UpdateOrderServiceWorkScript",
+    "RelativePath": "api/v1/OrderService/UpdateOrderServiceWorkScript",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.OrderServiceScriptViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "test",
+    "RelativePath": "api/v1/OrderService/test",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "test",
+        "Type": "MoonlightBay.Web.Models.ListTest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.TermianlController",
+    "Method": "TerminalInit",
+    "RelativePath": "api/v1/Termianl/TerminalInit",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.TerminalCreateViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

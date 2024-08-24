@@ -36,3 +36,16 @@
 /Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/Debug/net8.0/refint/MoonlightBay.Model.dll
 /Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/Debug/net8.0/MoonlightBay.Model.pdb
 /Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/Debug/net8.0/ref/MoonlightBay.Model.dll
+C:\CODES\MoonlightBay\MoonlightBay\MoonlightBay.Model\bin\Debug\net8.0\MoonlightBay.Model.deps.json
+C:\CODES\MoonlightBay\MoonlightBay\MoonlightBay.Model\bin\Debug\net8.0\MoonlightBay.Model.dll
+C:\CODES\MoonlightBay\MoonlightBay\MoonlightBay.Model\bin\Debug\net8.0\MoonlightBay.Model.pdb
+C:\CODES\MoonlightBay\MoonlightBay\MoonlightBay.Model\obj\Debug\net8.0\MoonlightBay.Model.csproj.AssemblyReference.cache
+C:\CODES\MoonlightBay\MoonlightBay\MoonlightBay.Model\obj\Debug\net8.0\MoonlightBay.Model.GeneratedMSBuildEditorConfig.editorconfig
+C:\CODES\MoonlightBay\MoonlightBay\MoonlightBay.Model\obj\Debug\net8.0\MoonlightBay.Model.AssemblyInfoInputs.cache
+C:\CODES\MoonlightBay\MoonlightBay\MoonlightBay.Model\obj\Debug\net8.0\MoonlightBay.Model.AssemblyInfo.cs
+C:\CODES\MoonlightBay\MoonlightBay\MoonlightBay.Model\obj\Debug\net8.0\MoonlightBay.Model.csproj.CoreCompileInputs.cache
+C:\CODES\MoonlightBay\MoonlightBay\MoonlightBay.Model\obj\Debug\net8.0\MoonlightBay.Model.sourcelink.json
+C:\CODES\MoonlightBay\MoonlightBay\MoonlightBay.Model\obj\Debug\net8.0\MoonlightBay.Model.dll
+C:\CODES\MoonlightBay\MoonlightBay\MoonlightBay.Model\obj\Debug\net8.0\refint\MoonlightBay.Model.dll
+C:\CODES\MoonlightBay\MoonlightBay\MoonlightBay.Model\obj\Debug\net8.0\MoonlightBay.Model.pdb
+C:\CODES\MoonlightBay\MoonlightBay\MoonlightBay.Model\obj\Debug\net8.0\ref\MoonlightBay.Model.dll

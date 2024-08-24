@@ -25,6 +25,7 @@ using MoonlightBay.Data.Repositories;
 using Microsoft.AspNetCore.Authorization;
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -39,7 +40,7 @@ builder.Services.AddScoped<ITerminalRepository, TerminalRepository>();
 //配置数据库
 builder.Services.AddDbContextPool<ApplicationDbContext>(options =>
 
-    options.UseMySql("Server=localhost;Port=3306;Database=MoonlightBay;User=root;Password=z123123123;",
+    options.UseMySql("Server=192.168.111.198;Port=3306;Database=MoonlightBay;User=root;Password=z123123123;",
         ServerVersion.Create(new Version(8, 1, 0), ServerType.MySql),
         b =>
         {
@@ -79,20 +80,29 @@ var tokenValidationParameters = new TokenValidationParameters
     ValidateAudience = true,
     ValidAudience = "MoonlightBayAudience",
     ValidateLifetime = true,
-    ClockSkew = TimeSpan.Zero
+    ClockSkew = TimeSpan.FromMinutes(2000),
 };
 
 // 添加 JWT Bearer 身份验证服务
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options =>
-    {
-        options.TokenValidationParameters = tokenValidationParameters;
-    });
+builder.Services.AddAuthentication(option =>
+{
+    option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    //options.RequireHttpsMetadata = false;
+    //options.SaveToken = true;
+    options.TokenValidationParameters = tokenValidationParameters;
+});
 
 // 添加授权服务
 builder.Services.AddAuthorizationBuilder();
+/*builder.Services.AddAuthorization(options =>
+{
+    // 这里可以配置授权策略
+});*/
 
-builder.Services.AddAuthorization();
 
 
 //设置大小写一致
@@ -124,9 +134,11 @@ if (app.Environment.IsDevelopment())
 
 //app.UseMiddleware<RoleInitializationMiddleware>();
 
+
 app.UseStaticFiles();
 app.UseRouting();
 app.UseCors("corsPolicy");
+app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
@@ -136,7 +148,7 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
-app.UseHttpsRedirection();
+
 
 
 app.Run();

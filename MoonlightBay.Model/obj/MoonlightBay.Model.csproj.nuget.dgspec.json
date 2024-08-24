@@ -1,25 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj": {}
+    "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Model\\MoonlightBay.Model.csproj": {}
   },
   "projects": {
-    "/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj": {
+    "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Model\\MoonlightBay.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj",
+        "projectUniqueName": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Model\\MoonlightBay.Model.csproj",
         "projectName": "MoonlightBay.Model",
-        "projectPath": "/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj",
-        "packagesPath": "/Users/yuchengyu/.nuget/packages/",
-        "outputPath": "/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/",
+        "projectPath": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Model\\MoonlightBay.Model.csproj",
+        "packagesPath": "C:\\Users\\ycy\\.nuget\\packages\\",
+        "outputPath": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Model\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/yuchengyu/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\ycy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -64,7 +71,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
