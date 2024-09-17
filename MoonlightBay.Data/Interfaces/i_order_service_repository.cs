@@ -16,6 +16,8 @@ public interface IOrderServiceRepository
     Task<OrderServiceResource?> GetOrderServiceResourceByNameAsync(string orderServiceResourceName);
     Task<OrderServiceResource?> GetOrderServiceResourceByIDAsync(int? orderServiceResourceID);
     Task<List<OrderServiceResource>?> GetOrderServiceResourcesAsync();
+    Task<List<OrderServiceResource>?> GetOrderServiceResourcesPageAsync(int pageIndex);
+    Task<int> GetOrderServiceResourcesBindingCountAsync(int? orderServiceID);
     
 
     //操作OrderService

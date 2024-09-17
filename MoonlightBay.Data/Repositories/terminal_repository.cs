@@ -122,5 +122,20 @@ public class TerminalRepository(ApplicationDbContext dbContext
         return 0;
     }
 
+    public async Task<List<Terminal>?> GetTerminalsAsync(int pageIndex){
+        List<Terminal>? terminals = await _dbContext.Terminals
+        .Include(q => q.OrderChannels)!
+        .ThenInclude(q => q.Orders)!
+        .ThenInclude(q => q.OrderResources)
+        .Include(q => q.OrderChannels)!
+        .ThenInclude(q => q.Orders)!
+        .ThenInclude(q => q.OrderService)
+        .ThenInclude(q => q!.OrderServiceResources)
+        .Skip(pageIndex  * 12)
+        .Take(12)
+        .ToListAsync();
+        return terminals;
+    }
+
     
 }

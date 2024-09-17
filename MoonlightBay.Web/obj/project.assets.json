@@ -3202,43 +3202,35 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ycy\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "/Users/yuchengyu/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Web\\MoonlightBay.Web.csproj",
+      "projectUniqueName": "/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay.Web/MoonlightBay.Web.csproj",
       "projectName": "MoonlightBay.Web",
-      "projectPath": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Web\\MoonlightBay.Web.csproj",
-      "packagesPath": "C:\\Users\\ycy\\.nuget\\packages\\",
-      "outputPath": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Web\\obj\\",
+      "projectPath": "/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay.Web/MoonlightBay.Web.csproj",
+      "packagesPath": "/Users/yuchengyu/.nuget/packages/",
+      "outputPath": "/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay.Web/obj/",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\ycy\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "/Users/yuchengyu/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Data\\MoonlightBay.Data.csproj": {
-              "projectPath": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Data\\MoonlightBay.Data.csproj"
+            "/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay.Data/MoonlightBay.Data.csproj": {
+              "projectPath": "/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay.Data/MoonlightBay.Data.csproj"
             },
-            "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Model\\MoonlightBay.Model.csproj": {
-              "projectPath": "C:\\CODES\\MoonlightBay\\MoonlightBay\\MoonlightBay.Model\\MoonlightBay.Model.csproj"
+            "/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj": {
+              "projectPath": "/Users/yuchengyu/Documents/codes/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj"
             }
           }
         }
@@ -3318,7 +3310,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.400/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

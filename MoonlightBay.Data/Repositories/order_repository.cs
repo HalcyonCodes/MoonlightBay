@@ -240,7 +240,7 @@ public class OrderRepository(
     //从所有终端订单栈里得到弹出优先度最高的订单
     public async Task<Order?> GetOrderAsync()
     {
-        if (_httpContextAccessor.HttpContext == null) return -1;
+        if (_httpContextAccessor.HttpContext == null) return null;
         //ApplicationUser? user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
         //===
         var currentUser = _httpContextAccessor.HttpContext.User;
@@ -287,7 +287,6 @@ public class OrderRepository(
 
         if(_httpContextAccessor.HttpContext == null) return null;
 
-        if (_httpContextAccessor.HttpContext == null) return -1;
         //ApplicationUser? user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
         //===
         var currentUser = _httpContextAccessor.HttpContext.User;

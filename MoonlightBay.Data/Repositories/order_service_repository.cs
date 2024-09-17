@@ -86,6 +86,23 @@ public class OrderServiceRepository(
         orderServiceResources ??= [];
         return orderServiceResources;
     }
+     public async Task<List<OrderServiceResource>?> GetOrderServiceResourcesPageAsync(int pageIndex){
+        List<OrderServiceResource>? orderServiceResources = await _dbContext.OrderServiceResources
+        .Skip(pageIndex * 12)
+        .Take(12)
+        .ToListAsync();
+        orderServiceResources ??= [];
+        return orderServiceResources;
+     }
+
+    public async Task<int> GetOrderServiceResourcesBindingCountAsync(int? orderServiceID){
+        if(orderServiceID == null) return 0;
+        int count = await _dbContext.OrderServiceResourceClasses
+        .Where(t => t.OrderServiceResource!.OrderServiceResourceID == orderServiceID)
+        .CountAsync();
+        return count;
+
+     }
 
     public async Task<int?> AddOrderServiceAsync(OrderService orderService){
         OrderService newOrderService = new(){

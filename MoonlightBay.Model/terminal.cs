@@ -13,4 +13,8 @@ public class Terminal{
     public string? MechineID{get;set;}  //机器ID
 
     public List<OrderChannel>? OrderChannels{get;set;}
+    
+    //
+    public string? TerminalDesc{get; set;}
+    public int? TerminalStatus{get; set;}
 }

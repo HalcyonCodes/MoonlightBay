@@ -23,5 +23,9 @@ public interface ITerminalRepository{
     Task<int> TerminalInitAsync(Guid? terminalID);
 
 
+    //获取指定页面 12个item为1页
+    Task<List<Terminal>?> GetTerminalsAsync(int page);
+
+
 
 }

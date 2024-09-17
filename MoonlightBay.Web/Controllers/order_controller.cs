@@ -311,6 +311,39 @@ public class OrderController(
         return Ok();
     }
 
+    //UI
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> GetOrderChannel([FromQuery] int channelLevels){
+        List<OrderChannel>? channels = await _ordereRepository.GetOrderChannelsAsync();
+        if(channels == null) return BadRequest("get order channel failed.");
+        OrderChannel? channel = channels.FirstOrDefault(q => q.OrderChannelLevel == channelLevels);
+        if(channel == null) return BadRequest("get order channel failed.");
+        ChannelOrderResultViewModel resultViewModel = new(){
+            code = "200",
+            message = "",
+            data = new (){channel = []},
+        };
+        channel.Orders ??= [];
+        ChannelOrderViewModel temp;
+
+        foreach(var v in channel.Orders){
+
+            temp = new(){
+                id = v.OrderID.ToString(),
+                date = v.CreatedTime!.Value.ToString("yyyy/M/d"),
+                time = v.CreatedTime.Value.ToString("HH:mm"),
+                name = v.OrderService!.OrderServiceName,
+            };
+            resultViewModel.data.channel.Add(temp);
+        }
+
+        return Ok(resultViewModel);
+
+    }
+
+     
+
 
 }
 

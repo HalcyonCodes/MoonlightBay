@@ -87,6 +87,42 @@ public class OrderServiceController(
         });
         return Ok(resultViewModel);
     }
+    
+    //UI
+    //SER003-1: GetOrderServiceResourcesPage
+    //Desc: 通过页面获取订单服务资源列表
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> GetOrderServiceResourcesPage( [FromQuery] int pageIndex){
+       ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+        if(user == null) return BadRequest("faild.");
+        if(user.Role != "Admin") return BadRequest("faild.");
+        List<OrderServiceResource>? orderServiceResources= await _orderServiceRepository.GetOrderServiceResourcesPageAsync(pageIndex);
+        orderServiceResources ??= [];
+        OrderResourceUIResoultViewModel resultViewModel = new(){
+            code = "200",
+            message = "",
+            data = new OrderResourceUiDataViewModel()
+        };
+        resultViewModel.data.orderResources = [];
+        OrderResourceUIViewModel temp;
+
+        orderServiceResources.ForEach(async t => {
+            int count = await _orderServiceRepository.GetOrderServiceResourcesBindingCountAsync(t.OrderServiceResourceID);
+            temp = new() {
+                id = t.OrderServiceResourceID.ToString(),
+                name = t.OrderServiceResourceName,
+                desc = t.OrderServiceResourceDesc,
+                bindingCount = count.ToString()
+            };
+           resultViewModel.data.orderResources.Add(temp); 
+        });
+        return Ok(resultViewModel);
+
+    }
+
+
+
 
     //SER004-0: UpdateOrderServiceResource
     //Desc: 更新一个订单服务资源
@@ -427,6 +463,8 @@ public class OrderServiceController(
         int a;
         return Ok();
     }
+
+   
 
 
 

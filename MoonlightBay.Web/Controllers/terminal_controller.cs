@@ -49,6 +49,33 @@ public class TermianlController(
         return Ok();
     }
 
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> GetTerminals([FromQuery] int pageIndex){
+        List<Terminal>? terminals = await _terminalRepository.GetTerminalsAsync(pageIndex);
+        TerminalResultViewModel resultViewModel = new(){
+            code = "200",
+            message = "",
+            data = new TerminalsViewModel()
+        };
+        resultViewModel.data.terminals = [];
+        TerminalViewModel temp;
+        foreach (Terminal terminal in terminals){
+            temp = new(){
+                id = terminal.TerminalID.ToString(),
+                name = terminal.TerminalName,
+                ip = terminal.TerminalIP,
+                desc = terminal.TerminalDesc,
+                status = terminal.TerminalStatus,
+            };
+            resultViewModel.data.terminals.Add(temp);
+        }
+        return Ok(resultViewModel);
+    }
+    
+    
+
+
 
 
 }
