@@ -24,6 +24,7 @@ public class OrderServiceController(
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly IOrderServiceRepository _orderServiceRepository = orderServiceRepository;
     
+    //UI
     //SER001-0: AddOrderServiceResource
     //Desc: 添加服务资源
     [HttpPost]
@@ -45,10 +46,12 @@ public class OrderServiceController(
         return Ok();
     }
 
+
+    //UI
     //SER002-0: DeleteOrderServiceResource
     //Desc: 删除服务资源
     [HttpPost]
-    [Authorize]
+    [Authorize] 
     public async Task<IActionResult> DeleteOrderServiceResource([FromBody] OrderServiceResourceViewModel viewModel )
     {
         ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
@@ -58,6 +61,8 @@ public class OrderServiceController(
         if(status != 0) return BadRequest("delete order service resource failed.");
         return Ok();
     }
+
+
 
     //SER003-0: GetOrderServiceResources
     //Desc: 获取所有订单服务资源列表
@@ -72,7 +77,7 @@ public class OrderServiceController(
         orderServiceResources ??= [];
 
         OrderServiceResourcesResultViewModel resultViewModel= new(){
-            code = "200",
+            code = "200", 
             message = "",
             orderServiceResources = []
         };
@@ -91,7 +96,7 @@ public class OrderServiceController(
     //UI
     //SER003-1: GetOrderServiceResourcesPage
     //Desc: 通过页面获取订单服务资源列表
-    [HttpGet]
+    /*[HttpGet]
     [Authorize]
     public async Task<IActionResult> GetOrderServiceResourcesPage( [FromQuery] int pageIndex){
        ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
@@ -119,7 +124,7 @@ public class OrderServiceController(
         });
         return Ok(resultViewModel);
 
-    }
+    }*/
 
 
 
@@ -298,8 +303,71 @@ public class OrderServiceController(
         return Ok(resultViewModel);
     }
 
+    //UI
+    //SER008-2: GetOrderServicesByResource
+    //Desc: 获得orderResource所绑定的所有服务
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> GetOrderServicesByResource([FromQuery] int orderResourceID){
+        List<OrderService>? orderServices = await _orderServiceRepository.GetOrderServicesByResourcesAsync(orderResourceID);
+        orderServices ??= [];
+        OrderServiceUIResoultViewModel resultViewModel = new(){
+            code = "200",
+            message = "",
+            data = new OrderServiceUIDataViewModel(),
+        };
+        OrderServiceUIViewModel serviceViewModel;
+        resultViewModel.data.orderServices = [];
+        orderServices.ForEach(q => {
+            serviceViewModel = new(){
+                id = q.OrderServiceID.ToString(),
+                name = q.OrderServiceName,
+                desc = q.OrderServiceDesc,
+            };
+           resultViewModel.data.orderServices.Add(serviceViewModel); 
+        });
+        return Ok(resultViewModel);
+    }
+
+    //UI
+    //SER008-3: GetOrderServicesByPageIndex
+    //Desc: 获取订单页面
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> GetOrderServicesByPageIndex([FromQuery] int pageIndex){
+        List<OrderService>? orderServices = await _orderServiceRepository.GetOrderServicesByPageIndexAsync(pageIndex);
+        orderServices ??= [];
+        OrderServiceUIPageResultViewModel resultViewModel = new(){
+            code = "200",
+            message = "",
+            data = new OrderServiceUIPageDataViewModel(),
+        };
+        resultViewModel.data.orderServices = [];
+        OrderServiceUIPageViewModel temp;
+        orderServices.ForEach(async q => {
+            List<string> resources = [];
+            q.OrderServiceResources?.ForEach(w => {
+                resources.Add(w.OrderServiceResource!.OrderServiceResourceName!);
+            });
+            int count = await _orderServiceRepository.GetOrderServiceBindingCountAsync(q.OrderServiceID);
+            string countStr = count.ToString();
+            temp = new(){
+                id = q.OrderServiceID.ToString(),
+                name = q.OrderServiceName,
+                desc = q.OrderServiceDesc,
+                resources = resources,
+                workScript = q.WorkScript!.OrderServiceScriptName,
+                bindingCount = countStr,
+            };
+            resultViewModel.data.orderServices.Add(temp);
+        });
+        return Ok(resultViewModel);
+    }
+
+    //UI
     //SER009-0: AddServiceResourceToOrderService
     //Desc: 为订单服务添加服务资源
+    
     [HttpPost]
     [Authorize]
     public async Task<IActionResult> AddServiceResourceToOrderService([FromBody] OrderServiceViewModel viewModel){
@@ -308,7 +376,7 @@ public class OrderServiceController(
         viewModel.orderServiceResources ??= [];
         orderService.OrderServiceResources ??= [];
 
-        bool flag = false;
+        bool flag = false; 
         List<OrderServiceResourceClass> oldClass = new([.. orderService.OrderServiceResources]);
 
         int status = 0;
@@ -343,8 +411,11 @@ public class OrderServiceController(
         return Ok();
     }
 
+ 
+    //UI
     //SER010-0: AddOrderServiceWorkScript
     //Desc: 添加工作脚本
+    
     [HttpPost]
     [Authorize]
     public async Task<IActionResult> AddOrderServiceWorkScript([FromBody] OrderServiceScriptViewModel viewModel){
@@ -383,6 +454,7 @@ public class OrderServiceController(
         return Ok();
     }
 
+   
     //SER012-0 UpdateOrderServiceWorkScript
     //Desc: 更新工作脚本
     [HttpPost]
@@ -401,7 +473,7 @@ public class OrderServiceController(
         return Ok();
     }
 
-
+   
     //SER013-0 GetOrderServiceWorkScripts
     //Desc: 获取所有工作脚本
     [HttpGet]
@@ -419,12 +491,80 @@ public class OrderServiceController(
                 orderServiceScriptID = t.OrderServiceScriptID,
                 orderServiceDesc = t.OrderServiceDesc,
                 orderServiceScriptName = t.OrderServiceScriptName
+
             };
             resultViewModel.orderServiceScripts.Add(scriptViewModel);
         });
         return Ok(resultViewModel);
     }
 
+    //UI
+    //SER013-1 GetOrderServiceWorkScriptsUI
+    //Desc: 获取所有工作脚本
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> GetOrderServiceWorkScriptsUI(){
+        List<OrderServiceScript>? scripts = await _orderServiceRepository.GetOrderServiceScriptsAsync();
+        scripts ??= [];
+        OrderServiceUIWorkScriptResultViewModel resultViewModel = new(){
+            code = "200",
+            message = "",
+            data = new OrderServiceUIWorkScriptDataViewModel(),
+        };
+        resultViewModel.data.orderWorkScripts ??= [];
+        OrderServiceUIWorkScriptViewModel temp;
+        scripts.ForEach(async q => {
+            int bindingCount = await _orderServiceRepository.GetOrderServiceScriptBindingCountAsync(q.OrderServiceScriptID);
+            temp = new(){
+                id = q.OrderServiceScriptID.ToString(),
+                name = q.OrderServiceScriptName,
+                desc = q.OrderServiceDesc,
+                bindingCount = bindingCount.ToString()
+                
+            };
+            resultViewModel.data.orderWorkScripts.Add(temp);
+        });
+        return Ok(resultViewModel);
+    }
+     //UI
+    //SER013-2 GetOrderServiceWorkScriptsUI
+    //Desc: 获取指定service的脚本
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> GetOrderServiceWorkScriptUI([FromQuery] int serviceID)
+    {
+        OrderService? orderService = await _orderServiceRepository.GetOrderServiceByIDWithResourcesAsync(serviceID);
+        if (orderService == null) return BadRequest("get order service failed.");
+        OrderServiceScript? script = orderService.WorkScript;
+
+        OrderServiceUIWorkScriptResultViewModel resultViewModel = new()
+        {
+            code = "200",
+            message = "",
+            data = new OrderServiceUIWorkScriptDataViewModel(),
+        };
+        resultViewModel.data.orderWorkScripts ??= [];
+        OrderServiceUIWorkScriptViewModel temp;
+        if (script != null)
+        {
+            int bindingCount = await _orderServiceRepository.GetOrderServiceScriptBindingCountAsync(script.OrderServiceScriptID);
+            temp = new()
+            {
+                id = script.OrderServiceScriptID.ToString(),
+                name = script.OrderServiceScriptName,
+                desc = script.OrderServiceDesc,
+                bindingCount = bindingCount.ToString()
+
+            };
+            resultViewModel.data.orderWorkScripts.Add(temp);
+        }
+        return Ok(resultViewModel);
+
+
+    }
+
+
+    //UI
     //SER014-0 AddOrderServiceWorkScriptsToOrderService
     //Desc: 将工作脚本添加到OrderService里
     [HttpPost]
@@ -450,6 +590,7 @@ public class OrderServiceController(
 
     }
 
+    //
 
 
 

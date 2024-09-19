@@ -11,8 +11,8 @@ using MoonlightBay.Data;
 namespace MoonlightBay.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240817161549_CodeFirst")]
-    partial class CodeFirst
+    [Migration("20240919103036_FristCode")]
+    partial class FristCode
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -440,11 +440,17 @@ namespace MoonlightBay.Web.Migrations
                     b.Property<string>("MechineID")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("TerminalDesc")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("TerminalIP")
                         .HasColumnType("longtext");
 
                     b.Property<string>("TerminalName")
                         .HasColumnType("longtext");
+
+                    b.Property<int?>("TerminalStatus")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("varchar(255)");

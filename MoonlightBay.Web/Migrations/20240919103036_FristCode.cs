@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MoonlightBay.Web.Migrations
 {
     /// <inheritdoc />
-    public partial class CodeFirst : Migration
+    public partial class FristCode : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -154,7 +154,10 @@ namespace MoonlightBay.Web.Migrations
                     TerminalIP = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     MechineID = table.Column<string>(type: "longtext", nullable: true)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TerminalDesc = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TerminalStatus = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {

@@ -348,5 +348,40 @@ public class OrderServiceRepository(
         return 0;
     }
 
+    public async Task<List<OrderService>?> GetOrderServicesByResourcesAsync(int? orderServiceResourceID){
+        if(orderServiceResourceID == null) return null;
+        List<OrderService>? dbOrderServices = await _dbContext.OrderServices
+        .Include(q => q.OrderServiceResources)
+        .Where(q => q.OrderServiceResources!.Any(t => t.OrderServiceResource!.OrderServiceResourceID == orderServiceResourceID))
+        .ToListAsync();
+        dbOrderServices ??= [];
+        return dbOrderServices;
+    }
+
+    public async Task<List<OrderService>?> GetOrderServicesByPageIndexAsync(int pageIndex){
+        List<OrderService>? dbOrderServices = await _dbContext.OrderServices
+        .Include(q => q.OrderServiceResources)!
+        .Skip(pageIndex * 12)
+        .Take(12)
+        .ToListAsync();
+        dbOrderServices ??= [];
+        return dbOrderServices;
+    }
+
+    public async Task<int> GetOrderServiceBindingCountAsync(int? orderServiceID){
+        if(orderServiceID == null) return -1;
+        int? count = await _dbContext.Orders
+        .Where(q => q.OrderService!.OrderServiceID == orderServiceID)
+        .CountAsync();
+        return count ?? 0;
+    }
+
+    public async Task<int> GetOrderServiceScriptBindingCountAsync(int? scriptID){
+        int? count = await _dbContext.OrderServices
+        .Where(q => q.WorkScript!.OrderServiceScriptID == scriptID)
+        .CountAsync();
+        return count ?? 0;
+    }
+
    
 }

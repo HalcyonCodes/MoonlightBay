@@ -33,6 +33,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderServiceRepository, OrderServiceRepository>();
 builder.Services.AddScoped<ITerminalRepository, TerminalRepository>();
+builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 //builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
 
 
@@ -40,7 +41,7 @@ builder.Services.AddScoped<ITerminalRepository, TerminalRepository>();
 //配置数据库
 builder.Services.AddDbContextPool<ApplicationDbContext>(options =>
 
-    options.UseMySql("Server=192.168.111.198;Port=3306;Database=MoonlightBay;User=root;Password=z123123123;",
+    options.UseMySql("Server=127.0.0.1;Port=3306;Database=MoonlightBay;User=root;Password=z123123123;",
         ServerVersion.Create(new Version(8, 1, 0), ServerType.MySql),
         b =>
         {

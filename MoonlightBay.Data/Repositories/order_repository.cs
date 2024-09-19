@@ -14,7 +14,7 @@ public class OrderRepository(
     ApplicationDbContext dbContext,
     UserManager<ApplicationUser> userManager,
     IHttpContextAccessor httpContextAccessor,
-    IAccountRepository accountRepository,
+    IAccountRepository accountRepository
 ) : IOrderRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;

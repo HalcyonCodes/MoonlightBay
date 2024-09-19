@@ -437,11 +437,17 @@ namespace MoonlightBay.Web.Migrations
                     b.Property<string>("MechineID")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("TerminalDesc")
+                        .HasColumnType("longtext");
+
                     b.Property<string>("TerminalIP")
                         .HasColumnType("longtext");
 
                     b.Property<string>("TerminalName")
                         .HasColumnType("longtext");
+
+                    b.Property<int?>("TerminalStatus")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("varchar(255)");

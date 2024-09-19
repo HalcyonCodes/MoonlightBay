@@ -28,7 +28,9 @@ public interface IOrderServiceRepository
     Task<OrderService?> GetOrderServiceByIDWithResourcesAsync(int? orderServiceID);
     Task<List<OrderService>> GetOrderServicesAsync();
     Task<int> AddOrderServiceResourcesToOrderServiceAsync(OrderService orderService);
-    
+    Task<List<OrderService>?> GetOrderServicesByResourcesAsync(int? orderServiceResourceID);
+    Task<List<OrderService>?> GetOrderServicesByPageIndexAsync(int pageIndex);
+    Task<int> GetOrderServiceBindingCountAsync(int? orderServiceID);
 
     //操作OrderServiceScript
     Task<int?> AddOrderServiceScriptAsync(OrderServiceScript script);
@@ -37,6 +39,7 @@ public interface IOrderServiceRepository
     Task<OrderServiceScript?> GetOrderServiceScriptAsync(int? scriptID);
     Task<List<OrderServiceScript>?> GetOrderServiceScriptsAsync();
     Task<int> AddOrderServiceScriptToOrderServiceAsync(OrderService orderService);
+    Task<int> GetOrderServiceScriptBindingCountAsync(int? scriptID);
    
 
     //操作OrderServiceClasses
