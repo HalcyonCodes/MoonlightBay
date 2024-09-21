@@ -137,5 +137,18 @@ public class TerminalRepository(ApplicationDbContext dbContext
         return terminals;
     }
 
+    public async Task<Terminal?> GetTerminalByIDAsync(Guid terminalID){
+        Terminal? terminal = await _dbContext.Terminals
+        .Include(q => q.OrderChannels)!
+        .ThenInclude(q => q.Orders)!
+        .ThenInclude(q => q.OrderResources)
+        .Include(q => q.OrderChannels)!
+        .ThenInclude(q => q.Orders)!
+        .ThenInclude(q => q.OrderService)
+        .ThenInclude(q => q!.OrderServiceResources)
+        .SingleOrDefaultAsync(q => q.TerminalID == terminalID);
+        return terminal;
+    }
+
     
 }

@@ -54,3 +54,8 @@ public class OrderServiceScriptsResultViewModel{
     public string? message;
     public List<OrderServiceScriptViewModel>? orderServiceScripts{get; set;}
 }
+
+public class OrderServiceScriptSerivceViewModel{
+     public string? scriptID{get; set;}
+     public string? orderServiceID{get; set;}
+}

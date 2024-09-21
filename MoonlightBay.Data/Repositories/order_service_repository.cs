@@ -40,14 +40,18 @@ public class OrderServiceRepository(
 
         .Where(t => t.OrderServiceResources!.Any(r => r.OrderServiceResource!.OrderServiceResourceID == orderServiceResourceID)).ToListAsync();
 
-        orderServices.ForEach(async q => {
+
+        foreach (var q in orderServices)
+        {
             q.OrderServiceResources ??= [];
             List<OrderServiceResourceClass>? resourceClass = await _dbContext.OrderServiceResourceClasses
             .Where(q => q.OrderServiceResource!.OrderServiceResourceID == q.OrderServiceResource.OrderServiceResourceID).ToListAsync();
-            foreach(var k in resourceClass){
+            foreach (var k in resourceClass)
+            {
                 q.OrderServiceResources.Remove(k);
             }
-        });
+            _dbContext.OrderServiceResourceClasses.RemoveRange(resourceClass);
+        };
 
         _dbContext.OrderServiceResources.Remove(orderServiceResource);
         await _dbContext.SaveChangesAsync();
@@ -95,12 +99,15 @@ public class OrderServiceRepository(
         return orderServiceResources;
      }
 
-    public async Task<int> GetOrderServiceResourcesBindingCountAsync(int? orderServiceID){
-        if(orderServiceID == null) return 0;
-        int count = await _dbContext.OrderServiceResourceClasses
-        .Where(t => t.OrderServiceResource!.OrderServiceResourceID == orderServiceID)
-        .CountAsync();
-        return count;
+    public async Task<int> GetOrderServiceResourcesBindingCountAsync(int? orderServiceResourceID){
+        if(orderServiceResourceID == null) return 0;
+        List<OrderService>? orderServices = await _dbContext.OrderServices
+        .Include(q => q.OrderServiceResources)
+        .Where(q => q.OrderServiceResources!
+        .Any(r => r.OrderServiceResource!.OrderServiceResourceID == orderServiceResourceID))
+        .ToListAsync();
+
+        return orderServices.Count;
 
      }
 
@@ -201,6 +208,8 @@ public class OrderServiceRepository(
         if(orderServiceID == null) return null;
         OrderService? orderService = await _dbContext.OrderServices
         .Include(t => t.OrderServiceResources)
+        .Include(q => q.WorkScript)
+    
         .FirstOrDefaultAsync(t => t.OrderServiceID == orderServiceID);
         if(orderService == null) return null;
         return orderService;
@@ -286,7 +295,9 @@ public class OrderServiceRepository(
         OrderServiceScript newOrderServiceScript = new(){
             OrderServiceScriptID = null,
             OrderServiceDesc = script.OrderServiceDesc,
-            OrderServiceScriptName = script.OrderServiceScriptName
+            OrderServiceScriptName = script.OrderServiceScriptName,
+            CreatedTime = DateTime.Now,
+            
         };
         _dbContext.OrderServiceScripts.Add(newOrderServiceScript);
         await _dbContext.SaveChangesAsync();
@@ -361,6 +372,7 @@ public class OrderServiceRepository(
     public async Task<List<OrderService>?> GetOrderServicesByPageIndexAsync(int pageIndex){
         List<OrderService>? dbOrderServices = await _dbContext.OrderServices
         .Include(q => q.OrderServiceResources)!
+        .Include(q => q.WorkScript)!
         .Skip(pageIndex * 12)
         .Take(12)
         .ToListAsync();

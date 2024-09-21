@@ -5,6 +5,7 @@ using MoonlightBay.Model;
 
 using MoonlightBay.Web.Models;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 
 namespace MoonlightBay.Web.Controllers;
@@ -17,12 +18,14 @@ namespace MoonlightBay.Web.Controllers;
 public class OrderServiceController(
     ILoggerFactory loggerFactory,
     UserManager<ApplicationUser> userManager,
-    IOrderServiceRepository orderServiceRepository
+    IOrderServiceRepository orderServiceRepository,
+    IAccountRepository accountRepository
     ) : Controller
 {
     private readonly ILogger _logger = loggerFactory.CreateLogger<AccountController>();
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly IOrderServiceRepository _orderServiceRepository = orderServiceRepository;
+    private readonly IAccountRepository _accountRepository = accountRepository;
     
     //UI
     //SER001-0: AddOrderServiceResource
@@ -31,7 +34,16 @@ public class OrderServiceController(
     [Authorize]
     public async Task<IActionResult> AddOrderServiceResource([FromBody] OrderServiceResourceViewModel viewModel )
     {
-        ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+       var userName = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(userName == null) return BadRequest("faild.");
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if(user == null){
+            userName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            if(userName == null) return BadRequest("faild.");
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
+
+
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
         OrderServiceResource newOrderServiceResource = new()
@@ -54,7 +66,14 @@ public class OrderServiceController(
     [Authorize] 
     public async Task<IActionResult> DeleteOrderServiceResource([FromBody] OrderServiceResourceViewModel viewModel )
     {
-        ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+         var userName = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(userName == null) return BadRequest("faild.");
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if(user == null){
+            userName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            if(userName == null) return BadRequest("faild.");
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
         int status = await _orderServiceRepository.DeleteOrderServiceResourceByIDAsync(viewModel.orderServiceResourceID);
@@ -70,7 +89,14 @@ public class OrderServiceController(
     [Authorize]
     public async Task<IActionResult> GetOrderServiceResources()
     {
-        ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+         var userName = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(userName == null) return BadRequest("faild.");
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if(user == null){
+            userName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            if(userName == null) return BadRequest("faild.");
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
         List<OrderServiceResource>? orderServiceResources= await _orderServiceRepository.GetOrderServiceResourcesAsync();
@@ -96,10 +122,18 @@ public class OrderServiceController(
     //UI
     //SER003-1: GetOrderServiceResourcesPage
     //Desc: 通过页面获取订单服务资源列表
-    /*[HttpGet]
+    [HttpGet]
     [Authorize]
     public async Task<IActionResult> GetOrderServiceResourcesPage( [FromQuery] int pageIndex){
-       ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+        var userName = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(userName == null) return BadRequest("faild.");
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if(user == null){
+            userName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            if(userName == null) return BadRequest("faild.");
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
+  
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
         List<OrderServiceResource>? orderServiceResources= await _orderServiceRepository.GetOrderServiceResourcesPageAsync(pageIndex);
@@ -112,19 +146,19 @@ public class OrderServiceController(
         resultViewModel.data.orderResources = [];
         OrderResourceUIViewModel temp;
 
-        orderServiceResources.ForEach(async t => {
-            int count = await _orderServiceRepository.GetOrderServiceResourcesBindingCountAsync(t.OrderServiceResourceID);
+        foreach(var item in orderServiceResources){
+            int count = await _orderServiceRepository.GetOrderServiceResourcesBindingCountAsync(item.OrderServiceResourceID);
             temp = new() {
-                id = t.OrderServiceResourceID.ToString(),
-                name = t.OrderServiceResourceName,
-                desc = t.OrderServiceResourceDesc,
+                id = item.OrderServiceResourceID.ToString(),
+                name = item.OrderServiceResourceName,
+                desc = item.OrderServiceResourceDesc,
                 bindingCount = count.ToString()
             };
            resultViewModel.data.orderResources.Add(temp); 
-        });
+        }
         return Ok(resultViewModel);
 
-    }*/
+    }
 
 
 
@@ -134,7 +168,14 @@ public class OrderServiceController(
     [HttpPost]
     [Authorize]
     public async Task<IActionResult> UpdateOrderServiceResource([FromBody] OrderServiceResourceViewModel viewModel){
-        ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+         var userName = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(userName == null) return BadRequest("faild.");
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if(user == null){
+            userName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            if(userName == null) return BadRequest("faild.");
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
         OrderServiceResource orderServiceResource = new(){
@@ -152,7 +193,14 @@ public class OrderServiceController(
     [HttpPost]
     [Authorize]
     public async Task<IActionResult> AddOrderService([FromBody] OrderServiceViewModel viewModel){
-        ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+        var userName = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(userName == null) return BadRequest("faild.");
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if(user == null){
+            userName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            if(userName == null) return BadRequest("faild.");
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
         OrderService newOrderService = new() {
@@ -344,23 +392,25 @@ public class OrderServiceController(
         };
         resultViewModel.data.orderServices = [];
         OrderServiceUIPageViewModel temp;
-        orderServices.ForEach(async q => {
+       
+            foreach(var q in orderServices){
             List<string> resources = [];
             q.OrderServiceResources?.ForEach(w => {
                 resources.Add(w.OrderServiceResource!.OrderServiceResourceName!);
             });
             int count = await _orderServiceRepository.GetOrderServiceBindingCountAsync(q.OrderServiceID);
             string countStr = count.ToString();
+
             temp = new(){
                 id = q.OrderServiceID.ToString(),
                 name = q.OrderServiceName,
                 desc = q.OrderServiceDesc,
                 resources = resources,
-                workScript = q.WorkScript!.OrderServiceScriptName,
+                workScript = q.WorkScript == null? "null" : q.WorkScript.OrderServiceScriptName,
                 bindingCount = countStr,
             };
             resultViewModel.data.orderServices.Add(temp);
-        });
+        };
         return Ok(resultViewModel);
     }
 
@@ -419,7 +469,14 @@ public class OrderServiceController(
     [HttpPost]
     [Authorize]
     public async Task<IActionResult> AddOrderServiceWorkScript([FromBody] OrderServiceScriptViewModel viewModel){
-        ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+        var userName = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(userName == null) return BadRequest("faild.");
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if(user == null){
+            userName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            if(userName == null) return BadRequest("faild.");
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
         OrderServiceScript newScript = new(){
@@ -437,8 +494,15 @@ public class OrderServiceController(
     //Desc: 删除工作脚本
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> DelteOrderServiceWorkScript([FromBody] OrderServiceScriptViewModel viewModel){
-            ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+    public async Task<IActionResult> DeleteOrderServiceWorkScript([FromBody] OrderServiceScriptViewModel viewModel){
+         var userName = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(userName == null) return BadRequest("faild.");
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if(user == null){
+            userName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            if(userName == null) return BadRequest("faild.");
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
         
@@ -460,7 +524,14 @@ public class OrderServiceController(
     [HttpPost]
     [Authorize]
     public async Task<IActionResult> UpdateOrderServiceWorkScript([FromBody] OrderServiceScriptViewModel viewModel){
-            ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+         var userName = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(userName == null) return BadRequest("faild.");
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if(user == null){
+            userName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            if(userName == null) return BadRequest("faild.");
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
         OrderServiceScript script = new(){
@@ -513,7 +584,8 @@ public class OrderServiceController(
         };
         resultViewModel.data.orderWorkScripts ??= [];
         OrderServiceUIWorkScriptViewModel temp;
-        scripts.ForEach(async q => {
+        
+            foreach(var q in scripts){
             int bindingCount = await _orderServiceRepository.GetOrderServiceScriptBindingCountAsync(q.OrderServiceScriptID);
             temp = new(){
                 id = q.OrderServiceScriptID.ToString(),
@@ -523,7 +595,8 @@ public class OrderServiceController(
                 
             };
             resultViewModel.data.orderWorkScripts.Add(temp);
-        });
+        }
+
         return Ok(resultViewModel);
     }
      //UI
@@ -570,7 +643,14 @@ public class OrderServiceController(
     [HttpPost]
     [Authorize]
     public async Task<IActionResult> AddOrderServiceWorkScriptToOrderSerivce([FromBody] OrderServiceViewModel viewModel){
-        ApplicationUser? user = await _userManager.GetUserAsync(HttpContext.User);
+         var userName = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(userName == null) return BadRequest("faild.");
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if(user == null){
+            userName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            if(userName == null) return BadRequest("faild.");
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
         if(user == null) return BadRequest("faild.");
         if(user.Role != "Admin") return BadRequest("faild.");
 
@@ -590,8 +670,34 @@ public class OrderServiceController(
 
     }
 
-    //
+    //SER014-1 AddOrderServiceWorkScriptsToOrderServiceUI
+    //Desc: 将工作脚本添加到OrderService里
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> AddOrderServiceWorkScriptToOrderSerivceUI([FromBody] OrderServiceScriptSerivceViewModel viewModel){
+         var userName = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(userName == null) return BadRequest("faild.");
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if(user == null){
+            userName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            if(userName == null) return BadRequest("faild.");
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
+        if(user == null) return BadRequest("faild.");
+        if(user.Role != "Admin") return BadRequest("faild.");
+         OrderServiceScript script = new(){
+            OrderServiceScriptID = int.Parse(viewModel.scriptID!),
+        };
+        OrderService orderService = new(){
+            OrderServiceID = int.Parse(viewModel.orderServiceID!),
+            WorkScript = script,
+        };
 
+        int status = await _orderServiceRepository.AddOrderServiceScriptToOrderServiceAsync(orderService);
+        if(status != 0) return BadRequest("add script to order service faild.");
+        return Ok();
+
+    }
 
 
     [HttpPost]

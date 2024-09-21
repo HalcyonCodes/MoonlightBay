@@ -41,6 +41,9 @@ public class TermianlController(
             TerminalID = Guid.NewGuid(),
             MechineID = viewModel.MechineID,
             TerminalName = viewModel.TerminalName,
+            TerminalIP = viewModel.TerminalIP,
+            TerminalDesc = viewModel.TerminalDesc,
+            TerminalStatus = -1,
         };
         Guid? newTerminalID = await _terminalRepository.AddAysnc(newTerminal);
         if(newTerminalID == null) return BadRequest("add new terminal failed.");

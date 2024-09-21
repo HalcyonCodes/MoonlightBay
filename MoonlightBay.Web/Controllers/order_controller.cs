@@ -314,8 +314,11 @@ public class OrderController(
     //UI 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> GetOrderChannel([FromQuery] int channelLevels){
-        List<OrderChannel>? channels = await _ordereRepository.GetOrderChannelsAsync();
+    public async Task<IActionResult> GetOrderChannel([FromQuery] int channelLevels, [FromQuery] Guid terminalID){
+        Terminal? terminal = await _terminalRepository.GetTerminalByIDAsync(terminalID);
+        if(terminal == null) return BadRequest("get terminal failed.");
+        
+        List<OrderChannel>? channels = terminal.OrderChannels;
         if(channels == null) return BadRequest("get order channel failed.");
         OrderChannel? channel = channels.FirstOrDefault(q => q.OrderChannelLevel == channelLevels);
         if(channel == null) return BadRequest("get order channel failed.");
