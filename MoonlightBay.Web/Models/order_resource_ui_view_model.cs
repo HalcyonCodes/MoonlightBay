@@ -13,6 +13,11 @@ public class OrderResourceUiDataViewModel{
     public List<OrderResourceUIViewModel>? orderResources {get; set;}
 }
 
+public class UpdateOrderResourceUIDViewModel{
+    public List<OrderResourceUIViewModel>? orderResources {get; set;}
+    public string? orderServiceId{get; set;}
+}
+
 public class OrderResourceUIResoultViewModel{
     public string? code{get; set;}
     public string? message{get; set;}

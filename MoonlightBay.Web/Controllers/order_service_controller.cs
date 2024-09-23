@@ -82,7 +82,7 @@ public class OrderServiceController(
     }
 
 
-
+   
     //SER003-0: GetOrderServiceResources
     //Desc: 获取所有订单服务资源列表
     [HttpGet]
@@ -118,6 +118,8 @@ public class OrderServiceController(
         });
         return Ok(resultViewModel);
     }
+
+    
     
     //UI
     //SER003-1: GetOrderServiceResourcesPage
@@ -160,6 +162,91 @@ public class OrderServiceController(
 
     }
 
+    //UI
+    //SER003-2: GetOrderServiceResourcesByServiceID
+    //Desc: 通过serviceID获取订单服务资源列表
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> GetOrderServiceResourcesByServiceID([FromQuery] int serviceID){
+        var userName = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(userName == null) return BadRequest("faild.");
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if(user == null){
+            userName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            if(userName == null) return BadRequest("faild.");
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
+  
+        if(user == null) return BadRequest("faild.");
+        if(user.Role != "Admin") return BadRequest("faild.");
+        OrderService? orderService = await _orderServiceRepository.GetOrderServiceByIDWithResourcesAsync(serviceID);
+        if(orderService == null) return BadRequest("faild.");
+        List<OrderServiceResourceClass>? resources = orderService.OrderServiceResources;
+        resources ??= [];
+        //
+        OrderResourceUIResoultViewModel viewModel = new(){
+            code = "200",
+            message = "",
+            data = new OrderResourceUiDataViewModel()
+        };
+        viewModel.data.orderResources = [];
+
+        OrderResourceUIViewModel temp;
+        foreach(var q in resources){
+            int bindingCount = await _orderServiceRepository.GetOrderServiceResourcesBindingCountAsync(q.OrderServiceResource!.OrderServiceResourceID);
+            temp = new(){
+                id = q.OrderServiceResource.OrderServiceResourceID.ToString(),
+                name = q.OrderServiceResource.OrderServiceResourceName,
+                desc = q.OrderServiceResource.OrderServiceResourceDesc,
+                bindingCount = bindingCount.ToString(),
+            };
+            viewModel.data.orderResources.Add(temp);
+        }
+        return Ok(viewModel);
+    }
+
+    //UI
+    //SER003-2: GetOrderServiceResourcesUI
+    //Desc: 获取所有订单服务资源列表
+    [HttpGet]
+    [Authorize]
+    public async Task<IActionResult> GetOrderServiceResourcesUI()
+    {
+         var userName = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(userName == null) return BadRequest("faild.");
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if(user == null){
+            userName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            if(userName == null) return BadRequest("faild.");
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
+        if(user == null) return BadRequest("faild.");
+        if(user.Role != "Admin") return BadRequest("faild.");
+        List<OrderServiceResource>? orderServiceResources= await _orderServiceRepository.GetOrderServiceResourcesAsync();
+        orderServiceResources ??= [];
+
+        OrderResourceUIResoultViewModel resultViewModel= new(){
+            code = "200", 
+            message = "",
+            data = new OrderResourceUiDataViewModel()
+        };
+        resultViewModel.data.orderResources = [];
+
+        foreach (var q in orderServiceResources)
+        {
+            int bindingCount = await _orderServiceRepository.GetOrderServiceResourcesBindingCountAsync(q.OrderServiceResourceID);
+            OrderResourceUIViewModel resourceView = new()
+            {
+                id = q.OrderServiceResourceID.ToString(),
+                name = q.OrderServiceResourceName,
+                desc = q.OrderServiceResourceDesc,
+                bindingCount = bindingCount.ToString(),
+            };
+            resultViewModel.data.orderResources.Add(resourceView);
+        }
+        return Ok(resultViewModel);
+    }
+
 
 
 
@@ -186,6 +273,40 @@ public class OrderServiceController(
         int status = await _orderServiceRepository.UpdateOrderServiceResourceAsync(orderServiceResource); 
         if(status != 0) return BadRequest("update order service resource failed.");
         return Ok();
+    }
+
+    //UI
+    //SER004-1: UpdateOrderServiceResources
+    //Desc: 更新一个订单服务所有资源
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> UpdateOrderServiceResources ( [FromBody] UpdateOrderResourceUIDViewModel viewModel){
+        var userName = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(userName == null) return BadRequest("faild.");
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if(user == null){
+            userName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            if(userName == null) return BadRequest("faild.");
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
+        if(user == null) return BadRequest("faild.");
+        if(user.Role != "Admin") return BadRequest("faild.");
+        OrderService? orderService = new()
+        {
+            OrderServiceID = int.Parse(viewModel.orderServiceId!)
+        };
+        viewModel.orderResources ??= [];
+        List<OrderServiceResource> resources = [];
+        foreach(var q in viewModel.orderResources!){
+            OrderServiceResource newResource = new(){
+                OrderServiceResourceID = int.Parse(q.id!)
+            };
+            resources.Add(newResource);
+        }
+        int status = await _orderServiceRepository.UpdateOrderServiceResourcesAsync(int.Parse(viewModel.orderServiceId!), resources);
+        if(status != 0) return BadRequest("faild.");
+        return Ok();
+
     }
 
     //SER005-0: AddOrderService

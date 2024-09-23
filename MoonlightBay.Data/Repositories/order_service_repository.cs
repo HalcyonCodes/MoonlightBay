@@ -207,7 +207,8 @@ public class OrderServiceRepository(
     public async  Task<OrderService?> GetOrderServiceByIDWithResourcesAsync(int? orderServiceID){
         if(orderServiceID == null) return null;
         OrderService? orderService = await _dbContext.OrderServices
-        .Include(t => t.OrderServiceResources)
+        .Include(t => t.OrderServiceResources)!
+        .ThenInclude(q => q.OrderServiceResource)
         .Include(q => q.WorkScript)
     
         .FirstOrDefaultAsync(t => t.OrderServiceID == orderServiceID);
@@ -372,6 +373,7 @@ public class OrderServiceRepository(
     public async Task<List<OrderService>?> GetOrderServicesByPageIndexAsync(int pageIndex){
         List<OrderService>? dbOrderServices = await _dbContext.OrderServices
         .Include(q => q.OrderServiceResources)!
+        .ThenInclude(q => q.OrderServiceResource)
         .Include(q => q.WorkScript)!
         .Skip(pageIndex * 12)
         .Take(12)
@@ -393,6 +395,44 @@ public class OrderServiceRepository(
         .Where(q => q.WorkScript!.OrderServiceScriptID == scriptID)
         .CountAsync();
         return count ?? 0;
+    }
+
+    public async Task<int> UpdateOrderServiceResourcesAsync(int? orderServiceID, List<OrderServiceResource> resources){
+        OrderService? orderService = await _dbContext.OrderServices
+        .Include(q => q.OrderServiceResources)!
+        .ThenInclude(q => q.OrderServiceResource)
+        .Include(q => q.WorkScript)
+        .FirstOrDefaultAsync(q => q.OrderServiceID == orderServiceID);
+        if(orderService == null) return -1;
+        List<OrderServiceResourceClass> resourceClasses = orderService.OrderServiceResources!;
+        _dbContext.OrderServiceResourceClasses.RemoveRange(resourceClasses);
+        //
+        orderService.OrderServiceResources ??= [];
+        bool flag = false;
+        foreach(var q in resources){
+            OrderServiceResource? dbResource = await _dbContext.OrderServiceResources
+            .FirstOrDefaultAsync(a => a.OrderServiceResourceID == q.OrderServiceResourceID);
+            if(dbResource == null){
+                flag = true;
+                break;
+            }
+
+            OrderServiceResourceClass newClass = new (){
+                OrderServiceResoourceClassID = Guid.NewGuid(),
+                CreatedTime = DateTime.Now,
+                OrderServiceResource = dbResource,
+                ResourceDoubleValue = -1,
+                ResourceIntValue = -1,
+                ResourceStringValue = "-1"
+            };
+            _dbContext.OrderServiceResourceClasses.Add(newClass);
+            orderService.OrderServiceResources.Add(newClass);
+
+        }
+        if(flag == true) return -1;
+        await _dbContext.SaveChangesAsync();
+        return 0;
+
     }
 
    

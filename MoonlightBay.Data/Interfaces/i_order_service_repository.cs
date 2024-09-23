@@ -31,6 +31,7 @@ public interface IOrderServiceRepository
     Task<List<OrderService>?> GetOrderServicesByResourcesAsync(int? orderServiceResourceID);
     Task<List<OrderService>?> GetOrderServicesByPageIndexAsync(int pageIndex);
     Task<int> GetOrderServiceBindingCountAsync(int? orderServiceID);
+    Task<int> UpdateOrderServiceResourcesAsync(int? orderServiceID, List<OrderServiceResource> resources);
 
     //操作OrderServiceScript
     Task<int?> AddOrderServiceScriptAsync(OrderServiceScript script);
