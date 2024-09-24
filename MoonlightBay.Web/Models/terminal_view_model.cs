@@ -32,5 +32,17 @@ public class TerminalViewModel{
 
 }
 
+public class TerminalStatusViewModel{
+    public string? terminalID {get; set;}
+    public int? status{get; set;}
+}
 
+
+
+public class UpdateTerminalUIViewModel{
+    public string? terminalID{get;set;}
+    public string? terminalName{get;set;}
+    public string? desc{get;set;}
+    public string? terminalIP{get;set;}
+}
 

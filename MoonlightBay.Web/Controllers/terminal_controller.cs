@@ -5,7 +5,8 @@ using MoonlightBay.Model;
 
 using MoonlightBay.Web.Models;
 using Microsoft.AspNetCore.Authorization;
-
+using System;
+using System.Text;
 
 namespace MoonlightBay.Web.Controllers;
 
@@ -75,7 +76,31 @@ public class TermianlController(
         }
         return Ok(resultViewModel);
     }
-    
+
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> SetTerminalStatus([FromBody] TerminalStatusViewModel viewModel){
+
+        Terminal? terminals = await _terminalRepository.GetTerminalByIDAsync(Guid.Parse(viewModel.terminalID));
+        if(terminals == null) return BadRequest("terminal not found.");
+        terminals.TerminalStatus = viewModel.status;
+        await _terminalRepository.UpdateAsync(terminals);
+        return Ok();
+    }
+
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> UpdateTerminal([FromBody] UpdateTerminalUIViewModel viewModel){
+        Terminal? terminal = await _terminalRepository.GetTerminalByIDAsync(Guid.Parse(viewModel.terminalID!));
+        if(terminal == null) return BadRequest("terminal not found.");
+        terminal.TerminalName = viewModel.terminalName;
+        terminal.TerminalIP = viewModel.terminalIP;
+        terminal.TerminalDesc = viewModel.desc;
+        int status = await _terminalRepository.UpdateAsync(terminal);
+        if(status == -1) return BadRequest("update failed.");
+        return Ok();
+    }
+
     
 
 

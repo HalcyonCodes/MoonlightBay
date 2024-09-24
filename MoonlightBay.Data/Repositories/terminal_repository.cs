@@ -117,6 +117,7 @@ public class TerminalRepository(ApplicationDbContext dbContext
         terminal.TerminalName = updateTerminal.TerminalName;
         terminal.MechineID = updateTerminal.MechineID;
         terminal.TerminalIP = updateTerminal.TerminalIP;
+        terminal.TerminalStatus = updateTerminal.TerminalStatus;
         _dbContext.Terminals.Update(terminal);
         await _dbContext.SaveChangesAsync();
         return 0;

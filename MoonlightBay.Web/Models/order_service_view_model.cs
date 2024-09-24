@@ -36,6 +36,7 @@ public class OrderServiceViewModel{
     public OrderServiceScriptViewModel? orderServiceWorkScript{get; set;}
 }
 
+
 public class OrderServicesResultViewModel{
     public string? code;
     public string? message;

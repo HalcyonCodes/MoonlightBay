@@ -62,3 +62,13 @@ public class OrderServiceUIWorkScriptResultViewModel{
     public string? message{get; set;}
     public OrderServiceUIWorkScriptDataViewModel? data{get; set;}
 }
+
+public class OrderServiceAddUIViewModel{
+
+    public string? orderServiceName{get; set;}
+    public string? orderServiceDesc{get; set;}
+}
+
+public class OrderServiceDeleteUIViewModel{
+    public int? orderServiceID{get; set;}
+}

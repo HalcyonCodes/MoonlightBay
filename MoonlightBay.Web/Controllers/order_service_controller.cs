@@ -308,7 +308,8 @@ public class OrderServiceController(
         return Ok();
 
     }
-
+    
+    
     //SER005-0: AddOrderService
     //Desc: 添加一个订单服务,并初始化
     [HttpPost]
@@ -334,14 +335,41 @@ public class OrderServiceController(
         if(status == null) return BadRequest("add order service failed.");
         return Ok();
     }
+    //UI
+    //SER005-1: AddOrderServiceUI
+    //Desc: 添加一个订单服务,并初始化
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> AddOrderServiceUI([FromBody] OrderServiceAddUIViewModel viewModel){
+         var userName = HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if(userName == null) return BadRequest("faild.");
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if(user == null){
+            userName = HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            if(userName == null) return BadRequest("faild.");
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
+        if(user == null) return BadRequest("faild.");
+        if(user.Role != "Admin") return BadRequest("faild.");
+        OrderService newOrderService = new() {
+            OrderServiceID = null,
+            OrderServiceName = viewModel.orderServiceName,
+            OrderServiceDesc = viewModel.orderServiceDesc,
+            OrderServiceResources = []
+        };
+        int? status = await _orderServiceRepository.AddOrderServiceAsync(newOrderService);
+        if(status == null) return BadRequest("add order service failed.");
+        return Ok();
 
+    }
+    //UI
     //SER006-0: DeleteOrderService
     //Desc: 删除一个订单服务
     [HttpPost]
     [Authorize]
-    public async Task<IActionResult> DeleteOrderService([FromBody] int? orderServiceID){
+    public async Task<IActionResult> DeleteOrderService([FromBody] OrderServiceDeleteUIViewModel viewModel){
         
-        int? status = await _orderServiceRepository.DeleteOrderServiceByIDAsync(orderServiceID);
+        int? status = await _orderServiceRepository.DeleteOrderServiceByIDAsync(viewModel.orderServiceID);
         if(status != 0) return BadRequest("delete order service failed.");
         return Ok();
     }
