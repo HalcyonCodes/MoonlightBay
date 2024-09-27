@@ -99,6 +99,27 @@
   },
   {
     "ContainingType": "MoonlightBay.Web.Controllers.OrderController",
+    "Method": "GetOrderChannel",
+    "RelativePath": "api/v1/Order/GetOrderChannel",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "channelLevels",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "terminalID",
+        "Type": "System.Guid",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderController",
     "Method": "GetOrderChannels",
     "RelativePath": "api/v1/Order/GetOrderChannels",
     "HttpMethod": "GET",
@@ -157,6 +178,22 @@
   },
   {
     "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "AddOrderServiceUI",
+    "RelativePath": "api/v1/OrderService/AddOrderServiceUI",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.OrderServiceAddUIViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
     "Method": "AddOrderServiceWorkScript",
     "RelativePath": "api/v1/OrderService/AddOrderServiceWorkScript",
     "HttpMethod": "POST",
@@ -189,6 +226,22 @@
   },
   {
     "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "AddOrderServiceWorkScriptToOrderSerivceUI",
+    "RelativePath": "api/v1/OrderService/AddOrderServiceWorkScriptToOrderSerivceUI",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.OrderServiceScriptSerivceViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
     "Method": "AddServiceResourceToOrderService",
     "RelativePath": "api/v1/OrderService/AddServiceResourceToOrderService",
     "HttpMethod": "POST",
@@ -212,9 +265,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "orderServiceID",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.OrderServiceDeleteUIViewModel",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -237,8 +290,8 @@
   },
   {
     "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
-    "Method": "DelteOrderServiceWorkScript",
-    "RelativePath": "api/v1/OrderService/DelteOrderServiceWorkScript",
+    "Method": "DeleteOrderServiceWorkScript",
+    "RelativePath": "api/v1/OrderService/DeleteOrderServiceWorkScript",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -279,8 +332,76 @@
   },
   {
     "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "GetOrderServiceResourcesByServiceID",
+    "RelativePath": "api/v1/OrderService/GetOrderServiceResourcesByServiceID",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "serviceID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "GetOrderServiceResourcesPage",
+    "RelativePath": "api/v1/OrderService/GetOrderServiceResourcesPage",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pageIndex",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "GetOrderServiceResourcesUI",
+    "RelativePath": "api/v1/OrderService/GetOrderServiceResourcesUI",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "GetOrderServiceWorkScriptUI",
+    "RelativePath": "api/v1/OrderService/GetOrderServiceWorkScriptUI",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "serviceID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
     "Method": "GetOrderServiceWorkScripts",
     "RelativePath": "api/v1/OrderService/GetOrderServiceWorkScripts",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "GetOrderServiceWorkScriptsUI",
+    "RelativePath": "api/v1/OrderService/GetOrderServiceWorkScriptsUI",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -295,6 +416,38 @@
     "IsController": true,
     "Order": 0,
     "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "GetOrderServicesByPageIndex",
+    "RelativePath": "api/v1/OrderService/GetOrderServicesByPageIndex",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pageIndex",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "GetOrderServicesByResource",
+    "RelativePath": "api/v1/OrderService/GetOrderServicesByResource",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "orderResourceID",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
     "ReturnTypes": []
   },
   {
@@ -324,6 +477,22 @@
       {
         "Name": "viewModel",
         "Type": "MoonlightBay.Web.Models.OrderServiceResourceViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderServiceController",
+    "Method": "UpdateOrderServiceResources",
+    "RelativePath": "api/v1/OrderService/UpdateOrderServiceResources",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.UpdateOrderResourceUIDViewModel",
         "IsRequired": true
       }
     ],
@@ -363,6 +532,38 @@
   },
   {
     "ContainingType": "MoonlightBay.Web.Controllers.TermianlController",
+    "Method": "GetTerminals",
+    "RelativePath": "api/v1/Termianl/GetTerminals",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pageIndex",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.TermianlController",
+    "Method": "SetTerminalStatus",
+    "RelativePath": "api/v1/Termianl/SetTerminalStatus",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.TerminalStatusViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.TermianlController",
     "Method": "TerminalInit",
     "RelativePath": "api/v1/Termianl/TerminalInit",
     "HttpMethod": "POST",
@@ -372,6 +573,22 @@
       {
         "Name": "viewModel",
         "Type": "MoonlightBay.Web.Models.TerminalCreateViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.TermianlController",
+    "Method": "UpdateTerminal",
+    "RelativePath": "api/v1/Termianl/UpdateTerminal",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.UpdateTerminalUIViewModel",
         "IsRequired": true
       }
     ],

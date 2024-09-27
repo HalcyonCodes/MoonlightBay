@@ -768,24 +768,32 @@
     ]
   },
   "packageFolders": {
-    "/Users/moonlighter/.nuget/packages/": {}
+    "C:\\Users\\moonlighter\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj",
+      "projectUniqueName": "C:\\Codes\\MoonlightBay\\MoonlightBay.Model\\MoonlightBay.Model.csproj",
       "projectName": "MoonlightBay.Model",
-      "projectPath": "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj",
-      "packagesPath": "/Users/moonlighter/.nuget/packages/",
-      "outputPath": "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/",
+      "projectPath": "C:\\Codes\\MoonlightBay\\MoonlightBay.Model\\MoonlightBay.Model.csproj",
+      "packagesPath": "C:\\Users\\moonlighter\\.nuget\\packages\\",
+      "outputPath": "C:\\Codes\\MoonlightBay\\MoonlightBay.Model\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "/Users/moonlighter/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\moonlighter\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -830,7 +838,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.401/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

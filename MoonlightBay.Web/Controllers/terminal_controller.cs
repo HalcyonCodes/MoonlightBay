@@ -35,9 +35,9 @@ public class TermianlController(
     {
        
         List<Terminal>? terminals = await _terminalRepository.GetUserTerminalsAsync();
-        if(terminals == null) return BadRequest("not login.");
+        //if(terminals == null) return BadRequest("not login.");
         terminals ??= [];
-        if(terminals.Count != 0) return Ok();
+        if(terminals.Count != 0) return Ok(terminals[0].TerminalID);
         Terminal newTerminal = new(){
             TerminalID = Guid.NewGuid(),
             MechineID = viewModel.MechineID,
@@ -50,7 +50,7 @@ public class TermianlController(
         if(newTerminalID == null) return BadRequest("add new terminal failed.");
         int result = await _terminalRepository.TerminalInitAsync(newTerminalID);
         if(result == -1) return BadRequest("new terminal init failed");
-        return Ok();
+        return Ok(newTerminalID);
     }
 
     [HttpGet]

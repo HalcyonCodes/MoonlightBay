@@ -1,33 +1,40 @@
 {
   "format": 1,
   "restore": {
-    "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Web/MoonlightBay.Web.csproj": {}
+    "C:\\Codes\\MoonlightBay\\MoonlightBay.Web\\MoonlightBay.Web.csproj": {}
   },
   "projects": {
-    "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Data/MoonlightBay.Data.csproj": {
+    "C:\\Codes\\MoonlightBay\\MoonlightBay.Data\\MoonlightBay.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Data/MoonlightBay.Data.csproj",
+        "projectUniqueName": "C:\\Codes\\MoonlightBay\\MoonlightBay.Data\\MoonlightBay.Data.csproj",
         "projectName": "MoonlightBay.Data",
-        "projectPath": "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Data/MoonlightBay.Data.csproj",
-        "packagesPath": "/Users/moonlighter/.nuget/packages/",
-        "outputPath": "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Data/obj/",
+        "projectPath": "C:\\Codes\\MoonlightBay\\MoonlightBay.Data\\MoonlightBay.Data.csproj",
+        "packagesPath": "C:\\Users\\moonlighter\\.nuget\\packages\\",
+        "outputPath": "C:\\Codes\\MoonlightBay\\MoonlightBay.Data\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/moonlighter/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\moonlighter\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj": {
-                "projectPath": "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj"
+              "C:\\Codes\\MoonlightBay\\MoonlightBay.Model\\MoonlightBay.Model.csproj": {
+                "projectPath": "C:\\Codes\\MoonlightBay\\MoonlightBay.Model\\MoonlightBay.Model.csproj"
               }
             }
           }
@@ -76,26 +83,33 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj": {
+    "C:\\Codes\\MoonlightBay\\MoonlightBay.Model\\MoonlightBay.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj",
+        "projectUniqueName": "C:\\Codes\\MoonlightBay\\MoonlightBay.Model\\MoonlightBay.Model.csproj",
         "projectName": "MoonlightBay.Model",
-        "projectPath": "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj",
-        "packagesPath": "/Users/moonlighter/.nuget/packages/",
-        "outputPath": "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/obj/",
+        "projectPath": "C:\\Codes\\MoonlightBay\\MoonlightBay.Model\\MoonlightBay.Model.csproj",
+        "packagesPath": "C:\\Users\\moonlighter\\.nuget\\packages\\",
+        "outputPath": "C:\\Codes\\MoonlightBay\\MoonlightBay.Model\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/moonlighter/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\moonlighter\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -140,37 +154,44 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Web/MoonlightBay.Web.csproj": {
+    "C:\\Codes\\MoonlightBay\\MoonlightBay.Web\\MoonlightBay.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Web/MoonlightBay.Web.csproj",
+        "projectUniqueName": "C:\\Codes\\MoonlightBay\\MoonlightBay.Web\\MoonlightBay.Web.csproj",
         "projectName": "MoonlightBay.Web",
-        "projectPath": "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Web/MoonlightBay.Web.csproj",
-        "packagesPath": "/Users/moonlighter/.nuget/packages/",
-        "outputPath": "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Web/obj/",
+        "projectPath": "C:\\Codes\\MoonlightBay\\MoonlightBay.Web\\MoonlightBay.Web.csproj",
+        "packagesPath": "C:\\Users\\moonlighter\\.nuget\\packages\\",
+        "outputPath": "C:\\Codes\\MoonlightBay\\MoonlightBay.Web\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "/Users/moonlighter/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\moonlighter\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Data/MoonlightBay.Data.csproj": {
-                "projectPath": "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Data/MoonlightBay.Data.csproj"
+              "C:\\Codes\\MoonlightBay\\MoonlightBay.Data\\MoonlightBay.Data.csproj": {
+                "projectPath": "C:\\Codes\\MoonlightBay\\MoonlightBay.Data\\MoonlightBay.Data.csproj"
               },
-              "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj": {
-                "projectPath": "/Users/moonlighter/Documents/codes/MoonlightBay/MoonlightBay/MoonlightBay.Model/MoonlightBay.Model.csproj"
+              "C:\\Codes\\MoonlightBay\\MoonlightBay.Model\\MoonlightBay.Model.csproj": {
+                "projectPath": "C:\\Codes\\MoonlightBay\\MoonlightBay.Model\\MoonlightBay.Model.csproj"
               }
             }
           }
@@ -250,7 +271,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.401/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

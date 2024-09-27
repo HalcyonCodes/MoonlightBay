@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using MoonlightBay.Data.Interfaces;
 using MoonlightBay.Model;
 using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace MoonlightBay.Data.Repositories;
 
@@ -11,11 +12,13 @@ namespace MoonlightBay.Data.Repositories;
 public class TerminalRepository(ApplicationDbContext dbContext
 , UserManager<ApplicationUser> userManager
 , IHttpContextAccessor httpContextAccessor
+    ,IAccountRepository accountRepository
 ) : ITerminalRepository
 {
     private readonly ApplicationDbContext _dbContext = dbContext;
     private readonly UserManager<ApplicationUser> _userManager = userManager;
     private readonly IHttpContextAccessor _contextAccessor = httpContextAccessor;
+    private readonly IAccountRepository _accountRepository = accountRepository;
 
     public async Task<Guid?> AddAysnc(Terminal terminal)
     {
@@ -60,9 +63,17 @@ public class TerminalRepository(ApplicationDbContext dbContext
 
     public async Task<List<Terminal>?> GetUserTerminalsAsync()
     {
-        if(_contextAccessor.HttpContext == null) return null;
-        ApplicationUser? user = await _userManager.GetUserAsync(_contextAccessor.HttpContext.User);
-        if(user == null) return null;
+        //if(_contextAccessor.HttpContext == null) return null;
+        //ApplicationUser? user = await _userManager.GetUserAsync(_contextAccessor.HttpContext.User);
+        var userName = _contextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if (user == null)
+        {
+            userName = _contextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
+
+        if (user == null) return null;
         List<Terminal> terminals = await _dbContext.Terminals
         .Include(q => q.OrderChannels)!
         .ThenInclude(q => q.Orders)!

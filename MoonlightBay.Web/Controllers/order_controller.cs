@@ -133,12 +133,20 @@ public class OrderController(
         };
         if(order.OrderService == null) return BadRequest("get order failed.");
 
-        OrderServiceViewModel serviceViewModel = new(){
+        OrderServiceScriptViewModel script = new()
+        {
+            orderServiceScriptID = order.OrderService.WorkScript.OrderServiceScriptID,
+            orderServiceScriptName = order.OrderService.WorkScript.OrderServiceScriptName,
+            orderServiceDesc = order.OrderService.WorkScript.OrderServiceDesc
+        };
+        OrderServiceViewModel serviceViewModel = new()
+        {
             orderServiceID = order.OrderService.OrderServiceID,
             orderServiceDesc = order.OrderService.OrderServiceDesc,
             orderServiceName = order.OrderService.OrderServiceName,
-            orderServiceResources = []
-        };
+            orderServiceResources = [],
+            orderServiceWorkScript = script
+        }; 
 
         order.OrderService.OrderServiceResources ??= [];
 
@@ -229,11 +237,18 @@ public class OrderController(
                     flag = true;
                     break;
                 }
+                OrderServiceScriptViewModel script = new()
+                {
+                    orderServiceScriptID = s.OrderService.WorkScript.OrderServiceScriptID,
+                    orderServiceScriptName = s.OrderService.WorkScript.OrderServiceScriptName,
+                    orderServiceDesc = s.OrderService.WorkScript.OrderServiceDesc
+                };
                 OrderServiceViewModel orderServiceViewModel = new(){
                     orderServiceID = s.OrderService!.OrderServiceID,
                     orderServiceName = s.OrderService!.OrderServiceName,
                     orderServiceDesc = s.OrderService!.OrderServiceDesc,
                     orderServiceResources = [],
+                    orderServiceWorkScript = script,
                 };
                 s.OrderService.OrderServiceResources ??= [];
 

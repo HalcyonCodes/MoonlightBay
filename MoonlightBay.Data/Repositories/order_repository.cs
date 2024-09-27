@@ -73,6 +73,8 @@ public class OrderRepository(
             newOrder.OrderResources.Add(newOrderResource);
         }
 
+        
+
         _dbContext.Orders.Add(newOrder);
         await _dbContext.SaveChangesAsync();
         return newOrder.OrderID;
@@ -114,6 +116,10 @@ public class OrderRepository(
         .Include(t => t.OrderChannels!)
         .ThenInclude(t => t.Orders!)
         .ThenInclude(t => t.OrderResources)
+        .Include(t => t.OrderChannels!)
+        .ThenInclude(t => t.Orders!)
+        .ThenInclude(q => q.OrderService)
+        .ThenInclude(q => q.WorkScript)
         .FirstOrDefaultAsync( t => t.TerminalID == terminalID);
         if(dbTerminal == null) return null;
         dbTerminal.OrderChannels ??= [];
@@ -126,6 +132,8 @@ public class OrderRepository(
     {
         Order? dbOrder = await _dbContext.Orders
         .Include(t => t.OrderResources)
+        .Include(q => q.OrderService)
+       
         .FirstOrDefaultAsync(t => t.OrderID == order.OrderID);
 
         if(dbOrder == null) return -1;
@@ -206,15 +214,16 @@ public class OrderRepository(
 
     public async Task<int> AddOrderToOrderChannelAsync(Guid orderID, int channelLevel)
     {
-        if(_httpContextAccessor.HttpContext == null) return -1;
-        //ApplicationUser? user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-        //===
-        var currentUser = _httpContextAccessor.HttpContext.User;
+        
+        var userName = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+     
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if (user == null)
+        {
+            userName = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
 
-        // 从 Claims 中获取用户 ID
-        string? userID = currentUser.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (userID == null) return -1;
-        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userID);
 
         if (user == null) return -1;
         Terminal? terminal = await _dbContext.Terminals
@@ -240,16 +249,17 @@ public class OrderRepository(
     //从所有终端订单栈里得到弹出优先度最高的订单
     public async Task<Order?> GetOrderAsync()
     {
-        if (_httpContextAccessor.HttpContext == null) return null;
-        //ApplicationUser? user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-        //===
-        var currentUser = _httpContextAccessor.HttpContext.User;
 
-        // 从 Claims 中获取用户 ID
-        string? userID = currentUser.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (userID == null) return null;
+        var userName = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userID);
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if (user == null)
+        {
+            userName = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
+
+
 
         Terminal? terminal = await _dbContext.Terminals
         .Include(t => t.OrderChannels)!
@@ -260,6 +270,10 @@ public class OrderRepository(
         .ThenInclude(t => t.OrderService)
         .ThenInclude(t => t!.OrderServiceResources)!
         .ThenInclude(q => q.OrderServiceResource)
+        .Include(t => t.OrderChannels)!
+        .ThenInclude(t => t.Orders)!
+        .ThenInclude(t => t.OrderService)
+        .ThenInclude(q => q.WorkScript)
         .FirstOrDefaultAsync(t => t.User == user);
         if(terminal == null) return null;
         terminal.OrderChannels ??= [];
@@ -285,16 +299,15 @@ public class OrderRepository(
     //获取所有订单通道中的订单
     public async Task<List<OrderChannel>?> GetOrderChannelsAsync(){
 
-        if(_httpContextAccessor.HttpContext == null) return null;
 
-        //ApplicationUser? user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-        //===
-        var currentUser = _httpContextAccessor.HttpContext.User;
+        var userName = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-        // 从 Claims 中获取用户 ID
-        string? userID = currentUser.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (userID == null) return null;
-        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userID);
+        ApplicationUser? user = await _accountRepository.GetUserByUserNameAsync(userName);
+        if (user == null)
+        {
+            userName = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.Name)?.Value;
+            user = await _accountRepository.GetUserByUserNameAsync(userName!);
+        }
 
         Terminal? terminal = await _dbContext.Terminals
         .Include(t => t.OrderChannels)!
@@ -305,6 +318,10 @@ public class OrderRepository(
         .ThenInclude(t => t.OrderService)
         .ThenInclude(t => t!.OrderServiceResources)!
         .ThenInclude(q => q.OrderServiceResource)
+         .Include(t => t.OrderChannels)!
+        .ThenInclude(t => t.Orders)!
+        .ThenInclude(t => t.OrderService)
+        .ThenInclude(q => q.WorkScript)
         .FirstOrDefaultAsync(t => t.User == user);
 
         if(terminal == null) return[];
@@ -321,6 +338,8 @@ public class OrderRepository(
         .Include(t => t.OrderResources)
         .Include(t => t.OrderService)
         .ThenInclude(t => t!.OrderServiceResources)
+        .Include(t => t.OrderService)
+        .ThenInclude(q => q.WorkScript)
         .FirstOrDefaultAsync(t => t.OrderID == orderID);
         if(dbOrder == null) return null;
         return dbOrder;
