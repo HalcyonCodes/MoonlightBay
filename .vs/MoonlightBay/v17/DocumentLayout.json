@@ -11,8 +11,8 @@
       "RelativeMoniker": "D:0:0:{E3D70411-B19C-46D5-9DA0-B82B685D4448}|MoonlightBay.Web\\MoonlightBay.Web.csproj|solutionrelative:moonlightbay.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{848AADCC-013D-4ECD-96FE-5142E43BC738}|MoonlightBay.Data\\MoonlightBay.Data.csproj|c:\\codes\\moonlightbay\\moonlightbay.data\\repositories\\order_repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{848AADCC-013D-4ECD-96FE-5142E43BC738}|MoonlightBay.Data\\MoonlightBay.Data.csproj|solutionrelative:moonlightbay.data\\repositories\\order_repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E3D70411-B19C-46D5-9DA0-B82B685D4448}|MoonlightBay.Web\\MoonlightBay.Web.csproj|c:\\codes\\moonlightbay\\moonlightbay.web\\models\\order_service_ui_view_model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E3D70411-B19C-46D5-9DA0-B82B685D4448}|MoonlightBay.Web\\MoonlightBay.Web.csproj|solutionrelative:moonlightbay.web\\models\\order_service_ui_view_model.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{848AADCC-013D-4ECD-96FE-5142E43BC738}|MoonlightBay.Data\\MoonlightBay.Data.csproj|c:\\codes\\moonlightbay\\moonlightbay.data\\interfaces\\i_order_repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -21,6 +21,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{848AADCC-013D-4ECD-96FE-5142E43BC738}|MoonlightBay.Data\\MoonlightBay.Data.csproj|c:\\codes\\moonlightbay\\moonlightbay.data\\repositories\\terminal_repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{848AADCC-013D-4ECD-96FE-5142E43BC738}|MoonlightBay.Data\\MoonlightBay.Data.csproj|solutionrelative:moonlightbay.data\\repositories\\terminal_repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{848AADCC-013D-4ECD-96FE-5142E43BC738}|MoonlightBay.Data\\MoonlightBay.Data.csproj|c:\\codes\\moonlightbay\\moonlightbay.data\\repositories\\order_repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{848AADCC-013D-4ECD-96FE-5142E43BC738}|MoonlightBay.Data\\MoonlightBay.Data.csproj|solutionrelative:moonlightbay.data\\repositories\\order_repository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +38,7 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "order_repository.cs",
               "DocumentMoniker": "C:\\Codes\\MoonlightBay\\MoonlightBay.Data\\Repositories\\order_repository.cs",
               "RelativeDocumentMoniker": "MoonlightBay.Data\\Repositories\\order_repository.cs",
@@ -42,8 +46,7 @@
               "RelativeToolTip": "MoonlightBay.Data\\Repositories\\order_repository.cs",
               "ViewState": "AgIAACsBAAAAAAAAAAAxwEgBAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-27T13:28:13.522Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-27T13:28:13.522Z"
             },
             {
               "$type": "Document",
@@ -55,8 +58,7 @@
               "RelativeToolTip": "MoonlightBay.Data\\Interfaces\\i_order_repository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-27T13:27:56.234Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-27T13:27:56.234Z"
             },
             {
               "$type": "Document",
@@ -66,7 +68,7 @@
               "RelativeDocumentMoniker": "MoonlightBay.Web\\Controllers\\order_controller.cs",
               "ToolTip": "C:\\Codes\\MoonlightBay\\MoonlightBay.Web\\Controllers\\order_controller.cs",
               "RelativeToolTip": "MoonlightBay.Web\\Controllers\\order_controller.cs",
-              "ViewState": "AgIAAEgBAAAAAAAAAAAIwEkBAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAJ0AAAAAAAAAAAAjwK8AAAB7AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-27T06:38:23.902Z",
               "EditorCaption": ""
@@ -81,8 +83,7 @@
               "RelativeToolTip": "MoonlightBay.Data\\Repositories\\terminal_repository.cs",
               "ViewState": "AgIAAHsAAAAAAAAAAAAtwDoAAAAuAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-09-26T11:54:49.718Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-09-26T11:54:49.718Z"
             },
             {
               "$type": "Document",
@@ -92,10 +93,21 @@
               "RelativeDocumentMoniker": "MoonlightBay.Web\\Program.cs",
               "ToolTip": "C:\\Codes\\MoonlightBay\\MoonlightBay.Web\\Program.cs",
               "RelativeToolTip": "MoonlightBay.Web\\Program.cs",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAYwFkAAAAEAAAAAAAAAA==",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAYwFoAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-23T09:56:47.818Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-23T09:56:47.818Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "order_service_ui_view_model.cs",
+              "DocumentMoniker": "C:\\Codes\\MoonlightBay\\MoonlightBay.Web\\Models\\order_service_ui_view_model.cs",
+              "RelativeDocumentMoniker": "MoonlightBay.Web\\Models\\order_service_ui_view_model.cs",
+              "ToolTip": "C:\\Codes\\MoonlightBay\\MoonlightBay.Web\\Models\\order_service_ui_view_model.cs",
+              "RelativeToolTip": "MoonlightBay.Web\\Models\\order_service_ui_view_model.cs",
+              "ViewState": "AgIAAEoAAAAAAAAAAAAIwGUAAAA0AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-04T11:58:22.789Z"
             }
           ]
         }

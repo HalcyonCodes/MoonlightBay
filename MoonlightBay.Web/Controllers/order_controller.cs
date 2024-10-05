@@ -119,6 +119,68 @@ public class OrderController(
         return Ok();    
     }
 
+
+    [HttpPost]
+    [Authorize]
+    public async Task<IActionResult> CreateOrderLite([FromBody] OrderRequestLiteViewModel viewModel)
+    {
+        List<Terminal>? terminal = await _terminalRepository.GetUserTerminalsAsync();
+
+        if (terminal == null) return BadRequest("create order failed.");
+
+        OrderChannel? terminalChannel = terminal.SelectMany(q => q.OrderChannels!)
+        .FirstOrDefault(q => q.OrderChannelLevel == viewModel.orderChannelLevel);
+
+        Order newOrder = new()
+        {
+            OrderID = Guid.NewGuid(),
+            CreatedTime = DateTime.Now,
+            Status = Order.OrderStatus.waiting,
+            OrderIndex = null
+        };
+        Terminal? sourceTerminal = terminal.FirstOrDefault();
+        Terminal? targetTerminal = new()
+        {
+            TerminalID = Guid.Parse(viewModel.order!.sourceTerminalID!)
+        };
+
+    
+        OrderService? orderService = new()
+        {
+            OrderServiceID = viewModel.order.orderService!.orderServiceID
+        };
+
+        viewModel.order.orderServiceResources ??= [];
+        newOrder.OrderResources ??= [];
+
+        foreach (var q in viewModel.order.orderServiceResources)
+        {
+            
+            
+            OrderServiceResourceClass newResourceClass = new()
+            {
+                OrderServiceResoourceClassID = Guid.NewGuid(),
+                CreatedTime = DateTime.Now,
+                ResourceIntValue = q.resourceIntValue,
+                ResourceDoubleValue = q.resourceDoubleValue,
+                ResourceStringValue = q.resourceStringValue,
+            };
+            newOrder.OrderResources.Add(newResourceClass);
+        }
+
+        newOrder.OrderService = orderService;
+        newOrder.SourceTerminal = sourceTerminal;
+        newOrder.TargetTerminal = targetTerminal;
+        Guid? status = await _ordereRepository.AddOrderAsync(newOrder);
+
+        int status2 = await _ordereRepository.AddOrderToOrderChannelAsync((Guid)status, (int)viewModel.orderChannelLevel!);
+    
+        return Ok();
+
+}
+
+
+
     [HttpGet]
     [Authorize]
     public async Task<IActionResult> GetOrder(){

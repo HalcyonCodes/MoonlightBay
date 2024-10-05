@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MoonlightBay.Web.Migrations
 {
     /// <inheritdoc />
-    public partial class FristCode : Migration
+    public partial class CodeFirst : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

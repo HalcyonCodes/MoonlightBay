@@ -89,6 +89,22 @@
   },
   {
     "ContainingType": "MoonlightBay.Web.Controllers.OrderController",
+    "Method": "CreateOrderLite",
+    "RelativePath": "api/v1/Order/CreateOrderLite",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "viewModel",
+        "Type": "MoonlightBay.Web.Models.OrderRequestLiteViewModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MoonlightBay.Web.Controllers.OrderController",
     "Method": "GetOrder",
     "RelativePath": "api/v1/Order/GetOrder",
     "HttpMethod": "GET",

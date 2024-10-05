@@ -72,3 +72,32 @@ public class OrderServiceAddUIViewModel{
 public class OrderServiceDeleteUIViewModel{
     public int? orderServiceID{get; set;}
 }
+
+
+
+public class OrderRequestLiteViewModel
+{
+    public int? orderChannelLevel { get; set; }
+    public OrderLite? order { get; set; }
+}
+
+public class OrderLite
+{
+    public string? orderID { get; set; }
+    public OrderServiceLite? orderService { get; set; }
+    public string? sourceTerminalID { get; set; }
+    public string? targetTerminalID { get; set; }
+    public List<OrderServiceResourceLite>? orderServiceResources { get; set; }
+}
+
+public class OrderServiceLite
+{
+    public int? orderServiceID { get; set; }
+}
+
+public class OrderServiceResourceLite
+{
+    public int? resourceIntValue { get; set; }
+    public string? resourceStringValue { get; set; }
+    public double? resourceDoubleValue { get; set; }
+}

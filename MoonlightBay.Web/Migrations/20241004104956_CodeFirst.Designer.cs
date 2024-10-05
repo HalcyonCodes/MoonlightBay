@@ -11,8 +11,8 @@ using MoonlightBay.Data;
 namespace MoonlightBay.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240919103036_FristCode")]
-    partial class FristCode
+    [Migration("20241004104956_CodeFirst")]
+    partial class CodeFirst
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
