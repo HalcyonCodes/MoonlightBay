@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MoonlightBay.Data")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0e6b1125c9ddffa981275049d4ef67f6b5c3b695")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+950191c0cd7ec5eed1ee8464f80efd743d8fd6b6")]
 [assembly: System.Reflection.AssemblyProductAttribute("MoonlightBay.Data")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MoonlightBay.Data")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

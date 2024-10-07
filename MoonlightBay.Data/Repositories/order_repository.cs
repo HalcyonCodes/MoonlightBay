@@ -48,18 +48,25 @@ public class OrderRepository(
         if (sourceTerminal == null) return null;
         Terminal? targetTerminal = await _dbContext.Terminals.FirstOrDefaultAsync(t => t.TerminalID == order.SourceTerminal.TerminalID);
         if (targetTerminal == null) return null;
-        OrderService? orderService = await _dbContext.OrderServices.FirstOrDefaultAsync(t => t.OrderServiceID == order.OrderService.OrderServiceID);
+        OrderService? orderService = await _dbContext.OrderServices
+            .Include(q => q.OrderServiceResources)
+            .ThenInclude(q => q.OrderServiceResource)
+            .FirstOrDefaultAsync(t => t.OrderServiceID == order.OrderService.OrderServiceID);
         if (orderService == null) return null;
         newOrder.SourceTerminal = sourceTerminal;
         newOrder.TargetTerminal = targetTerminal;
         newOrder.OrderService = orderService;
 
+        int index = 0;
+        orderService.OrderServiceResources ??= [];
         //处理订单参数
+        List<OrderServiceResourceClass> resources = orderService.OrderServiceResources;
+
+
         foreach(var q in order.OrderResources){
-            if(q.OrderServiceResource == null) break;
-            if(q.OrderServiceResource.OrderServiceResourceID == null) break;
-            OrderServiceResource? resource = await _dbContext.OrderServiceResources
-            .FirstOrDefaultAsync(q => q.OrderServiceResourceID == q.OrderServiceResourceID);
+           //if(q.OrderServiceResource == null) break;
+           // if(q.OrderServiceResource.OrderServiceResourceID == null) break;
+            OrderServiceResource? resource = resources[index].OrderServiceResource;
 
             OrderServiceResourceClass newOrderResource = new(){
                 OrderServiceResoourceClassID = Guid.NewGuid(),
@@ -71,6 +78,8 @@ public class OrderRepository(
             };
             _dbContext.OrderServiceResourceClasses.Add(newOrderResource);
             newOrder.OrderResources.Add(newOrderResource);
+
+            index++;
         }
 
         

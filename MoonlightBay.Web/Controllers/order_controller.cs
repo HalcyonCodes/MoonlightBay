@@ -153,6 +153,8 @@ public class OrderController(
         viewModel.order.orderServiceResources ??= [];
         newOrder.OrderResources ??= [];
 
+        int index = 0;
+       
         foreach (var q in viewModel.order.orderServiceResources)
         {
             
@@ -166,6 +168,7 @@ public class OrderController(
                 ResourceStringValue = q.resourceStringValue,
             };
             newOrder.OrderResources.Add(newResourceClass);
+            index++;
         }
 
         newOrder.OrderService = orderService;
