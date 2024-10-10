@@ -218,6 +218,11 @@ public class OrderRepository(
         dbOrder.Status = order.Status;
         _dbContext.Orders.Update(dbOrder);
         await _dbContext.SaveChangesAsync(); 
+        if(order.Status == Order.OrderStatus.complete)
+        {
+            _dbContext.Orders.Remove(dbOrder);
+            await _dbContext.SaveChangesAsync();
+        }
         return 0;
      }
 

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MoonlightBay.Web")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+950191c0cd7ec5eed1ee8464f80efd743d8fd6b6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+88a23017fdd7c002add425251eceeef81d97b960")]
 [assembly: System.Reflection.AssemblyProductAttribute("MoonlightBay.Web")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MoonlightBay.Web")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
